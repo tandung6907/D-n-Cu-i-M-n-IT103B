@@ -1,0 +1,12 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header{
+    width: 636px;
+    height: 170px;
+    top: 123px;
+    left: 483px;
+}
