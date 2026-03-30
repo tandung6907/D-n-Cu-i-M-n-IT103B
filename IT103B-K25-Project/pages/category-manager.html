@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý danh mục</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/category-manager.css">
+</head>
+
+<body>
+    <header>
+        <p class="logo">QuizzForge</p>
+        <nav class="header-nav">
+            <a href="/pages/category-manager.html" class="active">Danh mục</a>
+            <a href="/pages/product-manager.html">Bài test</a>
+            <a href="/pages/login.html" class="btn-logout">Đăng xuất</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Quản lý danh mục</h2>
+        <button class="btn-add" id="btnAddCategory">Thêm danh mục</button>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên danh mục</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="categoryTableBody">
+                    <tr>
+                        <td>1</td>
+                        <td>📚 Lịch sử</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>🧠 Khoa học</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>🎤 Giải trí</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>🏠 Đời sống</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>📚 Lịch sử</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>🧠 Khoa học</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>🎤 Giải trí</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>🧠 Khoa học</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <button class="page-btn">&lt;</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">&gt;</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 QuizForge. All rights reserved.</p>
+    </footer>
+
+    <script src="/js/category-manager.js"></script>
+</body>
+
+</html>

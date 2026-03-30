@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý bài test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/product-manager.css">
+</head>
+
+<body>
+    <header>
+        <p class="logo">QuizzForge</p>
+        <nav class="header-nav">
+            <a href="/pages/category-manager.html">Danh mục</a>
+            <a href="/pages/product-manager.html" class="active">Bài test</a>
+            <a href="/pages/login.html" class="btn-logout">Đăng xuất</a>
+        </nav>
+    </header>
+
+
+    <main>
+        <h2>Quản lý bài test</h2>
+        <div class="toolbar">
+            <button class="btn-add" id="btnAddTest">Thêm bài test</button>
+            <div class="toolbar-right">
+                <select class="select-sort" id="sortSelect">
+                    <option value="">Sắp xếp theo</option>
+                    <option value="name-asc">Tên A → Z</option>
+                    <option value="name-desc">Tên Z → A</option>
+                    <option value="time-asc">Thời gian tăng dần</option>
+                    <option value="time-desc">Thời gian giảm dần</option>
+                </select>
+                <input type="text" class="input-search" id="searchInput" placeholder="Tìm kiếm theo tên">
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên bài test</th>
+                        <th>Danh mục</th>
+                        <th>Số câu hỏi</th>
+                        <th>Thời gian</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="testTableBody">
+                    <tr>
+                        <td>1</td>
+                        <td>History Quiz</td>
+                        <td>📚 Lịch sử</td>
+                        <td>15</td>
+                        <td>10 min</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Science Challenge</td>
+                        <td>🧠 Khoa học</td>
+                        <td>20</td>
+                        <td>15 min</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Entertainment Trivia</td>
+                        <td>🎤 Đời sống</td>
+                        <td>10</td>
+                        <td>5 min</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Entertainment Trivia</td>
+                        <td>🎤 Đời sống</td>
+                        <td>10</td>
+                        <td>5 min</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Entertainment Trivia</td>
+                        <td>🎤 Đời sống</td>
+                        <td>10</td>
+                        <td>5 min</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Entertainment Trivia</td>
+                        <td>🎤 Đời sống</td>
+                        <td>10</td>
+                        <td>5 min</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Entertainment Trivia</td>
+                        <td>🎤 Đời sống</td>
+                        <td>10</td>
+                        <td>5 min</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Entertainment Trivia</td>
+                        <td>🎤 Đời sống</td>
+                        <td>10</td>
+                        <td>5 min</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <button class="page-btn">&lt;</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">&gt;</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Quiz App. All rights reserved.</p>
+    </footer>
+
+    <script src="/js/product-manager.js"></script>
+</body>
+
+</html>
