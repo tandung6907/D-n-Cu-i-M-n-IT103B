@@ -69,8 +69,16 @@ registerForm.addEventListener("submit", function (e) {
 
   //Xử lý khi dữ liệu hợp lệ
   if (isValid) {
-    const isExist = users.find((user) => user.email === email);
-    if (isExist) {
+    const isExistUser = users.find((user) => user.fullname === fullname);
+    const isExistEmail = users.find((user) => user.email === email);
+
+    if (isExistUser) {
+      document.getElementById("nameError").innerText =
+        "Tên người dùng này đã được đăng ký";
+      return;
+    }
+    
+    if (isExistEmail) {
       document.getElementById("emailError").innerText =
         "Email này đã được đăng ký";
       return;
