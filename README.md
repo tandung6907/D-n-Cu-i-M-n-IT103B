@@ -1,0 +1,1 @@
+Ai sửa = gay
