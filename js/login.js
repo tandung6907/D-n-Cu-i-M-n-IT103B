@@ -23,7 +23,7 @@ loginForm.addEventListener("submit", function (e) {
     if (user.role === "admin") {
       window.location.href = "admin_category.html"; // Trang quản lý danh mục
     } else {
-      window.location.href = "index.html"; // Trang chủ
+      window.location.href = "../pages/home.html"; // Trang chủ
     }
   } else {
     document.getElementById("loginEmailError").innerText =
