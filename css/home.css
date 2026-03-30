@@ -213,6 +213,10 @@ nav a {
     border-color: #3b82f6;
 }
 
+.page-item.disabled{
+    color: #ccc;
+}
+
 footer {
     background-color: #333333;
     color: #ffffff;

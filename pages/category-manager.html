@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuizForge - Quản Lý Danh Mục</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/category-manager.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="container">
+        <div class="logo">QuizzForge</div>
+        <nav class="nav-links">
+          <a href="./category-manager.html" class="active">Danh mục</a>
+          <a href="./test-manager.html">Bài test</a>
+          <a href="./register.html">Đăng xuất</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container main-content">
+      <h1>Quản lý danh mục</h1>
+
+      <button class="btn btn-primary btn-add">Thêm danh mục</button>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th class="text-center" style="width: 10%">ID</th>
+              <th style="width: 70%">Tên danh mục</th>
+              <th class="text-center" style="width: 20%">Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center">1</td>
+              <td>📚 Lịch sử</td>
+              <td>
+                <div class="action-group">
+                  <button class="btn btn-edit">Sửa</button>
+                  <button class="btn btn-delete">Xoá</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-center">2</td>
+              <td>🧠 Khoa học</td>
+              <td>
+                <div class="action-group">
+                  <button class="btn btn-edit">Sửa</button>
+                  <button class="btn btn-delete">Xoá</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-center">3</td>
+              <td>🎤 Giải trí</td>
+              <td>
+                <div class="action-group">
+                  <button class="btn btn-edit">Sửa</button>
+                  <button class="btn btn-delete">Xoá</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-center">4</td>
+              <td>🏠 Đời sống</td>
+              <td>
+                <div class="action-group">
+                  <button class="btn btn-edit">Sửa</button>
+                  <button class="btn btn-delete">Xoá</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <button class="page-item disabled">&lt;</button>
+        <button class="page-item active">1</button>
+        <button class="page-item">2</button>
+        <button class="page-item">3</button>
+        <button class="page-item">&gt;</button>
+      </div>
+    </main>
+
+    <footer>© 2025 Quiz App. All rights reserved.</footer>
+  </body>
+</html>
