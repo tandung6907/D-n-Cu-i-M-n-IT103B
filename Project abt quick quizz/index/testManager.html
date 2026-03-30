@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Manager</title>
+    <link rel="stylesheet" href="../style/testManager.css">
+</head>
+<body>
+    <div class="header">
+        <h2>QuizzForge</h2>
+        <div class="lead">
+            <button class="notIndeed">Danh mục</button>
+            <button class="smth">Bài test</button>
+            <button class="smth">Đăng xuất</button>
+        </div>
+    </div>
+    <div class="main">
+        <div class="contain">
+            <h1>
+                Quản lý bài test
+            </h1>
+            <div class="special">
+                <button id="addBtn">Thêm bài test</button>
+                <div class="sortNf">
+                    <select name="" id="sorts">
+                        <option value="">Sắp xếp theo</option>
+                        <option value="">Sắp xếp theo 2</option>
+                    </select>
+                    <input type="text" placeholder="Tìm kiếm theo tên" id="found">
+                </div>
+            </div>
+            <table id="tble" border="1" cellspacing = "0">
+                <thead>
+                    <tr>
+                        <th class="id">ID</th>
+                        <th class="name">Tên bài test</th>
+                        <td>Danh mục</td>
+                        <th class="quant">Số câu hỏi</th>
+                        <th class="time">Thời gian</th>
+                        <th class="action">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="odd">
+                        <td class="num">1</td>
+                        <td>History Quiz</td>
+                        <td>📚 Lịch sử</td>
+                        <td>15</td>
+                        <td>10 min</td>
+                        <td class="grBtn">
+                            <button id="updBtn">Sửa</button>
+                            <button id="delBtn">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="num">2</td>
+                        <td>Science Challenge</td>
+                        <td>🧠 Khoa học</td>
+                        <td>20</td>
+                        <td>15 min</td>
+                        <td class="grBtn">
+                            <button id="updBtn">Sửa</button>
+                            <button id="delBtn">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="num">3</td>
+                        <td>Entertainment Trivia</td>
+                        <td>🎤 Giải trí</td>
+                        <td>10</td>
+                        <td>5 min</td>
+                        <td class="grBtn">
+                            <button id="updBtn">Sửa</button>
+                            <button id="delBtn">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="num">4</td>
+                        <td>Entertainment Trivia</td>
+                        <td>🎤 Giải trí</td>
+                        <td>10</td>
+                        <td>5 min</td>
+                        <td class="grBtn">
+                            <button id="updBtn">Sửa</button>
+                            <button id="delBtn">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="num">5</td>
+                        <td>Entertainment Trivia</td>
+                        <td>🎤 Giải trí</td>
+                        <td>10</td>
+                        <td>5 min</td>
+                        <td class="grBtn">
+                            <button id="updBtn">Sửa</button>
+                            <button id="delBtn">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="num">6</td>
+                        <td>Entertainment Trivia</td>
+                        <td>🎤 Giải trí</td>
+                        <td>10</td>
+                        <td>5 min</td>
+                        <td class="grBtn">
+                            <button id="updBtn">Sửa</button>
+                            <button id="delBtn">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="num">7</td>
+                       <td>Entertainment Trivia</td>
+                        <td>🎤 Giải trí</td>
+                        <td>10</td>
+                        <td>5 min</td>
+                        <td class="grBtn">
+                            <button id="updBtn">Sửa</button>
+                            <button id="delBtn">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="num">8</td>
+                        <td>Entertainment Trivia</td>
+                        <td>🎤 Giải trí</td>
+                        <td>10</td>
+                        <td>5 min</td>
+                        <td class="grBtn">
+                            <button id="updBtn">Sửa</button>
+                            <button id="delBtn">Xoá</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pages">
+                <button class="special">&lt;</button>
+                <button class="current">1</button>
+                <button class="other">2</button>
+                <button class="other">3</button>
+                <button class="other next">&gt;</button>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2025 Quiz App. All rights reserved.</p>
+    </div>
+    <script src="../script/testManager.js"></script>
+</body>
+</html>

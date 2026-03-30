@@ -1,0 +1,92 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+#bdySi{
+    display: flex;
+    background-color: rgba(228, 228, 231, 1);
+    flex-direction: column;
+    align-items: center;
+    gap: 37px;
+}
+#header{
+    width: 636px;
+    height: 170px;
+    text-align: center;
+}
+#header h1{
+    font-size: 52px;
+    font-weight: 600;
+    padding: 20px;
+}
+#header p{
+    font-size: 18px;
+    font-weight: 400;
+    width: 494px;
+    height: 90px;
+    margin-left: 75px;
+}
+#siForm{
+    width: 533px;
+    height: 566px;
+    border: 1px solid rgba(228, 228, 231, 1);
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    justify-content: center ;
+}
+.iptInf{
+    padding: 16px;
+    width: 472px;
+    height: 65px;
+    border-radius: 9px;
+    border: 1px solid rgba(228, 228, 231, 1);
+    text-align: center;
+    background-color: white;
+    color: rgba(113, 113, 122, 1);
+}
+#siBtn{
+    color: white;
+    background-color: rgba(13, 110, 253, 1);
+    padding: 16px;
+    text-align: center;
+    border-radius: 9px;
+    border: 1px solid rgba(13, 110, 253, 1);
+    width: 472px;
+    height: 65px;
+
+}
+#asking p{
+    font-weight: 400;
+    width: 444px;
+    height: 25px;
+    font-size: 14px;
+    color: rgba(113, 113, 122, 1);
+    background-color: white;
+}
+#asking a{
+    font-weight: 600;
+    text-decoration: none;
+    color: rgba(13, 110, 253, 1);
+    font-size: 14px;
+}
+#error-announcement-psw{
+    color: red;
+    display: none;
+}
+#error-announcement-mails{
+    color: red;
+    display: none;
+}
+.labels{
+    margin-right: 400px;
+    font-weight: 400;
+    font-size: 18px;
+    color: black;
+
+}

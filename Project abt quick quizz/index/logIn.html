@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in</title>
+    <link rel="stylesheet" href="../style/logIn.css">
+</head>
+
+<body>
+    <div id="bdySi">
+        <div id="header">
+            <h1>Log In Form</h1>
+            <p>QuizForge – Nền tảng sáng tạo bài kiểm tra trực tuyến,
+                giúp bạn dễ dàng thiết kế, chia sẻ và thực hiện các bài
+                kiểm tra một cách nhanh chóng và hiệu quả! </p>
+        </div>
+        <form action="" id="siForm">
+            <label for="siEmail" class="labels">Email </label>
+            <input type="email" id="siEmail" placeholder="Email" class="iptInf">
+            <p id="error-announcement-mails">Email can't be empty</p>
+            <br>
+            <label for="siPass" class="labels">Password</label>
+            <input type="password" id="siPass" placeholder="Password" class="iptInf">
+            <p id="error-announcement-psw">Password can't be empty</p>
+            <br>
+            <button onclick="siClick()" id="siBtn">Log in</button>
+            <p id="asking">Haven't got an account yet? <a href="./signIn.html">Sign in now</a></p>
+        </form>
+    </div>
+</body>
+<script src="../script/logIn.js"></script>
+
+</html>
