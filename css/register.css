@@ -62,7 +62,7 @@ body {
     transition: all 0.3s ease;
 }
 
-.form-group .input-center{
+.form-group .input-center {
     text-align: center;
 }
 
@@ -104,4 +104,17 @@ body {
 
 .signup-link a:hover {
     text-decoration: underline;
+}
+
+.error-message {
+    color: #ff4d4d;
+    font-size: 13px;
+    margin-top: 5px;
+    display: block;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
 }

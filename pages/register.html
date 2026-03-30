@@ -23,25 +23,25 @@
     </div>
 
     <div class="register-card">
-      <form>
+      <form id="registerForm">
+        <div class="form-group">
+          <input
+            type="text"
+            id="fullname"
+            placeholder="Họ và tên"
+            class="input-center"
+          />
+          <span class="error-message" id="nameError"></span>
+        </div>
         <div class="form-group">
           <input
             type="email"
             id="email"
-            placeholder="Họ và tên"
-            class="input-center"
-          />
-        </div>
-
-        <div class="form-group">
-          <input
-            type="password"
-            id="password"
             placeholder="Địa chỉ email"
             class="input-center"
           />
+          <span class="error-message" id="emailError"></span>
         </div>
-
         <div class="form-group">
           <input
             type="password"
@@ -49,23 +49,24 @@
             placeholder="Mật khẩu"
             class="input-center"
           />
+          <span class="error-message" id="passwordError"></span>
         </div>
-
         <div class="form-group">
           <input
             type="password"
-            id="password"
+            id="confirmPassword"
             placeholder="Xác nhận mật khẩu"
             class="input-center"
           />
+          <span class="error-message" id="confirmPasswordError"></span>
         </div>
-
         <button type="submit" class="btn-register">Đăng ký</button>
-
         <p class="signup-link">
-          Đã có tài khoản? <a href="./login.html">Đăng nhập</a>
+          Đã có tài khoản? <a href="./login.html">Đăng Nhập</a>
         </p>
       </form>
     </div>
+
+    <script src="../js/register.js"></script>
   </body>
 </html>
