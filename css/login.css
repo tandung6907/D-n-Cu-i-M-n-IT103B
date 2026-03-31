@@ -19,6 +19,10 @@
   font-display: swap;
 }
 
+body {
+  background-color: #F8FAFC;
+}
+
 .header {
   background-color: black;
   width: 100%;
@@ -100,8 +104,36 @@
 }
 
 .login-box input:focus {
-  border-color: #2563eb;
+  border-color: plum;
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.login-box input::placeholder {
+  font-size: 16px;
+}
+
+.error-email {
+  color: red;
+  text-shadow:
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206);
+  display: none;
+  margin-top: 5px;
+}
+
+.error-pass {
+  color: red;
+  text-shadow:
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206);
+  display: none;
+  margin-top: 5px;
 }
 
 #btn-login {

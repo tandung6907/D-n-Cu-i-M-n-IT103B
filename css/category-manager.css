@@ -266,3 +266,242 @@ footer {
   color: #aaa;
   border-top: 2px solid #00aaff;
 }
+
+/* ===== OVERLAY ===== */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+.overlay.active {
+  display: block;
+}
+
+/* ===== POPUP ===== */
+.popup {
+  display: none;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 12px;
+  width: 420px;
+  max-width: 90vw;
+  z-index: 101;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  animation: popupIn 0.2s ease;
+}
+.popup.active {
+  display: block;
+}
+
+@keyframes popupIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+}
+.popup-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+.popup-close {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #888;
+  line-height: 1;
+}
+.popup-close:hover {
+  color: #333;
+}
+
+.popup-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.form-group label {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+.form-group input[type="text"] {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border 0.2s;
+}
+.form-group input[type="text"]:focus {
+  border-color: #6c63ff;
+}
+.error-name {
+  color: red;
+  font-size: 0.8rem;
+  display: none;
+}
+
+/* File input */
+.file-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#category-img {
+  display: none; /* ẩn input gốc */
+}
+.btn-file {
+  padding: 7px 14px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.btn-file:hover {
+  background: #e0e0e0;
+}
+
+.file-name {
+  font-size: 0.82rem;
+  color: #888;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 180px;
+}
+#preview-img {
+  display: none;
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  margin-top: 6px;
+}
+
+.popup-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid #eee;
+}
+.btn-cancel {
+  padding: 8px 18px;
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.btn-cancel:hover {
+  background: #f5f5f5;
+}
+
+.btn-save {
+  padding: 8px 18px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.btn-save:hover {
+  background: #0056c7;
+}
+
+/*XÓA*/
+.popup-confirm .popup-body p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.btn-delete-confirm {
+  padding: 8px 18px;
+  background: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.btn-delete-confirm:hover {
+  background: #c62828;
+}
+
+/* PHÂN TRANG */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.pagination a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.pagination a:hover:not(.disabled) {
+  background: #007bff;
+  color: #fff;
+  border-color: #0056c7;
+}
+
+.pagination a.active {
+  background: #007bff;
+  color: #fff;
+  border-color: #0056c7;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.pagination a.page-arrow {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.pagination a.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}

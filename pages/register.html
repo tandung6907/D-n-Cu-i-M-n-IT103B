@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Đăng ký - QuizForge</title>
     <link rel="stylesheet" href="../css/register.css" />
+    <script src="../js/register.js"></script>
   </head>
   <body>
     <header class="header">
@@ -23,7 +24,6 @@
       <section class="form-register">
         <form action="">
           <div class="register-box">
-            <label for="name-register">Họ và tên</label>
             <input
               type="text"
               name="Tên Đăng Nhập"
@@ -31,10 +31,10 @@
               placeholder="Họ và tên"
               class="input-center"
             />
+            <p class="error-name">Tên Đăng Nhập Không Được Để Trống!</p>
             <br />
           </div>
           <div class="register-box">
-            <label for="email-register">Địa chỉ email</label>
             <input
               type="text"
               name="Địa chỉ Email"
@@ -42,10 +42,10 @@
               placeholder="Địa chỉ email"
               class="input-center"
             />
+            <p class="error-email">Email Đăng Ký Không Được Để Trống!</p>
             <br />
           </div>
           <div class="register-box">
-            <label for="pass-register">Mật khẩu</label>
             <input
               type="text"
               name="Mật Khẩu"
@@ -53,10 +53,10 @@
               placeholder="Mật khẩu"
               class="input-center"
             />
+            <p class="error-pass">Mật Khẩu Đăng Ký Không Được Để Trống!</p>
             <br />
           </div>
           <div class="register-box">
-            <label for="check-pass">Xác nhận mật khẩu</label>
             <input
               type="text"
               name="Xác nhận mật khẩu"
@@ -64,6 +64,7 @@
               placeholder="Nhập lại mật khẩu"
               class="input-center"
             />
+            <p class="error-check-pass">Vui lòng nhập đúng mật khẩu đã nhập!</p>
             <br />
           </div>
 

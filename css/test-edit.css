@@ -255,7 +255,7 @@ h2 {
   transition: background-color 0.15s;
 }
 
-.table-wrapper tbody tr:nth-child(even) {
+.table-wrapper tbody tr:nth-child(odd) {
   background-color: #f9f9f9;
 }
 

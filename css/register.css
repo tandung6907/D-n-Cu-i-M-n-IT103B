@@ -74,13 +74,13 @@
 }
 
 .register-box {
-  margin-bottom: 24px;
+  height: 65px;
+  margin-bottom: 20px;
 }
 
-.register-box label {
-  display: block;
+.register-box input::placeholder {
   font-weight: 400;
-  font-size: 18px;
+  font-size: 12px;
   line-height: 30px;
   margin-bottom: 9px;
   color: #000000;
@@ -101,8 +101,56 @@
 }
 
 .register-box input:focus {
-  border-color: #2563eb;
+  border-color: plum;
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.error-name {
+  color: red;
+  text-shadow:
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206);
+  display: none;
+  margin-top: 5px;
+}
+
+.error-email {
+  color: red;
+  text-shadow:
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206);
+  display: none;
+  margin-top: 5px;
+}
+
+.error-pass {
+  color: red;
+  text-shadow:
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206);
+  display: none;
+  margin-top: 5px;
+}
+
+.error-check-pass {
+  color: red;
+  text-shadow:
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206),
+    0 0 3px rgb(238, 206, 206);
+  display: none;
+  margin-top: 5px;
 }
 
 #btn-register {
