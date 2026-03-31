@@ -1,7 +1,9 @@
 * {
-    margin: 0;
     padding: 0;
+    margin: 0;
     box-sizing: border-box;
+    user-select: none;
+    font-family: "Inter", sans-serif;
 }
 
 .header {
@@ -20,7 +22,7 @@
     width: 80px;
     height: 27px;
     font-weight: 400;
-    font-size: 17px;
+    font-size: 14px;
     border: none;
     background-color: rgba(33, 37, 41, 1);
 
@@ -31,9 +33,23 @@
     width: 80px;
     height: 27px;
     font-weight: 400;
-    font-size: 17px;
+    font-size: 14px;
     border: none;
     background-color: rgba(33, 37, 41, 1);
+}
+
+.notIndeed a {
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+}
+
+.smth a {
+    color: rgba(255, 255, 255, 1);
+    font-weight: 400;
+    font-size: 14px;
+    text-decoration: none;
 }
 
 .header h2 {
@@ -129,6 +145,7 @@ tbody tr {
     background-color: rgba(255, 193, 7, 1);
     color: black;
 }
+
 #delBtn {
     width: 58px;
     height: 31px;
@@ -137,7 +154,8 @@ tbody tr {
     background-color: rgba(220, 53, 69, 1);
     color: white;
 }
-.pages{
+
+.pages {
     display: flex;
     gap: 0;
     width: 100%;
@@ -145,33 +163,39 @@ tbody tr {
     justify-content: center;
     margin-top: 25px;
 }
-.pages button{
+
+.pages button {
     width: 36px;
     height: 38px;
     cursor: pointer;
 }
-.other{
+
+.other {
     border: 1px solid rgba(222, 226, 230, 1);
     background-color: rgba(255, 255, 255, 1);
     color: rgba(13, 110, 253, 1);
 }
-.current{
+
+.current {
     background-color: rgba(13, 110, 253, 1);
     color: rgba(222, 226, 230, 1);
     border: 1px solid rgba(222, 226, 230, 1);
 }
-.special{
+
+.special {
     background-color: rgba(222, 226, 230, 1);
     color: rgba(233, 236, 239, 1);
     border: 1px solid rgba(222, 226, 230, 1);
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
 }
-.next{
+
+.next {
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
 }
-.footer{
+
+.footer {
     width: 100%;
     height: 56px;
     background-color: rgba(51, 51, 51, 1);
@@ -181,4 +205,162 @@ tbody tr {
     color: rgba(255, 255, 255, 1);
     font-weight: 400;
     font-size: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .lead {
+        margin-right: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .main {
+        height: auto;
+        padding: 20px 10px;
+    }
+
+    .contain {
+        width: 100%;
+        height: auto;
+    }
+
+    .contain h1 {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    #addBtn {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    #tble {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    thead td,
+    .id,
+    .action {
+        width: auto;
+        min-width: 100px;
+    }
+
+    .pages {
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+
+    .footer {
+        font-size: 13px;
+        text-align: center;
+    }
+}
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+/* Nội dung Modal */
+.modal-content {
+    background-color: #fff;
+    width: 450px;
+    border-radius: 8px;
+    overflow: hidden;
+    animation: fadeIn 0.3s;
+}
+
+.modal-header {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+}
+
+.error-text {
+    color: #dc3545;
+    font-size: 12px;
+    display: none; 
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    text-align: right;
+    border-top: 1px solid #dee2e6;
+}
+
+.btn-cancel {
+    padding: 8px 20px;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-save {
+    padding: 8px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.close { cursor: pointer; font-size: 20px; }
+.disabled {
+    cursor: not-allowed !important;
+    opacity: 0.5;
+    background-color: #f8f9fa !important;
+    color: #ccc !important;
+}
+
+.pages button {
+    transition: all 0.2s;
+}
+
+.pages button:hover:not(.disabled) {
+    background-color: #e2e6ea;
 }

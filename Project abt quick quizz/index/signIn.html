@@ -1,37 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
     <link rel="stylesheet" href="../style/signIn.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik+Distressed&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <div id="bdySi">
         <div id="header">
-            <h1>Sign In Form</h1>
-                <p>QuizForge – Nền tảng sáng tạo bài kiểm tra trực tuyến, 
-                    giúp bạn dễ dàng thiết kế, chia sẻ và thực hiện các bài
-                     kiểm tra một cách nhanh chóng và hiệu quả! </p>
+            <h1>Đăng ký</h1>
+            <p>QuizForge – Nền tảng sáng tạo bài kiểm tra trực tuyến, <br>
+                giúp bạn dễ dàng thiết kế, chia sẻ và thực hiện các bài <br>
+                kiểm tra một cách nhanh chóng và hiệu quả! </p>
         </div>
         <form action="" id="siForm">
-            <input type="text" id="siName" placeholder="Fullname" class="iptInf">
+            <input type="text" id="siName" placeholder="Họ và tên" class="iptInf">
             <p id="error-announcement-fName">Name can't be empty</p>
             <br>
-            <input type="email" id="siEmail" placeholder="Email" class="iptInf">
+            <input type="email" id="siEmail" placeholder="Địa chỉ email" class="iptInf">
             <p id="error-announcement-mails">Email can't be empty</p>
             <br>
-            <input type="password" id="siPass" placeholder="Password" class="iptInf">
+            <input type="password" id="siPass" placeholder="Mật khẩu" class="iptInf">
             <p id="error-announcement-psw">Password can't be empty</p>
             <br>
-            <input type="password" id="siConfirm" placeholder="Confirm password" class="iptInf">
-            <p id="error-announcement-cfm">Password can't be empty</p> 
+            <input type="password" id="siConfirm" placeholder="Xác nhận mật khẩu" class="iptInf">
+            <p id="error-announcement-cfm">Password can't be empty</p>
             <br>
             <button onclick="siClick(event)" id="siBtn">Sign in</button>
-            <p id="asking">Already got an account? <a href="./logIn.html">Log in now</a></p>
+            <p id="asking">Đã có tài khoản? <a href="./logIn.html">Đăng nhập</a></p>
         </form>
 
     </div>
 </body>
 <script src="../script/signIn.js"></script>
+
 </html>

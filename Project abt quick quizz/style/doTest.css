@@ -2,6 +2,8 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    user-select: none;
+    font-family: "Inter", sans-serif;
 }
 
 .hder {
@@ -24,8 +26,15 @@
     border: none;
     cursor: pointer;
     font-weight: 400;
-    font-size: 17px;
+    font-size: 14px;
     margin-right: 12px;
+}
+
+.moveBtn a {
+    color: white;
+    font-weight: 400;
+    font-size: 14px;
+    text-decoration: none;
 }
 
 .findingNemo {
@@ -44,7 +53,10 @@
     font-size: 24px;
     margin-left: 36px;
 }
-
+.tMain{
+    color: white;
+    text-decoration: none;
+}
 .main {
     height: 687px;
     width: 100%;
@@ -69,6 +81,8 @@
     height: 67px;
     font-weight: 500;
     font-size: 25px;
+    margin-top: 15px;
+    margin-left: 12px;
 }
 
 .groupOfQuestion {
@@ -77,6 +91,9 @@
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 36px;
 }
 
 .aint {
@@ -102,6 +119,8 @@
     font-weight: 800;
     font-size: 14px;
     color: rgba(33, 37, 41, 1);
+    margin-top: 45px;
+    margin-left: 12px;
 }
 
 .current {
@@ -214,4 +233,154 @@
 .grBtn,
 .answer {
     width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .hder {
+        height: auto;
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .hder h2 {
+        margin-left: 0;
+    }
+
+    .findingNemo {
+        width: 100%;
+        order: 3;
+    }
+
+    .moves {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        order: 2;
+    }
+
+    .moveBtn {
+        margin: 0 5px;
+    }
+
+    .main {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .quickDir {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid rgba(204, 204, 204, 1);
+        margin-top: 0;
+        padding: 15px;
+        align-items: center;
+    }
+
+    .quickDir h2 {
+        width: 100%;
+        height: auto;
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 20px;
+    }
+
+    .groupOfQuestion {
+        width: 100%;
+        justify-content: center;
+        height: auto;
+        margin-bottom: 15px;
+    }
+
+    .notice {
+        width: 100%;
+        height: auto;
+        text-align: center;
+    }
+
+    .description {
+        width: 100%;
+        margin-top: 0;
+        padding: 15px;
+    }
+
+    .hr {
+        flex-direction: column;
+        height: auto;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .hr h2 {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .countDown {
+        display: flex;
+        justify-content: space-between;
+        background: #f1f1f1;
+        padding: 10px;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .question {
+        height: auto;
+    }
+
+    .question h2 {
+        font-size: 18px;
+    }
+
+    .answer {
+        height: auto;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .answer label {
+        padding: 10px;
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+    }
+
+    .grBtn {
+        flex-direction: column;
+        height: auto;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    #doneBtn {
+        width: 100%;
+        order: 2;
+    }
+
+    .navi {
+        width: 100%;
+        order: 1;
+    }
+
+    .prev,
+    .next {
+        width: 48%;
+    }
+
+    .footer {
+        font-size: 13px;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .hder h2 {
+        font-size: 20px;
+    }
+
+    .quickDir h2 {
+        font-size: 18px;
+    }
 }

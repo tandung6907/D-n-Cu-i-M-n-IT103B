@@ -3,6 +3,7 @@
     margin: 0;
     box-sizing: border-box;
     user-select: none;
+    font-family: "Inter", sans-serif;
 }
 #bdySi{
     display: flex;
@@ -89,4 +90,75 @@
     font-size: 18px;
     color: black;
 
+}
+@media screen and (max-width: 768px) {
+    #bdySi {
+        padding: 20px 10px;
+        gap: 20px;
+        min-height: 100vh;
+        justify-content: center;
+    }
+
+    #header {
+        width: 100%;
+        height: auto;
+    }
+
+    #header h1 {
+        font-size: 32px;
+        padding: 10px;
+    }
+
+    #header p {
+        width: 100%;
+        height: auto;
+        margin-left: 0;
+        font-size: 16px;
+        padding: 0 15px;
+    }
+
+    #siForm {
+        width: 100%;
+        max-width: 450px;
+        height: auto;
+        padding: 30px 15px;
+        gap: 15px;
+    }
+
+    .labels {
+        margin-right: 0;
+        width: 100%;
+        text-align: left;
+        padding-left: 15px;
+    }
+
+    .iptInf, #siBtn {
+        width: 100%;
+        max-width: 100%;
+        height: 55px; 
+    }
+
+    #asking {
+        width: 100%;
+        text-align: center;
+    }
+
+    #asking p {
+        width: 100%;
+        font-size: 13px;
+    }
+
+    br {
+        display: none; 
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #header h1 {
+        font-size: 28px;
+    }
+
+    #siForm {
+        border-radius: 15px;
+    }
 }

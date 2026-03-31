@@ -1,7 +1,9 @@
 * {
-    margin: 0;
     padding: 0;
+    margin: 0;
     box-sizing: border-box;
+    user-select: none;
+    font-family: "Inter", sans-serif;
 }
 
 .header {
@@ -20,7 +22,7 @@
     width: 80px;
     height: 27px;
     font-weight: 400;
-    font-size: 17px;
+    font-size: 14px;
     border: none;
     background-color: rgba(33, 37, 41, 1);
 
@@ -31,15 +33,34 @@
     width: 80px;
     height: 27px;
     font-weight: 400;
-    font-size: 17px;
+    font-size: 14px;
     border: none;
     background-color: rgba(33, 37, 41, 1);
+}
+
+.notIndeed a {
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+}
+
+.smth a {
+    color: rgba(255, 255, 255, 1);
+    font-weight: 400;
+    font-size: 14px;
+    text-decoration: none;
 }
 
 .header h2 {
     font-weight: 700;
     font-size: 24px;
     margin-left: 15px;
+}
+
+.tMain {
+    color: white;
+    text-decoration: none;
 }
 
 .lead {
@@ -76,6 +97,11 @@
     color: white;
     border-radius: 6px;
     cursor: pointer;
+}
+
+#addBtn a {
+    color: white;
+    text-decoration: none;
 }
 
 .special {
@@ -241,4 +267,116 @@ tbody tr {
     color: rgba(255, 255, 255, 1);
     font-weight: 400;
     font-size: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .lead {
+        margin-right: 0;
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+    }
+
+    .main {
+        height: auto;
+        padding: 20px 10px;
+    }
+
+    .contain {
+        width: 100%;
+        height: auto;
+        gap: 15px;
+    }
+
+    .contain h1 {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .special {
+        flex-direction: column;
+        height: auto;
+        width: 100%;
+        gap: 12px;
+        background-color: transparent;
+        border: none;
+    }
+
+    #addBtn {
+        width: 100%;
+        height: 45px;
+    }
+
+    .sortNf {
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #sorts,
+    #found {
+        width: 100%;
+        height: 40px;
+    }
+
+    #tble {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    thead th,
+    thead td,
+    tbody td {
+        min-width: 100px;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .id {
+        width: 50px;
+    }
+
+    .name {
+        min-width: 180px;
+    }
+
+    .action {
+        min-width: 130px;
+    }
+
+
+    .pages {
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    /* 6. Footer */
+    .footer {
+        font-size: 13px;
+        text-align: center;
+        padding: 0 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header h2 {
+        font-size: 20px;
+    }
+
+    .smth,
+    .notIndeed {
+        font-size: 14px;
+        width: auto;
+        padding: 0 8px;
+    }
 }
