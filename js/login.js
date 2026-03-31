@@ -1,7 +1,7 @@
 const users = JSON.parse(localStorage.getItem("users")) || [];
 const loginForm = document.getElementById("loginForm");
 
-loginForm.addEventListener("submit", function (e) {
+loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const email = document.getElementById("email").value.trim();

@@ -1,7 +1,7 @@
 const users = JSON.parse(localStorage.getItem("users")) || [];
 const registerForm = document.getElementById("registerForm");
 
-registerForm.addEventListener("submit", function (e) {
+registerForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   // Lấy dữ liệu từ input
@@ -77,7 +77,7 @@ registerForm.addEventListener("submit", function (e) {
         "Tên người dùng này đã được đăng ký";
       return;
     }
-    
+
     if (isExistEmail) {
       document.getElementById("emailError").innerText =
         "Email này đã được đăng ký";
