@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thêm/sửa bài test</title>
+    <link rel="stylesheet" href="../css/test-edit.css" />
+  </head>
+  <body>
+    <header class="header">
+      <section class="logo">
+        <a href="">QuizzForge</a>
+      </section>
+      <nav class="pages-link">
+        <a href="../pages/category-manager.html">Danh mục</a>
+        <a href="../pages/test-manager.html">Bài test</a>
+        <a href="../pages/register.html">Đăng xuất</a>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      <h1 class="page-title">Tạo bài test</h1>
+
+      <div class="form-input">
+        <label for="test-name">Tên bài test</label>
+        <input type="text" id="test-name" placeholder="Điền tên bài test" />
+
+        <div class="form-row">
+          <div class="form-group category">
+            <label for="test-category">Danh mục</label>
+            <select id="test-category">
+              <option value="">Chọn danh mục</option>
+              <option value="1">Toán học</option>
+              <option value="2">Lịch sử</option>
+              <option value="3">Tiếng Anh</option>
+            </select>
+          </div>
+
+          <div class="form-group time">
+            <label for="test-time">Thời gian (phút)</label>
+            <input type="number" id="test-time" min="0" value="15" />
+          </div>
+        </div>
+      </div>
+
+      <h2>Quản lý câu hỏi</h2>
+
+      <div class="action-bar">
+        <button class="btn-add">Thêm câu hỏi</button>
+        <button class="btn-save">Lưu</button>
+      </div>
+
+      <section class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th class="col-id">ID</th>
+              <th class="col-name">Câu hỏi</th>
+              <th class="col-action">Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-id">1</td>
+              <td class="col-name">What is the capital of France?</td>
+              <td class="col-action">
+                <button class="btn-edit">Sửa</button>
+                <button class="btn-delete">Xoá</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-id">2</td>
+              <td class="col-name">Which planet is known as the Red Planet?</td>
+              <td class="col-action">
+                <button class="btn-edit">Sửa</button>
+                <button class="btn-delete">Xoá</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-id">3</td>
+              <td class="col-name">Which planet is known as the Red Planet?</td>
+              <td class="col-action">
+                <button class="btn-edit">Sửa</button>
+                <button class="btn-delete">Xoá</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-id">4</td>
+              <td class="col-name">Which planet is known as the Red Planet?</td>
+              <td class="col-action">
+                <button class="btn-edit">Sửa</button>
+                <button class="btn-delete">Xoá</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-id">5</td>
+              <td class="col-name">Which planet is known as the Red Planet?</td>
+              <td class="col-action">
+                <button class="btn-edit">Sửa</button>
+                <button class="btn-delete">Xoá</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+    <footer>© 2025 Quiz App. All rights reserved.</footer>
+  </body>
+</html>
