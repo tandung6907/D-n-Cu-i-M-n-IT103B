@@ -21,6 +21,7 @@ header h1 {
 header p {
     font-size: 18px;
     font-weight: 400;
+    color: #52525B;
 }
 
 main form {
@@ -28,12 +29,12 @@ main form {
     flex-direction: column;
     background-color: #FFFFFF;
     border-radius: 20px;
-    padding: 40px;
+    padding: 20px 40px;
 }
 
 main form input {
-    margin: 20px;
-    padding: 10px 15px;
+    margin: 15px;
+    padding: 18px 15px;
     line-height: 1.5;
     border-radius: 9px;
     border: 1px solid #E4E4E7;
@@ -41,16 +42,21 @@ main form input {
 
 main form input::placeholder {
     text-align: center;
+    color: #52525B;
 }
 
 main form button {
     color: #FFFFFF;
     background-color: #0D6EFD;
     border-radius: 9px;
-    padding: 10px 15px;
+    padding: 20px 15px;
     line-height: 1.5;
     border: 1px solid #E4E4E7;
     cursor: pointer;
+}
+
+main form p {
+    padding-top: 15px;
 }
 
 main form a {
@@ -61,9 +67,9 @@ main form a {
 main form .error-name,
 main form .error-email,
 main form .error-password,
-main form .error-repassword{
+main form .error-repassword {
     color: red;
     text-align: left;
     margin-left: 18px;
     display: none;
-} 
+}
