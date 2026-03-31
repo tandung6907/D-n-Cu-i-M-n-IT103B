@@ -122,36 +122,49 @@ nav a {
     border-radius: 10px;
     overflow: hidden;
     display: flex;
-    padding: 15px;
+    padding: 5px 15px 5px 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     border: 1px solid #e5e7eb;
     position: relative;
+    align-items: center;
 }
 
 .quiz-image {
     width: 160px;
     height: 120px;
-    background-color: #a7f3d0;
-    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .quiz-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .quiz-info {
     flex: 1;
-    padding-left: 20px;
+    padding-left: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+}
+
+.btn-card-play {
+    font-family: 'Inter', sans-serif;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #fbbf24;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
 }
 
 .category {
@@ -172,20 +185,6 @@ nav a {
     color: #6b7280;
 }
 
-.btn-card-play {
-    font-family: 'Inter', sans-serif;
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    background-color: #fbbf24;
-    border: none;
-    padding: 6px 15px;
-    border-radius: 5px;
-    font-weight: 400;
-    font-size: 16px;
-    cursor: pointer;
-}
-
 .pagination {
     display: flex;
     justify-content: center;
@@ -204,7 +203,11 @@ nav a {
     border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
-    color: inherit;
+    color: #0d6efd;
+}
+
+.page-item.arrow {
+    color: #000;
 }
 
 .page-item.active {
@@ -213,7 +216,7 @@ nav a {
     border-color: #3b82f6;
 }
 
-.page-item.disabled{
+.page-item.disabled {
     color: #ccc;
 }
 

@@ -11,6 +11,7 @@ body {
   display: flex;
   flex-direction: column;
 }
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -23,17 +24,20 @@ footer {
   color: white;
   padding: 15px 0;
 }
+
 .navbar .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .nav-links a {
   color: #ccc;
   text-decoration: none;
   margin-left: 20px;
   font-size: 14px;
 }
+
 .nav-links a.active {
   color: white;
   font-weight: bold;
@@ -43,6 +47,7 @@ footer {
   flex: 1;
   padding: 30px 0;
 }
+
 h1 {
   font-family: "Roboto", sans-serif;
   font-weight: 500;
@@ -59,6 +64,7 @@ h1 {
   font-weight: 500;
   white-space: nowrap;
 }
+
 .btn-primary {
   width: 152px;
   height: 38px;
@@ -66,10 +72,12 @@ h1 {
   color: white;
   margin-bottom: 20px;
 }
+
 .btn-edit {
   background: #ffc107;
   color: #000;
 }
+
 .btn-delete {
   background: #dc3545;
   color: white;
@@ -109,7 +117,7 @@ td {
   font-size: 14px;
 }
 
-tbody tr:nth-child(even) {
+tbody tr:nth-child(odd) {
   background-color: #f8f9fa;
 }
 
@@ -156,14 +164,19 @@ tbody tr:nth-child(even) {
 .page-item {
   width: 35px;
   height: 35px;
+  color: #0d6efd;
   border: 1px solid #dee2e6;
   background: white;
   cursor: pointer;
   border-radius: 4px;
 }
 
-.page-item.disabled{
-    color: #ccc;
+.page-item.arrow {
+  color: #000;
+}
+
+.page-item.disabled {
+  color: #ccc;
 }
 
 .page-item.active {
@@ -180,19 +193,169 @@ footer {
   margin-top: 40px;
 }
 
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 40px;
+  overflow-y: auto;
+}
+
+.modal-content {
+  background: white;
+  width: 500px;
+  border-radius: 8px;
+  padding: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.close-btn {
+  font-size: 28px;
+  cursor: pointer;
+  color: #999;
+  line-height: 1;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #444;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.form-group input.input-error {
+  border-color: #dc3545;
+}
+
+.error-text {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  display: none;
+}
+
+.modal-footer {
+  padding: 15px 20px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+  padding: 8px 20px;
+}
+
+.btn-primary-modal {
+  background: #0d6efd;
+  color: white;
+  padding: 8px 24px;
+}
+
+.delete-modal-content {
+  width: 400px;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-body p {
+  font-size: 15px;
+  color: #333;
+  margin: 10px 0 20px 0;
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+}
+
+.btn-secondary {
+  background-color: #6b7280;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
 /* Responsive */
 @media screen and (max-width: 600px) {
   .table-container {
     border: none;
   }
+
   thead {
     display: none;
   }
+
   tr {
     display: block;
     margin-bottom: 15px;
     border: 1px solid #dee2e6;
   }
+
   td {
     display: flex;
     justify-content: space-between;
@@ -200,6 +363,7 @@ footer {
     border-bottom: 1px solid #eee;
     text-align: right;
   }
+
   td::before {
     content: attr(data-label);
     font-weight: bold;

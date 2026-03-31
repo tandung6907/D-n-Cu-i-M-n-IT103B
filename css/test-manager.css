@@ -24,17 +24,20 @@ footer {
   color: white;
   padding: 15px 0;
 }
+
 .navbar .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .nav-links a {
   color: #ccc;
   text-decoration: none;
   margin-left: 20px;
   font-size: 14px;
 }
+
 .nav-links a.active {
   color: white;
   font-weight: bold;
@@ -151,7 +154,7 @@ td {
   font-size: 14px;
 }
 
-tbody tr:nth-child(even) {
+tbody tr:nth-child(odd) {
   background-color: #f8f9fa;
 }
 
@@ -169,6 +172,7 @@ tbody tr:nth-child(even) {
 .page-item {
   width: 35px;
   height: 35px;
+  color: #0d6efd;
   border: 1px solid #dee2e6;
   background: white;
   cursor: pointer;
@@ -176,6 +180,10 @@ tbody tr:nth-child(even) {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.page-item.arrow {
+  color: #000;
 }
 
 .page-item.active {
