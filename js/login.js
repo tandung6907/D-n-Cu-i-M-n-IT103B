@@ -21,7 +21,7 @@ loginForm.addEventListener("submit", function (e) {
 
     // Phân quyền điều hướng
     if (user.role === "admin") {
-      window.location.href = "admin_category.html"; // Trang quản lý danh mục
+      window.location.href = "../pages/category-manager.html"; // Trang quản lý danh mục
     } else {
       window.location.href = "../pages/home.html"; // Trang chủ
     }
