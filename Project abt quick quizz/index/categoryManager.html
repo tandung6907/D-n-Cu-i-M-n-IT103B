@@ -15,10 +15,10 @@
 
 <body>
     <div class="header">
-        <h2>QuizzForge</h2>
+        <h2><a href="./mainPages.html" class="tMain">QuizzForge</a></h2>
         <div class="lead">
             <button class="smth"><a href="./categoryManager.html">Danh mục</a></button>
-            <button class="notIndeed"><a href="./editTest.html">Bài test</a></button>
+            <button class="notIndeed"><a href="./testManager.html">Bài test</a></button>
             <button class="smth"><a href="./logIn.html">Đăng xuất</a></button>
         </div>
     </div>
@@ -76,17 +76,17 @@
     </div>
 </div>
 <div id="deleteModal" class="modal">
-    <div class="modal-content" style="width: 400px;">
+    <div class="modal-content">
         <div class="modal-header">
             <h3>Xác nhận xoá</h3>
             <span class="close" onclick="closeDeleteModal()">&times;</span>
         </div>
         <div class="modal-body">
-            <p>Bạn chắc chắn muốn xoá bài test này?</p>
+            <p>Bạn chắc chắn muốn xoá category này?</p>
         </div>
         <div class="modal-footer">
             <button class="btn-cancel" onclick="closeDeleteModal()">Huỷ</button>
-            <button class="btn-save" style="background-color: #dc3545;" onclick="confirmDelete()">Xoá</button>
+            <button class="btn-save" onclick="confirmDelete()">Xoá</button>
         </div>
     </div>
 </div>

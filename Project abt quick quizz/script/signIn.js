@@ -14,6 +14,9 @@ function siClick(event){
         errorAnnouncement("#error-announcement-fName","Name should not be empty!","block");
         return;
     }
+    if(fName.length<5){
+        errorAnnouncement("#error-announcement-fName","Name should contain at least 5 characters","block");
+    }
     errorAnnouncement("#error-announcement-fName","","none");
     if(mails.length == 0){
         errorAnnouncement("#error-announcement-mails","Email should not be empty","block");
