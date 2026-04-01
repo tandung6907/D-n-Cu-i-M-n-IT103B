@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý danh mục</title>
+    <link rel="icon" href="/assets/images/istockphoto-1616906708-612x612.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/category-manager.css">
+    <link rel="stylesheet" href="/css/popup.css/popup-edit.css">
+    <!-- <link rel="stylesheet" href="/css/popup.css/popup-delete.css">  -->
+</head>
+
+<body>
+    <header>
+        <p class="logo">QuizzForge</p>
+        <nav class="header-nav">
+            <a href="/pages/category-manager.html" class="active">Danh mục</a>
+            <a href="/pages/product-manager.html">Bài test</a>
+            <a href="/pages/login.html" class="btn-logout" onclick="logout()">Đăng xuất</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Quản lý danh mục</h2>
+        <button class="btn-add" id="btnAddCategory">Thêm danh mục</button>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên danh mục</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="categoryTableBody">
+                    <tr>
+                        <td>1</td>
+                        <td>📚 Lịch sử</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>🧠 Khoa học</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>🎤 Giải trí</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>🏠 Đời sống</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>📚 Lịch sử</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>🧠 Khoa học</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>🎤 Giải trí</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>🧠 Khoa học</td>
+                        <td class="action-cell">
+                            <button class="btn-edit">Sửa</button>
+                            <button class="btn-delete">Xoá</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+ 
+        <div class="pagination">
+            <button class="page-btn">&lt;</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">&gt;</button>
+        </div>
+    </main>
+
+    <!-- popup chỉnh sửa  -->
+    <div class="modal-overlay" style="display: none"> //display: flex;
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Thêm/sửa danh mục</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group">
+                    <label for="category-name">Tên danh mục</label>
+                    <input type="text" id="category-name" value="Đời sống" class="input-error">
+                    <span class="error-text">Tên danh mục đã tồn tại</span>
+                </div>
+
+                <div class="input-group">
+                    <label for="emoji">Emoji</label>
+                    <input type="text" id="emoji" value="🏠">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-cancel">Huỷ</button>
+                <button class="btn btn-save">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- popup xóa
+    <div class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Xác nhận xóa</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn xóa bài test này?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-cancel">Huỷ</button>
+                <button class="btn btn-delete">Xoá</button>
+            </div>
+        </div>
+    </div> -->
+
+    <footer>
+        <p>&copy; 2025 QuizForge. All rights reserved.</p>
+    </footer>
+
+    <script src="/js/category-manager.js"></script>
+</body>
+
+</html>

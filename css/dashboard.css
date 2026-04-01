@@ -1,0 +1,227 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: #F4F4F4;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #212529;
+    color: #FFFFFF;
+    padding: 15px 40px;
+    position: relative;
+}
+
+header>p {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+header .search-bar {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+header .search-bar input {
+    width: 350px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    font-size: 14px;
+}
+
+header .search-bar input::placeholder {
+    color: #999;
+}
+
+header .header-right {
+    display: flex;
+    gap: 30px;
+}
+
+header .header-right a {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-size: 14px;
+}
+
+.banner {
+    background-color: #584ACB;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.banner h1 {
+    color: #FFFFFF;
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.banner button {
+    background-color: #FFC107;
+    color: #000;
+    border: none;
+    padding: 8px 30px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+main>h2 {
+    text-align: center;
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+main .sortByPlay {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+main .sortByPlay p {
+    font-size: 14px;
+    color: #333;
+}
+
+main .sortByPlay button {
+    background-color: #FFFFFF;
+    border: 1px solid #000;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #555;
+}
+
+main .sortByPlay button.active {
+    background-color: #FFF3CD;
+    border-color: #000;
+    color: #856404;
+}
+
+main .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+main .card-container .card {
+    display: flex;
+    width: calc(50% - 10px);
+    background-color: #FFFFFF;
+    border-radius: 6px;
+    border: 1px solid #EBEBEB;
+    overflow: hidden;
+    height: 150px;
+}
+
+main .card-container .card>img {
+    width: 150px;
+    height: 100%;
+    object-fit: cover;
+    padding: 10px;
+}
+
+main .card-container .card .card-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+}
+
+main .card-container .card .card-content .category {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+main .card-container .card .card-content .title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+main .card-container .card .card-content .stats {
+    font-size: 13px;
+    color: #777;
+}
+
+main .card-container .card .card-content button {
+    position: absolute;
+    bottom: 0px;
+    right: 15px;
+    background-color: #FFC107;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 15px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+main .pagination {
+    display: flex;
+    justify-content: center;
+}
+
+main .pagination button {
+    background-color: #FFFFFF;
+    border: 1px solid #DDD;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #007BFF;
+    font-size: 14px;
+}
+
+.pagination button:first-child {
+    color: #E9ECEF;
+    border: 1px solid #DEE2E6;
+}
+
+main .pagination button.active {
+    background-color: #007BFF;
+    color: #FFFFFF;
+    border-color: #007BFF;
+}
+
+main .pagination button:hover:not(.active) {
+    background-color: #F8F9FA;
+}
+
+footer {
+    text-align: center;
+    background-color: #333333;
+    color: #FFFFFF;
+    padding: 20px;
+    font-size: 14px;
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo bài test</title>
+    <link rel="icon" href="/assets/images/istockphoto-1616906708-612x612.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/quiz-builder.css">
+</head>
+ 
+<body>
+    <header>
+        <p class="logo">QuizzForge</p>
+        <nav class="header-nav">
+            <a href="/pages/category-manager.html">Danh mục</a>
+            <a href="/pages/product-manager.html" class="active">Bài test</a>
+            <a href="/pages/login.html" onclick="logout()">Đăng xuất</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Tạo bài test</h2>
+        <div class="form-container">
+            <div class="form-group">
+                <label for="testName">Tên bài test</label>
+                <input type="text" id="testName" placeholder="Điền tên bài test">
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <label for="testCategory">Danh mục</label>
+                    <select id="testCategory">
+                        <option value="">Chọn danh mục</option>
+                        <option value="1">📚 Lịch sử</option>
+                        <option value="2">🧠 Khoa học</option>
+                        <option value="3">🎤 Giải trí</option>
+                        <option value="4">🏠 Đời sống</option>
+                    </select>
+                </div>
+                <div class="form-col">
+                    <label for="testTime">Thời gian (phút)</label>
+                    <input type="number" id="testTime" value="15" min="1">
+                </div>
+            </div>
+
+            <!-- Quản lý câu hỏi -->
+            <div class="section-header">
+                <h3>Quản lý câu hỏi</h3>
+                <div class="section-actions">
+                    <button class="btn-add-question" id="btnAddQuestion">Thêm câu hỏi</button>
+                    <button class="btn-save-test" id="btnSaveTest">Lưu</button>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">ID</th>
+                            <th>Câu hỏi</th>
+                            <th style="width: 160px; text-align: center;">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="questionTableBody">
+                        <tr>
+                            <td>1</td>
+                            <td>What is the capital of France?</td>
+                            <td class="action-cell">
+                                <button class="btn-edit">Sửa</button>
+                                <button class="btn-delete">Xoá</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Which planet is known as the Red Planet?</td>
+                            <td class="action-cell">
+                                <button class="btn-edit">Sửa</button>
+                                <button class="btn-delete">Xoá</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Which planet is known as the Red Planet?</td>
+                            <td class="action-cell">
+                                <button class="btn-edit">Sửa</button>
+                                <button class="btn-delete">Xoá</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Which planet is known as the Red Planet?</td>
+                            <td class="action-cell">
+                                <button class="btn-edit">Sửa</button>
+                                <button class="btn-delete">Xoá</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Which planet is known as the Red Planet?</td>
+                            <td class="action-cell">
+                                <button class="btn-edit">Sửa</button>
+                                <button class="btn-delete">Xoá</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Quiz App. All rights reserved.</p>
+    </footer>
+    <script src="/js/quiz-builder.js"></script>
+</body>
+
+</html>
