@@ -35,7 +35,7 @@
         <nav class="nav-links">
           <a href="./category-manager.html">Danh mục</a>
           <a href="./test-manager.html" class="active">Bài test</a>
-          <a href="./register.html">Đăng xuất</a>
+          <a href="./login.html">Đăng xuất</a>
         </nav>
       </div>
     </header>
@@ -43,7 +43,7 @@
     <main class="container main-content">
       <h1>Quản lý bài test</h1>
       <div class="toolbar">
-        <button class="btn btn-primary">Thêm bài test</button>
+        <a href="./add-test.html" class="btn btn-primary" style="text-decoration: none;">Thêm bài test</a>
         <div class="filters">
           <select class="form-control">
             <option>Sắp xếp theo</option>
@@ -124,5 +124,28 @@
     </main>
 
     <footer>© 2025 Quiz App. All rights reserved.</footer>
+
+    <div id="deleteModal" class="modal-overlay">
+      <div class="modal-content delete-modal-content">
+        <div class="modal-header">
+          <h2>Xác nhận xoá</h2>
+          <span class="close-btn" onclick="toggleDeleteModal(false)"
+            >&times;</span
+          >
+        </div>
+        <div class="modal-body">
+          <p>Bạn chắc chắn muốn xoá bài test này?</p>
+          <input type="hidden" id="deleteId" />
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="toggleDeleteModal(false)">
+            Huỷ
+          </button>
+          <button class="btn btn-danger" onclick="confirmDelete()">Xoá</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/test-manager.js"></script>
   </body>
 </html>

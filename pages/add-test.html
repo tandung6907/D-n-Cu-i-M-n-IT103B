@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuizzForge - Thêm bài test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/add-test.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="container">
+        <div class="logo">QuizzForge</div>
+        <nav class="nav-links">
+          <a href="./category-manager.html">Danh mục</a>
+          <a href="./test-manager.html" class="active">Bài test</a>
+          <a href="./login.html">Đăng xuất</a>
+        </nav>
+      </div>
+    </header>
+    <main class="container main-content">
+      <h1 class="page-title">Tạo bài test</h1>
+
+      <!-- Phần nhập thông tin bài test -->
+      <div class="test-info-section">
+        <div class="form-group">
+          <label>Tên bài test</label>
+          <input
+            type="text"
+            placeholder="Điền tên bài test"
+            class="form-control"
+          />
+        </div>
+
+        <div class="row">
+          <div class="form-group flex-1">
+            <label>Danh mục</label>
+            <select class="form-control">
+              <option>Chọn danh mục</option>
+              <option>Lịch sử</option>
+              <option>Khoa học</option>
+            </select>
+          </div>
+          <div class="form-group flex-time">
+            <label>Thời gian (phút)</label>
+            <input type="number" value="15" class="form-control" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Phần Quản lý câu hỏi -->
+      <div class="question-management">
+        <h2 class="sub-title">Quản lý câu hỏi</h2>
+        <div class="action-bar">
+          <button class="btn btn-primary">Thêm câu hỏi</button>
+          <button class="btn btn-primary btn-save-all">Lưu</button>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 80px" class="text-center">ID</th>
+                <th>Câu hỏi</th>
+                <th style="width: 180px" class="text-center">Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center">1</td>
+                <td>What is the capital of France?</td>
+                <td class="text-center">
+                  <div class="action-group">
+                    <button class="btn-edit">Sửa</button>
+                    <button class="btn-delete">Xoá</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">2</td>
+                <td>Which planet is known as the Red Planet?</td>
+                <td class="text-center">
+                  <div class="action-group">
+                    <button class="btn-edit">Sửa</button>
+                    <button class="btn-delete">Xoá</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+    <footer>© 2025 Quiz App. All rights reserved.</footer>
+  </body>
+</html>

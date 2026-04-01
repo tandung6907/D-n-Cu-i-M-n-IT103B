@@ -1,3 +1,4 @@
+/* 1. Reset & Cơ bản */
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +7,7 @@
 }
 
 body {
-  background-color: #f8f9fa;
+  background-color: #fff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -18,8 +19,8 @@ body {
   width: 92%;
 }
 
-.navbar,
-footer {
+/* 2. Header & Navigation */
+.navbar {
   background-color: #212529;
   color: white;
   padding: 15px 0;
@@ -43,12 +44,7 @@ footer {
   font-weight: bold;
 }
 
-footer {
-  text-align: center;
-  font-size: 14px;
-  margin-top: auto;
-}
-
+/* 3. Nội dung chính & Toolbar */
 .main-content {
   flex: 1;
   padding: 40px 0;
@@ -70,11 +66,6 @@ h1 {
   flex-wrap: wrap;
 }
 
-.toolbar-right {
-  display: flex;
-  gap: 10px;
-}
-
 .form-control {
   padding: 8px 12px;
   border: 1px solid #dee2e6;
@@ -83,6 +74,7 @@ h1 {
   outline: none;
 }
 
+/* 4. Nút bấm (Buttons) */
 .btn {
   border: none;
   border-radius: 4px;
@@ -97,9 +89,11 @@ h1 {
   justify-content: center;
 }
 
+.btn:hover {
+  opacity: 0.85;
+}
+
 .btn-primary {
-  width: 152px;
-  height: 38px;
   background: #0d6efd;
   color: white;
   margin-bottom: 20px;
@@ -115,16 +109,20 @@ h1 {
   color: #fff;
 }
 
-.btn:hover {
-  opacity: 0.85;
+.btn-danger {
+  background-color: #ef4444;
+  color: white;
 }
 
-.action-group {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
+/* Dùng cho modal xóa */
+.btn-secondary {
+  background-color: #6b7280;
+  color: white;
 }
 
+/* Dùng cho nút Huỷ */
+
+/* 5. Bảng dữ liệu */
 .table-container {
   width: 100%;
   border: 1px solid #dee2e6;
@@ -162,11 +160,17 @@ tbody tr:nth-child(odd) {
   text-align: center;
 }
 
+.action-group {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* 6. Phân trang */
 .pagination {
   display: flex;
   justify-content: center;
   margin-top: 25px;
-  gap: 5px;
 }
 
 .page-item {
@@ -182,10 +186,6 @@ tbody tr:nth-child(odd) {
   justify-content: center;
 }
 
-.page-item.arrow {
-  color: #000;
-}
-
 .page-item.active {
   background: #0d6efd;
   color: white;
@@ -197,29 +197,91 @@ tbody tr:nth-child(odd) {
   cursor: not-allowed;
 }
 
+/* 7. Footer */
 footer {
   background-color: #212529;
   color: white;
   text-align: center;
   padding: 20px 0;
   font-size: 14px;
-  margin-top: 40px;
 }
 
+/* 8. MODAL XÓA (Quan trọng nhất) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: none;
+  /* Hiện bằng JS (flex) */
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 80px;
+}
+
+.modal-content {
+  background: white;
+  width: 400px;
+  /* Độ rộng riêng cho modal xóa */
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.close-btn {
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-body p {
+  font-size: 15px;
+  color: #4b5563;
+}
+
+.modal-footer {
+  padding: 15px 20px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* 9. Responsive cho Mobile */
 @media screen and (max-width: 768px) {
-  .toolbar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .toolbar-right {
-    flex-direction: column;
-  }
-
-  .table-container {
-    border: none;
-  }
-
   thead {
     display: none;
   }
@@ -247,9 +309,5 @@ footer {
     color: #666;
     font-size: 12px;
     text-transform: uppercase;
-  }
-
-  .action-group {
-    justify-content: flex-end;
   }
 }

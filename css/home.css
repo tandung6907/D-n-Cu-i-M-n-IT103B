@@ -189,7 +189,6 @@ nav a {
     display: flex;
     justify-content: center;
     margin-top: 40px;
-    gap: 5px;
 }
 
 .page-item {

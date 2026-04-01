@@ -26,7 +26,7 @@ loginForm.addEventListener("submit", (e) => {
       window.location.href = "../pages/home.html"; // Trang chủ
     }
   } else {
-    document.getElementById("loginEmailError").innerText =
+    document.getElementById("loginPassError").innerText =
       "Email hoặc mật khẩu không đúng";
   }
 });
