@@ -94,9 +94,11 @@ h1 {
 }
 
 .btn-primary {
+  width: 122px;
+  height: 38px;
+  border-radius: 6px;
   background: #0d6efd;
   color: white;
-  margin-bottom: 20px;
 }
 
 .btn-edit {
