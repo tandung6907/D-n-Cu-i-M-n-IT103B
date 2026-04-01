@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Đăng nhập - QuizForge</title>
     <link rel="stylesheet" href="../css/login.css" />
+    <script src="../js/login.js"></script>
   </head>
   <body>
     <header class="header">
@@ -30,7 +31,6 @@
               placeholder="Địa chỉ email"
               class="input-center"
             />
-            <p class="error-email">Email Đăng Ký Không Được Để Trống!</p>
           </div>
           <div class="login-box">
             <label for="pass-login">Password</label>
@@ -40,9 +40,11 @@
               placeholder="Mật khẩu"
               class="input-center"
             />
-            <p class="error-pass">Mật Khẩu Không Đúng!</p>
           </div>
-          <button type="submit" id="btn-login">Đăng nhập</button>
+          <p class="error-login"></p>
+          <button type="button" id="btn-login" onclick="handleLogin()">
+            Đăng nhập
+          </button>
         </form>
 
         <p class="register-link">

@@ -20,7 +20,7 @@
 }
 
 body {
-  background-color: #F8FAFC;
+  background-color: #f8fafc;
 }
 
 .header {
@@ -43,13 +43,15 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 965px;
+  width: 100%;
 }
 
 .title {
-  width: 600px;
+  width: 533px;
   height: 170px;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 123px;
 }
 
 .title h2 {
@@ -70,7 +72,8 @@ body {
 .form-login {
   background-color: #ffffff;
   width: 100%;
-  max-width: 600px;
+  max-width: 533px;
+  height: 484px;
   margin-top: 20px;
   padding: 40px;
   border-radius: 15px;
@@ -112,28 +115,19 @@ body {
   font-size: 16px;
 }
 
-.error-email {
+p.error-login {
+  width: 100%;
+  border-radius: 12px;
+  display: none;
+  font-size: 18px;
   color: red;
   text-shadow:
-    0 0 3px rgb(238, 206, 206),
-    0 0 3px rgb(238, 206, 206),
-    0 0 3px rgb(238, 206, 206),
-    0 0 3px rgb(238, 206, 206),
-    0 0 3px rgb(238, 206, 206);
-  display: none;
-  margin-top: 5px;
-}
-
-.error-pass {
-  color: red;
-  text-shadow:
-    0 0 3px rgb(238, 206, 206),
-    0 0 3px rgb(238, 206, 206),
-    0 0 3px rgb(238, 206, 206),
-    0 0 3px rgb(238, 206, 206),
-    0 0 3px rgb(238, 206, 206);
-  display: none;
-  margin-top: 5px;
+    0 0 3px rgb(244, 149, 149),
+    0 0 3px rgb(244, 149, 149),
+    0 0 3px rgb(244, 149, 149),
+    0 0 3px rgb(244, 149, 149),
+    0 0 3px rgb(244, 149, 149);
+  transition: all 0.3s ease;
 }
 
 #btn-login {

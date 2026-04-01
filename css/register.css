@@ -39,13 +39,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 965px;
+  width: 100%;
 }
 
 .title {
-  width: 600px;
+  width: 636px;
   height: 170px;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 123px;
 }
 
 .title h2 {
@@ -66,7 +68,8 @@
 .form-register {
   background-color: #ffffff;
   width: 100%;
-  max-width: 600px;
+  max-width: 533px;
+  height: 566px;
   margin-top: 20px;
   padding: 40px;
   border-radius: 15px;
@@ -186,4 +189,24 @@
 
 .login-link a:hover {
   text-decoration: underline;
+}
+
+#popup-success {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  transition: all 1s ease;
+}
+
+.popup-box {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 24px;
+  color: plum;
 }

@@ -32,6 +32,7 @@ window.onload = function () {
   errorEmail = document.querySelector(".error-email");
   errorName = document.querySelector(".error-name");
   errorPass = document.querySelector(".error-pass");
+  errorCheckPass = document.querySelector(".error-check-pass");
   form = document.querySelector(".form-register");
 
   form.addEventListener("keydown", function (e) {
@@ -48,13 +49,14 @@ function handleSubmit() {
   const pass = registerPass.value.trim();
   const checked = checkPass.value.trim();
 
-  if (!validateName(name) || !email || !pass || !checked) return;
+  if (!validateName(name) || !validateEmail(email) || !validatePass(pass) || !validateCheckPass(checked, pass)) return;
 
   const newRegister = {
     id: nextId++,
     name: name,
     email: email,
     pass: pass,
+    role: "user",
   };
 
   registers.push(newRegister);
@@ -66,8 +68,16 @@ function handleSubmit() {
   registerPass.value = "";
   checkPass.value = "";
   registerName.focus();
+
+  //HIỂN THỊ POPUP ĐĂNG KÝ THÀNH CÔNG + CHUYỂN SANG TRANG ĐĂNG NHẬP
+  document.getElementById("popup-success").style.display = "flex";
+
+  setTimeout(() => {
+    window.location.href = "../pages/login.html";
+  }, 1000);
 }
 
+// VALIDATE NAME
 function validateName(name) {
   errorName.style.display = "none";
 
@@ -89,4 +99,64 @@ function validateName(name) {
   return true;
 }
 
-function validateEmail(email) {}
+// VALIDATE EMAIL
+function validateEmail(email) {
+  errorEmail.style.display = "none";
+  if (email.length === 0) {
+    errorEmail.style.display = "block";
+    errorEmail.textContent = "Email không được để trống!";
+    return false;
+  }
+
+  const regexEmail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/u;
+  if (!regexEmail.test(email)) {
+    errorEmail.style.display = "block";
+    errorEmail.textContent = "Email không đúng định dạng (cần @gmail.com)";
+    return false;
+  }
+
+  let isDuplicated = false;
+  registers.forEach((p) => {
+    if (p.email === email) {
+      isDuplicated = true;
+    }
+  });
+  if (isDuplicated) {
+    errorEmail.style.display = "block";
+    errorEmail.textContent = "Email đã tồn tại!";
+    return false;
+  }
+
+  errorEmail.style.display = "none";
+  return true;
+}
+
+// VALIDATE PASSWORD
+function validatePass(pass) {
+  errorPass.style.display = "none";
+  if (pass.length === 0 || pass.length < 8) {
+    errorPass.style.display = "block";
+    errorPass.textContent = "Mật khẩu không để trống và nhiều hơn 8 kí tự!";
+    return false;
+  }
+  return true;
+}
+
+// VALIDATE CHECKPASS
+function validateCheckPass(checked, pass) {
+  errorCheckPass.style.display = "none";
+  if (checked.length === 0) {
+    errorCheckPass.style.display = "block";
+    errorCheckPass.textContent = "Không được để trống!";
+    return false;
+  }
+
+  if (checked !== pass) {
+    errorCheckPass.style.display = "block";
+    errorCheckPass.textContent = "Vui lòng xác nhận đúng mật khẩu đăng ký!";
+    return false;
+  }
+
+  errorCheckPass.style.display = "none";
+  return true;
+}
