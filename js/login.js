@@ -17,7 +17,6 @@ loginForm.addEventListener("submit", (e) => {
   if (user) {
     // Lưu thông tin user đang đăng nhập
     localStorage.setItem("currentUser", JSON.stringify(user));
-    alert("Đăng nhập thành công!");
 
     // Phân quyền điều hướng
     if (user.role === "admin") {

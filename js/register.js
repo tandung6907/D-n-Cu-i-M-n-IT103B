@@ -94,8 +94,6 @@ registerForm.addEventListener("submit", (e) => {
 
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
-
-    alert("Đăng ký thành công!");
     window.location.href = "../pages/login.html";
   }
 });
