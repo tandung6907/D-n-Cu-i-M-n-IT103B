@@ -1,5 +1,5 @@
 // Kiểm tra đăng nhập đơn giản
-function checkLogin() {
+const checkLogin = () => {
   let currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
     window.location.href = "../pages/login.html";
