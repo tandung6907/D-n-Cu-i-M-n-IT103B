@@ -34,9 +34,11 @@
         <div class="logo">QuizzForge</div>
         <nav class="nav-links">
           <a href="./category-manager.html">Danh mục</a>
+
           <a href="./test-manager.html" class="active">Bài test</a>
-          <a href="./login.html">Đăng xuất</a>
+          <a href="./login.html" onclick="localStorage.removeItem('currentUser'); return true;">Đăng xuất</a>
         </nav>
+
       </div>
     </header>
 

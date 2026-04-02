@@ -145,24 +145,58 @@ const confirmDelete = () => {
   toggleModal(deleteModal, false);
 };
 
-//7. Gán sự kiện cho các nút bấm
+// Kiểm tra đăng nhập admin
+function checkLogin() {
+  let currentUserStr = localStorage.getItem("currentUser");
+  if (!currentUserStr) {
+    window.location.href = "../pages/login.html";
+    return;
+  }
+  let currentUser;
+  try {
+    currentUser = JSON.parse(currentUserStr);
+  } catch (e) {
+    localStorage.removeItem("currentUser");
+    window.location.href = "../pages/login.html";
+    return;
+  }
+  
+  if (currentUser.role !== "admin") {
+    window.location.href = "../pages/home.html";
+    return;
+  }
+}
 
-// Nút Lưu trên modal thêm/sửa
-document.getElementById("btnSave").onclick = () => saveData();
+// Chạy khi trang load
+window.onload = function() {
+  checkLogin();
 
-// Nút Xoá trên modal xác nhận xoá
-const btnConfirmDelete = document.querySelector("#deleteModal .btn-danger");
-btnConfirmDelete.onclick = () => confirmDelete();
-
-// Nút Huỷ và Dấu X (Dùng chung hàm toggleModal)
-const closeBtns = document.querySelectorAll(".close-btn, .btn-secondary");
-closeBtns.forEach((btn) => {
-  btn.onclick = () => {
-    toggleModal(modal, false);
-    toggleModal(deleteModal, false);
+  // Gán sự kiện nút lưu
+  document.getElementById("btnSave").onclick = function() {
+    saveData();
   };
-});
 
-inputName.oninput = () => resetError();
+  // Nút xác nhận xóa
+  let btnDel = document.querySelector("#deleteModal .btn-danger");
+  if (btnDel) {
+    btnDel.onclick = function() {
+      confirmDelete();
+    };
+  }
 
-renderTable();
+  // Nút đóng modal
+  let closeBtns = document.querySelectorAll(".close-btn, .btn-secondary");
+  for (let i = 0; i < closeBtns.length; i++) {
+    closeBtns[i].onclick = function() {
+      toggleModal(modal, false);
+      toggleModal(deleteModal, false);
+    };
+  }
+
+  // Xóa lỗi khi nhập tên
+  inputName.oninput = function() {
+    resetError();
+  };
+
+  renderTable();
+};

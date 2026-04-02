@@ -82,20 +82,47 @@ const confirmDelete = () => {
   toggleModal(deleteModal, false);
 };
 
-// 6. Gán sự kiện cho các nút bấm
-// Nút Xoá trong modal
-const btnConfirmDelete = document.querySelector("#deleteModal .btn-danger");
-if (btnConfirmDelete) {
-  btnConfirmDelete.onclick = () => confirmDelete();
+
+// Kiểm tra đăng nhập admin
+function checkLogin() {
+  let currentUserStr = localStorage.getItem("currentUser");
+  if (!currentUserStr) {
+    window.location.href = "../pages/login.html";
+    return;
+  }
+  let currentUser;
+  try {
+    currentUser = JSON.parse(currentUserStr);
+  } catch (e) {
+    localStorage.removeItem("currentUser");
+    window.location.href = "../pages/login.html";
+    return;
+  }
+  
+  if (currentUser.role !== "admin") {
+    window.location.href = "../pages/home.html";
+    return;
+  }
 }
 
-// Nút Đóng/Huỷ modal
-const closeBtns = document.querySelectorAll(".close-btn, .btn-secondary");
-closeBtns.forEach((btn) => {
-  btn.onclick = () => {
-    toggleModal(deleteModal, false);
-  };
-});
+// 6. Gán sự kiện cho các nút bấm in DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  checkLogin();
 
-// Khởi tạo bảng lần đầu
-renderTable();
+  // Nút Xoá trong modal
+  const btnConfirmDelete = document.querySelector("#deleteModal .btn-danger");
+  if (btnConfirmDelete) {
+    btnConfirmDelete.onclick = () => confirmDelete();
+  }
+
+  // Nút Đóng/Huỷ modal
+  const closeBtns = document.querySelectorAll(".close-btn, .btn-secondary");
+  closeBtns.forEach((btn) => {
+    btn.onclick = () => {
+      toggleModal(deleteModal, false);
+    };
+  });
+
+  // Khởi tạo bảng lần đầu
+  renderTable();
+});

@@ -89,7 +89,7 @@ registerForm.addEventListener("submit", (e) => {
       fullname: fullname,
       email: email,
       password: password,
-      role: "admin",
+      role: "user",
     };
 
     users.push(newUser);
