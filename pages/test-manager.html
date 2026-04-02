@@ -43,7 +43,12 @@
     <main class="container main-content">
       <h1>Quản lý bài test</h1>
       <div class="toolbar">
-        <a href="./add-test.html" class="btn btn-primary" style="text-decoration: none;">Thêm bài test</a>
+        <a
+          href="./add-test.html"
+          class="btn btn-primary"
+          style="text-decoration: none"
+          >Thêm bài test</a
+        >
         <div class="filters">
           <select class="form-control">
             <option>Sắp xếp theo</option>
@@ -115,11 +120,13 @@
       </div>
 
       <div class="pagination">
-        <button class="page-item disabled">&lt;</button>
-        <button class="page-item active">1</button>
-        <button class="page-item">2</button>
-        <button class="page-item">3</button>
-        <button class="page-item arrow">&gt;</button>
+        <div class="pagination-wrapper">
+          <button class="page-item disabled arrow">&lt;</button>
+          <button class="page-item active">1</button>
+          <button class="page-item">2</button>
+          <button class="page-item">3</button>
+          <button class="page-item arrow">&gt;</button>
+        </div>
       </div>
     </main>
 

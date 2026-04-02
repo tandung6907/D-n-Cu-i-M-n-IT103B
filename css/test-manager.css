@@ -172,31 +172,48 @@ tbody tr:nth-child(odd) {
 .pagination {
   display: flex;
   justify-content: center;
-  margin-top: 25px;
+  margin-top: 40px;
+}
+
+.pagination-wrapper {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
 }
 
 .page-item {
   width: 35px;
   height: 35px;
-  color: #0d6efd;
-  border: 1px solid #dee2e6;
-  background: white;
-  cursor: pointer;
-  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: white;
+  border: none;
+  border-right: 1px solid #e5e7eb;
+  cursor: pointer;
+  color: #3b82f6;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.page-item:last-child {
+  border-right: none;
+}
+
+.page-item.arrow {
+  color: #1f2937;
 }
 
 .page-item.active {
-  background: #0d6efd;
+  background-color: #3b82f6;
   color: white;
-  border-color: #0d6efd;
 }
 
 .page-item.disabled {
-  color: #ccc;
-  cursor: not-allowed;
+  color: #d1d5db;
+  cursor: default;
+  background-color: #e9ecef;
 }
 
 /* 7. Footer */
