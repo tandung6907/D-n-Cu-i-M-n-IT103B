@@ -118,3 +118,41 @@ body {
 .form-group {
     margin-bottom: 15px;
 }
+
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 42px;
+    }
+
+    .header p {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 40px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .header h1 {
+        font-size: 32px;
+    }
+
+    .header p {
+        font-size: 16px;
+    }
+
+    .register-card {
+        padding: 30px 20px;
+    }
+
+    .form-group input {
+        font-size: 16px;
+    }
+}
