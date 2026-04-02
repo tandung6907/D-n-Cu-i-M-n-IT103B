@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../script/checkLogin.js"></script>
     <title>Category Manager</title>
     <link rel="stylesheet" href="../style/categoryManager.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,6 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik+Distressed&display=swap"
         rel="stylesheet">
+    <link rel="icon" href="../img/20260402-150420.jpg">
 </head>
 
 <body>
@@ -19,7 +21,8 @@
         <div class="lead">
             <button class="smth"><a href="./categoryManager.html">Danh mục</a></button>
             <button class="notIndeed"><a href="./testManager.html">Bài test</a></button>
-            <button class="smth"><a href="./logIn.html">Đăng xuất</a></button>
+            <button class="smth" onclick="logout()">Đăng xuất</button>
+
         </div>
     </div>
     <div class="main">
@@ -37,7 +40,7 @@
                     </tr>
                 </thead>
                 <tbody id="tbdy">
-                   
+
                 </tbody>
             </table>
             <div class="pages">
@@ -53,43 +56,44 @@
         <p>&copy; 2025 Quiz App. All rights reserved.</p>
     </div>
     <div id="categoryModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>Thêm/sửa danh mục</h3>
-            <span class="close" onclick="closeModal()">&times;</span>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label>Tên danh mục</label>
-                <input type="text" id="categoryName" placeholder="Đời sống">
-                <small id="error-msg" class="error-text">Tên danh mục đã tồn tại</small>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Thêm/sửa danh mục</h3>
+                <span class="close" onclick="closeModal()">&times;</span>
             </div>
-            <div class="form-group">
-                <label>Emoji</label>
-                <input type="text" id="categoryEmoji" placeholder="🏠">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Tên danh mục</label>
+                    <input type="text" id="categoryName" placeholder="Đời sống">
+                    <small id="error-msg" class="error-text">Tên danh mục đã tồn tại</small>
+                </div>
+                <div class="form-group">
+                    <label>Emoji</label>
+                    <input type="text" id="categoryEmoji" placeholder="🏠">
+                </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn-cancel" onclick="closeModal()">Huỷ</button>
-            <button class="btn-save" onclick="saveCategory()">Lưu</button>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeModal()">Huỷ</button>
+                <button class="btn-save" onclick="saveCategory()">Lưu</button>
+            </div>
         </div>
     </div>
-</div>
-<div id="deleteModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>Xác nhận xoá</h3>
-            <span class="close" onclick="closeDeleteModal()">&times;</span>
-        </div>
-        <div class="modal-body">
-            <p>Bạn chắc chắn muốn xoá category này?</p>
-        </div>
-        <div class="modal-footer">
-            <button class="btn-cancel" onclick="closeDeleteModal()">Huỷ</button>
-            <button class="btn-save" onclick="confirmDelete()">Xoá</button>
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Xác nhận xoá</h3>
+                <span class="close" onclick="closeDeleteModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn xoá category này?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeDeleteModal()">Huỷ</button>
+                <button class="btn-save" onclick="confirmDelete()"
+                    style="background-color: rgba(220, 53, 69, 1);">Xoá</button>
+            </div>
         </div>
     </div>
-</div>
     <script src="../script/categoryManager.js"></script>
 </body>
 

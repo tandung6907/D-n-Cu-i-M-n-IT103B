@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../script/checkLogin.js"></script>
     <title>Edit Test</title>
     <link rel="stylesheet" href="../style/editTest.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,6 +12,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik+Distressed&display=swap"
         rel="stylesheet">
+    <link rel="icon" href="../img/20260402-150420.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
@@ -19,7 +22,7 @@
         <div class="lead">
             <button class="notIndeed"><a href="./categoryManager.html">Danh mục</a></button>
             <button class="smth"><a href="./testManager.html">Bài test</a></button>
-            <button class="smth"><a href="./logIn.html">Đăng xuất</a></button>
+            <button class="smth" onclick="logout()">Đăng xuất</button>
         </div>
     </div>
     <div class="main">
@@ -29,17 +32,13 @@
                 <label for="tName">Tên bài test</label>
                 <br>
                 <input type="text" placeholder="Điền tên bài test" id="tName">
-                <br>
+                <p class="error-msg">Tên bài test không được để trống</p>
                 <div class="specChoice">
                     <div class="cate">
                         <label for="sorts">Danh mục</label>
                         <br>
-                        <select name="" id="sorts">
-                            <option value="">Chọn danh mục</option>
-                            <option value="">📚 Lịch sử</option>
-                            <option value="">🧠 Khoa học</option>
-                            <option value="">🎤 Giải trí</option>
-                            <option value="">🏠 Đời sống</option>
+                        <select name="" id="sorts" onchange="pickUp()">
+
                         </select>
                     </div>
                     <div class="tm">
@@ -55,8 +54,8 @@
                 Quản lý câu hỏi
             </h1>
             <div class="special">
-                <button id="addBtn">Thêm câu hỏi</button>
-                <button id="saveBtn">Lưu</button>
+                <button id="addBtn" onclick="addClick()">Thêm câu hỏi</button>
+                <button id="saveBtn" onclick="saveClick()">Lưu</button>
             </div>
             <table id="tble" border="0" cellspacing="0">
                 <thead>
@@ -66,52 +65,7 @@
                         <th class="action">Hành động</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="odd">
-                        <td class="num">1</td>
-
-                        <td>What is the capital of France?</td>
-                        <td class="grBtn">
-                            <button id="updBtn">Sửa</button>
-                            <button id="delBtn">Xoá</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="num">2</td>
-
-                        <td>Which planet is known as the Red Planet?</td>
-                        <td class="grBtn">
-                            <button id="updBtn">Sửa</button>
-                            <button id="delBtn">Xoá</button>
-                        </td>
-                    </tr>
-                    <tr class="odd">
-                        <td class="num">3</td>
-
-                        <td>Which planet is known as the Red Planet?</td>
-                        <td class="grBtn">
-                            <button id="updBtn">Sửa</button>
-                            <button id="delBtn">Xoá</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="num">4</td>
-
-                        <td>Which planet is known as the Red Planet?</td>
-                        <td class="grBtn">
-                            <button id="updBtn">Sửa</button>
-                            <button id="delBtn">Xoá</button>
-                        </td>
-                    </tr>
-                    <tr class="odd">
-                        <td class="num">5</td>
-
-                        <td>Which planet is known as the Red Planet?</td>
-                        <td class="grBtn">
-                            <button id="updBtn">Sửa</button>
-                            <button id="delBtn">Xoá</button>
-                        </td>
-                    </tr>
+                <tbody id="tMain">
 
                 </tbody>
             </table>
@@ -119,6 +73,58 @@
     </div>
     <div class="footer">
         <p>&copy; 2025 Quiz App. All rights reserved.</p>
+    </div>
+    <div class="modal" id="testModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Thêm/sửa câu hỏi</h3>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="testName">Câu hỏi</label>
+                    <input type="text" id="testName" placeholder="Nhập câu hỏi">
+                </div>
+
+                <label>Câu trả lời</label>
+
+                <div id="answerContainer">
+                    <div class="answer-group">
+                        <div class="check-box-wrapper">
+                            <input type="checkbox" class="is-correct">
+                        </div>
+                        <input type="text" placeholder="Nhập câu trả lời" class="answer-input">
+                        <button class="delete-btn" onclick="this.parentElement.remove()">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
+                <button onclick="addAnswerRow()" class="btn-add-more">+ Thêm câu trả lời</button>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeModal()">
+                    Hủy
+                </button>
+                <button class="btn-save" onclick="saveModal()">
+                    Lưu
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Xác nhận xóa</h3>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn xoá bài test này?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeDeleteModal()">Hủy</button>
+                <button class="btn-save" onclick="confirmDelete()"
+                    style="background-color: rgba(220, 53, 69, 1);">Xóa</button>
+            </div>
+        </div>
     </div>
     <script src="../script/editTest.js"></script>
 </body>

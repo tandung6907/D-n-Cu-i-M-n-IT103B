@@ -37,7 +37,14 @@ function liClick(event){
         return;
     }else{
         errorAnnouncement("#error-announcement-psw","","none");
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("userLogin", JSON.stringify(userFound));
         alert("Log in successfully");
     }
-    document.location.href = "../index/mainPages.html"
+    
+    if(userFound.role === "admin") {
+        window.location.href = "../index/categoryManager.html";
+    } else {
+        window.location.href = "../index/mainPages.html";
+    }
 }

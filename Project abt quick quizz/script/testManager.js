@@ -1,5 +1,5 @@
-let somesome = JSON.parse(localStorage.getItem("ttts"))
-let tests = somesome ? somesome : [
+let smthsmth = JSON.parse(localStorage.getItem("ttts"));
+let tests = smthsmth ? smthsmth : [
     {
         id: 1,
         name: "History Quiz",
@@ -51,6 +51,34 @@ let tests = somesome ? somesome : [
     },
     {
         id: 8,
+        name: "Entertainment Trivia",
+        category: "🎤 Giải trí",
+        question: 10,
+        time: "5 min",
+    },
+    {
+        id: 9,
+        name: "Entertainment Trivia",
+        category: "🎤 Giải trí",
+        question: 10,
+        time: "5 min",
+    },
+    {
+        id: 10,
+        name: "Entertainment Trivia",
+        category: "🎤 Giải trí",
+        question: 10,
+        time: "5 min",
+    },
+    {
+        id: 11,
+        name: "Entertainment Trivia",
+        category: "🎤 Giải trí",
+        question: 10,
+        time: "5 min",
+    },
+    {
+        id: 12,
         name: "Entertainment Trivia",
         category: "🎤 Giải trí",
         question: 10,
@@ -222,4 +250,9 @@ function changePage(page) {
     if (page < 1 || page > totalPages) return; 
     currentPage = page;
     showUp();
+}
+function logout() {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userLogin");
+    window.location.href = "../index/logIn.html";
 }

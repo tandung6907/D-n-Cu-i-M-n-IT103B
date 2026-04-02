@@ -4,13 +4,17 @@ let accounts = somesome ? somesome : [
     { id: 2, category: "🧠 Khoa học" },
     { id: 3, category: "🎤 Giải trí" },
     { id: 4, category: "🏠 Đời sống" },
-    { id: 5, category: "📚 Lịch sử" },
-    { id: 6, category: "🧠 Khoa học" },
-    { id: 7, category: "🎤 Giải trí" },
-    { id: 8, category: "🧠 Khoa học" },
+    { id: 5, category: "⌛ Đia lý" },
+    { id: 6, category: "🔩 Vật lý" },
+    { id: 7, category: "🎲 Toán học" },
+    { id: 8, category: "💩 Sinh học" },
+    { id: 9, category: "🥠 Văn học" },
+    { id: 10, category: "🌌 Hóa học" },
+    { id: 11, category: "🌊 Thể dục" },
+    { id: 12, category: "🪂 Tin học" },
 ];
 let currentPage = 1;
-let limit = 8;
+let limit = 5;
 let editId = null;
 let idToDelete = null;
 function showUp() {
@@ -144,4 +148,9 @@ function changePage(page) {
     if (page < 1 || page > totalPages) return;
     currentPage = page;
     showUp();
+}
+function logout() {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userLogin");
+    window.location.href = "../index/logIn.html";
 }

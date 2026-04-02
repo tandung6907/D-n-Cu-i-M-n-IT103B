@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../script/checkLogin.js"></script>
     <title>Test Manager</title>
     <link rel="stylesheet" href="../style/testManager.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,8 +20,10 @@
         <div class="lead">
             <button class="notIndeed"><a href="./categoryManager.html">Danh mục</a></button>
             <button class="smth"><a href="./testManager.html">Bài test</a></button>
-            <button class="smth"><a href="./logIn.html">Đăng xuất</a></button>
+            <button class="smth" onclick="logout()">Đăng xuất</button>
         </div>
+               <link rel="icon" href="../img/20260402-150420.jpg">
+
     </div>
     <div class="main">
         <div class="contain">
@@ -111,7 +114,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-cancel" onclick="closeDeleteModal()">Hủy</button>
-                <button class="btn-save" onclick="confirmDelete()">Xóa</button>
+                <button class="btn-save" onclick="confirmDelete()" style="background-color: rgba(220, 53, 69, 1);">Xóa</button>
             </div>
         </div>
     </div>
