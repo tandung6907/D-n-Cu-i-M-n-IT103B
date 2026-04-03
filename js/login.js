@@ -51,6 +51,7 @@ window.onload = function () {
       handleLogin();
     }
   });
+  
 };
 
 function handleLogin() {
@@ -59,7 +60,7 @@ function handleLogin() {
   errorLogin.style.display = "none";
   if (!mail || !pass) {
     errorLogin.style.display = "block";
-    errorLogin.textContent = "Email và mật khẩu không được để trống!";
+    errorLogin.textContent = "Email hoặc mật khẩu không đúng!";
     return;
   }
 
@@ -87,3 +88,4 @@ function handleLogin() {
     window.location.href = "../pages/home.html";
   }
 }
+

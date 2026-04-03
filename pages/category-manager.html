@@ -5,26 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quản lý danh mục</title>
     <link rel="stylesheet" href="../css/category-manager.css" />
-    <script src="../js/category-manager.js"></script>
   </head>
   <body>
     <header class="header">
       <section class="logo">
-        <a href="">QuizzForge</a>
+        <a href="../pages/home.html">QuizzForge</a>
       </section>
       <nav class="pages-link">
         <a href="../pages/category-manager.html">Danh mục</a>
         <a href="../pages/test-manager.html">Bài test</a>
-        <a href="../pages/login.html">Đăng xuất</a>
+        <button type="button" onclick="handleLogOut()">Đăng xuất</button>
       </nav>
     </header>
 
     <main class="main-content">
       <h1 class="page-title">Quản lý danh mục</h1>
 
-      <button class="btn-add">
-        Thêm danh mục
-      </button>
+      <button class="btn-add">Thêm danh mục</button>
 
       <section class="table-wrapper">
         <table>
@@ -35,151 +32,7 @@
               <th class="col-action">Hành động</th>
             </tr>
           </thead>
-          <tbody class="list-category">
-            <!-- <tr>
-              <td>1</td>
-              <td class="category-name">
-                <img
-                  src="../assets/icons/book-solid.png"
-                  alt="icon"
-                  class="category-icon"
-                />
-                Lịch sử
-              </td>
-              <td>
-                <div class="action-cell">
-                  <button class="btn-edit">Sửa</button>
-                  <button class="btn-delete">Xoá</button>
-                </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td>2</td>
-              <td class="category-name">
-                <img
-                  src="../assets/icons/brain-solid.png"
-                  alt="icon"
-                  class="category-icon"
-                />
-                Khoa học
-              </td>
-              <td>
-                <div class="action-cell">
-                  <button class="btn-edit">Sửa</button>
-                  <button class="btn-delete">Xoá</button>
-                </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td>3</td>
-              <td class="category-name">
-                <img
-                  src="../assets/icons/battle-net-brands-solid.png"
-                  alt="icon"
-                  class="category-icon"
-                />
-                Giải trí
-              </td>
-              <td>
-                <div class="action-cell">
-                  <button class="btn-edit">Sửa</button>
-                  <button class="btn-delete">Xoá</button>
-                </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td>4</td>
-              <td class="category-name">
-                <img
-                  src="../assets/icons/house-solid.png"
-                  alt="icon"
-                  class="category-icon"
-                />
-                Đời sống
-              </td>
-              <td>
-                <div class="action-cell">
-                  <button class="btn-edit">Sửa</button>
-                  <button class="btn-delete">Xoá</button>
-                </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td>5</td>
-              <td class="category-name">
-                <img
-                  src="../assets/icons/book-solid.png"
-                  alt="icon"
-                  class="category-icon"
-                />
-                Lịch sử
-              </td>
-              <td>
-                <div class="action-cell">
-                  <button class="btn-edit">Sửa</button>
-                  <button class="btn-delete">Xoá</button>
-                </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td>6</td>
-              <td class="category-name">
-                <img
-                  src="../assets/icons/brain-solid.png"
-                  alt="icon"
-                  class="category-icon"
-                />
-                Khoa học
-              </td>
-              <td>
-                <div class="action-cell">
-                  <button class="btn-edit">Sửa</button>
-                  <button class="btn-delete">Xoá</button>
-                </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td>7</td>
-              <td class="category-name">
-                <img
-                  src="../assets/icons/battle-net-brands-solid.png"
-                  alt="icon"
-                  class="category-icon"
-                />
-                Giải trí
-              </td>
-              <td>
-                <div class="action-cell">
-                  <button class="btn-edit">Sửa</button>
-                  <button class="btn-delete">Xoá</button>
-                </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td>8</td>
-              <td class="category-name">
-                <img
-                  src="../assets/icons/brain-solid.png"
-                  alt="icon"
-                  class="category-icon"
-                />
-                Khoa học
-              </td>
-              <td>
-                <div class="action-cell">
-                  <button class="btn-edit">Sửa</button>
-                  <button class="btn-delete">Xoá</button>
-                </div>
-              </td>
-            </tr> -->
-          </tbody>
+          <tbody class="list-category"></tbody>
         </table>
       </section>
 
@@ -246,5 +99,18 @@
     </main>
 
     <footer>© 2025 QuizForge. All rights reserved.</footer>
+
+    <div id="popup-logout">
+      <div class="popup-box">
+        <p>Đăng xuất thành công!</p>
+      </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/category-manager.js"></script>
+    <script>
+      checkAdmin();
+    </script>
   </body>
 </html>
+ 

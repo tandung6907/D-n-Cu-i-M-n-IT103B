@@ -66,7 +66,7 @@ function handleSubmit() {
   registerEmail.value = "";
   registerName.value = "";
   registerPass.value = "";
-  checkPass.value = "";
+  checkPass.value = ""; 
   registerName.focus();
 
   //HIỂN THỊ POPUP ĐĂNG KÝ THÀNH CÔNG + CHUYỂN SANG TRANG ĐĂNG NHẬP
@@ -91,7 +91,7 @@ function validateName(name) {
   if (name.length < 5 || !regexName.test(name)) {
     errorName.style.display = "block";
     errorName.textContent =
-      "Tên không được chứa ký tự đặc biệt không có số và dài hơn 5 ký tự!";
+      "Tên không được chứa ký tự đặc biệt không có số!";
     return false;
   }
 
@@ -111,7 +111,7 @@ function validateEmail(email) {
   const regexEmail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/u;
   if (!regexEmail.test(email)) {
     errorEmail.style.display = "block";
-    errorEmail.textContent = "Email không đúng định dạng (cần @gmail.com)";
+    errorEmail.textContent = `Email không đúng định dạng (cần @"text"."text")!`;
     return false;
   }
 

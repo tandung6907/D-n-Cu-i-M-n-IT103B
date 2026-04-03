@@ -92,6 +92,25 @@
   transition: all 0.3s ease;
 }
 
+.pages-link button {
+  font-size: 17px;
+  line-height: 27px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  color: #ffffff;
+  background-color: #000000;
+  border: none;
+  letter-spacing: 0px;
+  text-decoration: none;
+  padding-left: 28px;
+  transition: all 0.3s ease;
+}
+
+.pages-link button:hover {
+  color: plum;
+  cursor: pointer;
+}
+
 .pages-link a:hover {
   color: plum;
 }
@@ -113,7 +132,7 @@
 }
 
 .title h2 {
-  font-size: 30px;
+  font-size: 31px;
   font-weight: 500;
   line-height: 38px;
   letter-spacing: 0px;
@@ -140,17 +159,22 @@
 }
 
 .container {
+  width: 100%;
+  max-width: 1320px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 24px 40px;
+  margin: 24px auto;
+  padding: 0 40px;
+  /* Xóa height: 782px cố định */
 }
 
 .sort-by-turn {
   display: flex;
-  align-items: center;
+  align-items: center; /* đổi từ flex-start thành center */
   gap: 10px;
   margin-bottom: 20px;
+  width: 100%; /* thêm để chiếm full width */
 }
 
 .sort-by-turn span {
@@ -162,28 +186,27 @@
 .sort-by-turn button {
   padding: 6px 14px;
   border-radius: 6px;
-  border: 1px solid #4a3db5;
+  border: 1px solid #212529;
   background-color: transparent;
-  color: #4a3db5;
+  color: #212529;
   cursor: pointer;
   font-size: 14px;
   font-family: "Courier New", Courier, monospace;
   transition: all 0.25s ease;
 }
 
-.sort-by-turn .active:hover {
+.sort-by-turn button:hover {
+  background-color: #fff3cd;
+}
+
+/* .sort-by-turn button.active,
+.sort-by-turn button:hover {
   background-color: #fff;
   color: #4a3db5;
-}
-
-.sort-by-turn button.active,
-.sort-by-turn button:hover {
-  background-color: #4a3db5;
-  color: #fff;
-}
+} */
 
 .sub-title {
-  font-size: 22px;
+  font-size: 27px;
   font-weight: 500;
   line-height: 33px;
   letter-spacing: 0px;
@@ -205,7 +228,7 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   width: 100%;
-  max-width: 900px;
+  max-width: 1320px;
   align-self: center;
 }
 
@@ -222,6 +245,7 @@
     box-shadow 0.25s ease,
     transform 0.25s ease;
   position: relative;
+  min-height: 144px;
 }
 
 .quiz-card:hover {
@@ -339,4 +363,24 @@ footer {
   color: #888;
   margin-top: 30px;
   border-top: 1px solid #eee;
+}
+
+#popup-success {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  transition: all 1s ease;
+}
+
+.popup-box {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 24px;
+  color: plum;
 }

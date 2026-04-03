@@ -48,7 +48,10 @@ window.onload = function () {
   // ĐÓNG POPUP
   document.getElementById("popup-close").addEventListener("click", closePopup);
   document.getElementById("btn-cancel").addEventListener("click", closePopup);
-  overlay.addEventListener("click", closePopup);
+  overlay.addEventListener("click", function () {
+    closePopup();
+    closeConfirm();
+  });
 
   // LƯU
   document.getElementById("btn-save").addEventListener("click", handleSubmit);
@@ -270,4 +273,13 @@ function renderPagination(totalPages) {
     }
   });
   pagination.appendChild(next);
+}
+
+function handleLogOut() {
+  //HIỂN THỊ POPUP ĐĂNG XUẤT THÀNH CÔNG + CHUYỂN SANG TRANG ĐĂNG NHẬP
+  document.getElementById("popup-logout").classList.add("active");
+
+  setTimeout(() => {
+    window.location.href = "../pages/login.html";
+  }, 1000);
 }
