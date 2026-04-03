@@ -96,7 +96,9 @@ const saveData = () => {
 
   let errors = [];
   if (!nameVal) {
-    errors.push("Tên danh mục không được trống");
+    errors.push(
+      "Tên danh mục không được trống, chỉ chứa khoảng trắng hoặc có dấu cách đầu/cuối",
+    );
   } else if (nameVal.length < 3 || nameVal.length > 50) {
     errors.push("Tên danh mục phải từ 3 đến 50 ký tự");
   }
