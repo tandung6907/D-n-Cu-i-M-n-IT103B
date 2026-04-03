@@ -38,6 +38,8 @@ const toggleModal = (modalElement, show) => {
 // Hàm xoá báo lỗi đỏ trên input
 const resetError = () => {
   inputName.classList.remove("input-error");
+  inputEmoji.classList.remove("input-error");
+  errorMsg.textContent = "";
   errorMsg.style.display = "none";
 };
 
@@ -89,10 +91,21 @@ window.prepareEdit = (id) => {
 // Hàm xử lý khi nhấn nút lưu trên popup
 const saveData = () => {
   const nameVal = inputName.value.trim();
-  const emojiVal = inputEmoji.value.trim() || "📁";
+  const emojiVal = inputEmoji.value.trim();
   const currentId = inputId.value;
 
-  if (!nameVal) return alert("Vui lòng nhập tên danh mục!");
+  let errors = [];
+  if (!nameVal) {
+    errors.push("Tên danh mục không được trống");
+  } else if (nameVal.length < 3 || nameVal.length > 50) {
+    errors.push("Tên danh mục phải từ 3 đến 50 ký tự");
+  }
+
+  if (!emojiVal) {
+    errors.push("Emoji không được trống");
+  } else if (emojiVal.length < 1 || emojiVal.length > 3) {
+    errors.push("Emoji phải từ 1 đến 3 ký tự");
+  }
 
   // Validate: Kiểm tra trùng tên (Bỏ qua chính nó nếu đang sửa)
   const isDuplicate = categories.some(
@@ -100,10 +113,20 @@ const saveData = () => {
   );
 
   if (isDuplicate) {
-    inputName.classList.add("input-error");
+    errors.push("Tên danh mục đã tồn tại");
+  }
+
+  if (errors.length > 0) {
+    const errorText = errors.join(", ");
+    errorMsg.textContent = errorText;
     errorMsg.style.display = "block";
+    inputName.classList.add("input-error");
+    inputEmoji.classList.add("input-error");
     return;
   }
+
+  // Clear lỗi trước khi lưu
+  resetError();
 
   if (currentId === "") {
     // Logic thêm: Tạo ID mới tự động tăng
@@ -160,26 +183,26 @@ const checkLogin = () => {
     window.location.href = "../pages/login.html";
     return;
   }
-  
+
   if (currentUser.role !== "admin") {
     window.location.href = "../pages/home.html";
     return;
   }
-}
+};
 
 // Chạy khi trang load
-window.onload = function() {
+window.onload = function () {
   checkLogin();
 
   // Gán sự kiện nút lưu
-  document.getElementById("btnSave").onclick = function() {
+  document.getElementById("btnSave").onclick = function () {
     saveData();
   };
 
   // Nút xác nhận xóa
   let btnDel = document.querySelector("#deleteModal .btn-danger");
   if (btnDel) {
-    btnDel.onclick = function() {
+    btnDel.onclick = function () {
       confirmDelete();
     };
   }
@@ -187,14 +210,18 @@ window.onload = function() {
   // Nút đóng modal
   let closeBtns = document.querySelectorAll(".close-btn, .btn-secondary");
   for (let i = 0; i < closeBtns.length; i++) {
-    closeBtns[i].onclick = function() {
+    closeBtns[i].onclick = function () {
       toggleModal(modal, false);
       toggleModal(deleteModal, false);
     };
   }
 
-  // Xóa lỗi khi nhập tên
-  inputName.oninput = function() {
+  // Xóa lỗi khi nhập
+  inputName.oninput = function () {
+    resetError();
+  };
+
+  inputEmoji.oninput = function () {
     resetError();
   };
 
