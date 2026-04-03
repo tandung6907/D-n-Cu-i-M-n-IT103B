@@ -78,7 +78,7 @@ registerForm.addEventListener("submit", (e) => {
     isValid = false;
   }
 
-  // Check duplicate before submit
+  // Validate nếu tên hoặc email đã được đăng ký hay chưa
   if (isValid) {
     const isExistUser = users.find((user) => user.fullname === fullname);
     if (isExistUser) {
