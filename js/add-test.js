@@ -8,15 +8,6 @@ let editingRow = null;
 let rowToDelete = null;
 let questionIdCounter = 3; // Tiếp theo là ID 3
 
-
-// Check login
-const checkLogin = () => {
-  let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  if (!currentUser || currentUser.role !== "admin") {
-    window.location.href = "../pages/login.html";
-  }
-};
-
 // 2. Render bảng dữ liệu mẫu
 const renderTable = () => {
   const tbody =
@@ -123,6 +114,14 @@ document.getElementById("confirmDeleteBtn").onclick = () => {
 };
 
 const editRow = (btn) => openModal(true, btn.closest("tr"));
+
+// Check login first
+const checkLogin = () => {
+  let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser || currentUser.role !== "admin") {
+    window.location.href = "../pages/login.html";
+  }
+};
 
 // 7. Khởi tạo khi trang load
 window.onload = () => {
