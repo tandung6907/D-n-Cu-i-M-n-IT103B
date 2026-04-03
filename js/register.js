@@ -18,84 +18,89 @@ registerForm.addEventListener("submit", (e) => {
   let isValid = true;
 
   const nameError = document.getElementById("nameError");
+
+  // Validate lead/trail spaces
   if (originalFullname !== fullname) {
-    nameError.innerText = "Tên không được có khoảng trắng đầu hoặc cuối";
+    nameError.innerText += "Tên không được có khoảng trắng đầu hoặc cuối; ";
     isValid = false;
   }
 
   //1. Validate Họ tên (Fullname)
   const nameRegex = /^[a-zA-Z]+$/;
+  let nameErrors = [];
 
-  if (isValid && !fullname) {
-    nameError.innerText =
-      "Họ và tên không được trống hoặc chỉ chứa khoảng trắng";
-    isValid = false;
-  } else if (isValid && fullname.length < 5) {
-    nameError.innerText = "Họ và tên phải có tối thiểu 5 ký tự";
-    isValid = false;
-  } else if (isValid && !nameRegex.test(fullname)) {
-    nameError.innerText =
-      "Họ và tên không được có dấu, không chứa khoảng trắng hoặc ký tự lạ";
+  if (!fullname) {
+    nameErrors.push("Họ và tên không được trống hoặc chỉ chứa khoảng trắng");
+  } else if (fullname.length < 5) {
+    nameErrors.push("Họ và tên phải có tối thiểu 5 ký tự");
+  } else if (!nameRegex.test(fullname)) {
+    nameErrors.push(
+      "Họ và tên không được có dấu, không chứa khoảng trắng hoặc ký tự lạ",
+    );
+  }
+
+  if (nameErrors.length > 0) {
+    nameError.innerText += nameErrors.join(", ");
     isValid = false;
   }
 
   //2. Validate Email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (isValid && !email) {
+  if (!email) {
     document.getElementById("emailError").innerText =
       "Email không được để trống";
     isValid = false;
-  } else if (isValid && !emailRegex.test(email)) {
+  } else if (!emailRegex.test(email)) {
     document.getElementById("emailError").innerText =
       "Email không đúng định dạng";
     isValid = false;
   }
 
   //3. Validate Mật khẩu
-  if (isValid && !password) {
+  if (!password) {
     document.getElementById("passwordError").innerText =
       "Mật khẩu không được để trống";
     isValid = false;
-  } else if (isValid && password.length < 8) {
+  } else if (password.length < 8) {
     document.getElementById("passwordError").innerText =
       "Mật khẩu phải có tối thiểu 8 ký tự";
     isValid = false;
   }
 
   //4. Validate Xác nhận mật khẩu
-  if (isValid && !confirmPassword) {
+  if (!confirmPassword) {
     document.getElementById("confirmPasswordError").innerText =
       "Vui lòng xác nhận mật khẩu";
     isValid = false;
-  } else if (isValid && confirmPassword !== password) {
+  } else if (confirmPassword !== password) {
     document.getElementById("confirmPasswordError").innerText =
       "Mật khẩu xác nhận không trùng khớp";
     isValid = false;
   }
 
-  //Xử lý khi dữ liệu hợp lệ
+  // Check duplicate before submit
   if (isValid) {
     const isExistUser = users.find((user) => user.fullname === fullname);
-    const isExistEmail = users.find((user) => user.email === email);
-
     if (isExistUser) {
-      document.getElementById("nameError").innerText =
-        "Tên người dùng này đã được đăng ký";
-      return;
+      nameError.innerText += "Tên người dùng này đã được đăng ký";
+      isValid = false;
     }
 
+    const isExistEmail = users.find((user) => user.email === email);
     if (isExistEmail) {
-      document.getElementById("emailError").innerText =
+      document.getElementById("emailError").innerText +=
         "Email này đã được đăng ký";
-      return;
+      isValid = false;
     }
+  }
 
+  if (isValid) {
     const newUser = {
       id: Date.now(),
       fullname: fullname,
       email: email,
       password: password,
-      role: "admin",
+      role: "user",
     };
 
     users.push(newUser);
