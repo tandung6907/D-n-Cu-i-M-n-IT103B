@@ -95,16 +95,22 @@ registerForm.addEventListener("submit", (e) => {
   }
 
   if (isValid) {
-    const newUser = {
-      id: Date.now(),
-      fullname: fullname,
-      email: email,
-      password: password,
-      role: "user", //"admin" là để chuyển sang trang admin
-    };
+    createToast("success", "Đăng kí thành công");
 
-    users.push(newUser);
-    localStorage.setItem("users", JSON.stringify(users));
-    window.location.href = "../pages/login.html";
+    setTimeout(() => {
+      const newUser = {
+        id: Date.now(),
+        fullname: fullname,
+        email: email,
+        password: password,
+        role: "user", //"admin" là để chuyển sang trang admin
+      };
+
+      users.push(newUser);
+      localStorage.setItem("users", JSON.stringify(users));
+      window.location.href = "../pages/login.html";
+    }, 2000);
+  } else {
+    createToast("error", "Vui lòng nhập đúng thông tin");
   }
 });
