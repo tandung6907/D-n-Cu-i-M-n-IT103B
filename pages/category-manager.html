@@ -27,18 +27,29 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/category-manager.css" />
+    <link rel="stylesheet" href="../css/toast.css" />
   </head>
   <body>
     <header class="navbar">
       <div class="container">
-        <div class="logo">QuizzForge</div>
+        <div class="logo">
+          <a href="./home.html" style="text-decoration: none; color: inherit"
+            >QuizzForge</a
+          >
+        </div>
         <nav class="nav-links">
           <a href="./category-manager.html" class="active">Danh mục</a>
 
           <a href="./test-manager.html">Bài test</a>
-          <a href="./login.html" onclick="localStorage.removeItem('currentUser'); return true;">Đăng xuất</a>
+          <a
+            href="./login.html"
+            onclick="
+              localStorage.removeItem('currentUser');
+              return true;
+            "
+            >Đăng xuất</a
+          >
         </nav>
-
       </div>
     </header>
 
@@ -125,6 +136,9 @@
       </div>
     </div>
 
+    <div id="toast-container"></div>
+
     <script src="../js/category-manager.js"></script>
+    <script src="../js/toast.js"></script>
   </body>
 </html>

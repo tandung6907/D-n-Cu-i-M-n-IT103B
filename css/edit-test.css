@@ -290,6 +290,15 @@ footer {
   color: white;
 }
 
+.btn-cancel {
+  color: #000;
+}
+
+.btn-save {
+  color: #fff;
+  background-color: #6c757d;
+}
+
 .answer-item-row {
   display: flex;
   align-items: stretch;

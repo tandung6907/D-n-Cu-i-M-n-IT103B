@@ -27,11 +27,16 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/edit-test.css" />
+    <link rel="stylesheet" href="../css/toast.css" />
   </head>
   <body>
     <header class="navbar">
       <div class="container">
-        <div class="logo">QuizzForge</div>
+        <div class="logo">
+          <a href="./home.html" style="text-decoration: none; color: inherit"
+            >QuizzForge</a
+          >
+        </div>
         <nav class="nav-links">
           <a href="./category-manager.html">Danh mục</a>
           <a href="./test-manager.html" class="active">Bài test</a>
@@ -59,6 +64,13 @@
             class="form-control"
           />
         </div>
+
+        <!-- <div class="img-choose">
+          <div class="form-group">
+            <label> Chọn ảnh</label>
+            <input type="image" name="" id="" />
+          </div>
+        </div> -->
 
         <div class="row">
           <div class="form-group flex-1">
@@ -179,6 +191,9 @@
       </div>
     </div>
 
+    <div id="toast-container"></div>
+
     <script src="../js/edit-test.js"></script>
+    <script src="../js/toast.js"></script>
   </body>
 </html>

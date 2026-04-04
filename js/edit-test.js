@@ -1,14 +1,63 @@
-// 1. Mảng dữ liệu mẫu
 const mockTests = [
   { id: 1, name: "History Quiz", category: "Lịch sử", time: "10" },
   { id: 2, name: "Science Challenge", category: "Khoa học", time: "15" },
   { id: 3, name: "Entertainment Trivia", category: "Khoa học", time: "5" },
 ];
 
+let questions = [];
 let editingRow = null;
 let questionIdCounter = 3;
+let STORAGE_KEY = "";
 
-// 2. Kiểm tra đăng nhập
+const saveToLocalStorage = () => {
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify({
+      questions,
+      questionIdCounter,
+    }),
+  );
+};
+
+const loadFromLocalStorage = () => {
+  const data = localStorage.getItem(STORAGE_KEY);
+  if (data) {
+    const parsed = JSON.parse(data);
+    questions = parsed.questions || [];
+    questionIdCounter = Math.max(3, parsed.questionIdCounter || 3);
+    renderTable();
+  }
+};
+
+const getQuestionsFromTable = () => {
+  const tbody = document.querySelector("tbody");
+  const rows = tbody.querySelectorAll("tr");
+  questions = Array.from(rows).map((row) => ({
+    id: parseInt(row.cells[0].innerText),
+    text: row.cells[1].innerText,
+  }));
+  questionIdCounter =
+    Math.max(questionIdCounter, ...questions.map((q) => q.id)) + 1;
+};
+
+const renderTable = () => {
+  const tbody = document.querySelector("tbody");
+  tbody.innerHTML = "";
+  questions.forEach((q) => {
+    const row = tbody.insertRow();
+    row.innerHTML = `
+      <td class="text-center">${q.id}</td>
+      <td>${q.text}</td>
+      <td class="text-center">
+        <div class="action-group">
+          <button class="btn-edit" onclick="editCurrentRow(this)">Sửa</button>
+          <button class="btn-delete" onclick="prepareDelete(this)">Xoá</button>
+        </div>
+      </td>
+    `;
+  });
+};
+
 const checkLogin = () => {
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
   if (!currentUser || currentUser.role !== "admin") {
@@ -16,11 +65,10 @@ const checkLogin = () => {
   }
 };
 
-// 3. Hàm tạo dòng câu trả lời trong Modal (mặc định 4 ô)
 const addAnswerRow = (val = "") => {
   const answerList = document.getElementById("modalAnswerList");
   const div = document.createElement("div");
-  div.className = "answer-item-row"; // Đổi tên class để tránh trùng lặp style cũ
+  div.className = "answer-item-row";
   div.innerHTML = `
         <div class="checkbox-section">
             <input type="checkbox" class="answer-checkbox">
@@ -38,7 +86,6 @@ const addAnswerRow = (val = "") => {
   answerList.appendChild(div);
 };
 
-// 4. Mở/Đóng Modal
 const openModal = (isEdit = false, row = null) => {
   const modal = document.getElementById("questionModal");
   const input = document.getElementById("modalQuestionInput");
@@ -63,31 +110,54 @@ const openModal = (isEdit = false, row = null) => {
 const closeModal = () =>
   document.getElementById("questionModal").classList.remove("active");
 
-// 5. Lưu từ Modal vào bảng
 const saveQuestion = () => {
   const text = document.getElementById("modalQuestionInput").value;
-  if (!text.trim()) return alert("Vui lòng nhập câu hỏi!");
+  if (!text.trim()) return createToast("error", "Vui lòng nhập câu hỏi!");
 
   if (editingRow) {
-    editingRow.cells[1].innerText = text;
+    const id = parseInt(editingRow.cells[0].innerText);
+    const index = questions.findIndex((q) => q.id === id);
+    if (index !== -1) questions[index].text = text;
   } else {
-    const tbody = document.querySelector("tbody");
-    const row = tbody.insertRow();
-    row.innerHTML = `
-            <td class="text-center">${questionIdCounter++}</td>
-            <td>${text}</td>
-            <td class="text-center">
-                <div class="action-group">
-                    <button class="btn-edit" onclick="editCurrentRow(this)">Sửa</button>
-                    <button class="btn-delete" onclick="prepareDelete(this)">Xoá</button>
-                </div>
-            </td>
-        `;
+    questions.push({ id: questionIdCounter++, text: text });
   }
+  renderTable();
   closeModal();
+  saveToLocalStorage();
+  createToast("success", "Lưu câu hỏi thành công!");
 };
 
-// 6. Xử lý Xóa
+const saveTest = () => {
+  const name = document.querySelector(
+    '.test-info-section input[type="text"]',
+  ).value;
+  const category = document.querySelector(".test-info-section select").value;
+  const time = document.querySelector(".flex-time input").value;
+
+  if (!name.trim())
+    return createToast("error", "Tên bài test không được để trống!");
+
+  let allTests = JSON.parse(localStorage.getItem("tests")) || mockTests;
+  let urlParams = new URLSearchParams(window.location.search);
+  let testId = urlParams.get("id") || 1;
+
+  const index = allTests.findIndex((t) => t.id == testId);
+  if (index !== -1) {
+    allTests[index].name = name;
+    allTests[index].category = category;
+    allTests[index].time = time;
+    allTests[index].questions = questions.length;
+  }
+
+  localStorage.setItem("tests", JSON.stringify(allTests));
+  saveToLocalStorage();
+  createToast("success", "Lưu bài test thành công!");
+
+  setTimeout(() => {
+    window.location.href = "./test-manager.html";
+  }, 1500);
+};
+
 const toggleDeleteModal = (show) =>
   document.getElementById("deleteModal").classList.toggle("active", show);
 
@@ -97,46 +167,76 @@ const prepareDelete = (btn) => {
 };
 
 const confirmDeleteRow = () => {
-  if (editingRow) editingRow.remove();
+  if (editingRow) {
+    const id = parseInt(editingRow.cells[0].innerText);
+    questions = questions.filter((q) => q.id !== id);
+    renderTable();
+  }
   toggleDeleteModal(false);
+  saveToLocalStorage();
+  createToast("success", "Xóa câu hỏi thành công!");
 };
 
 const editCurrentRow = (btn) => openModal(true, btn.closest("tr"));
 
-// 7. Khởi chạy khi trang load
+const renderCategoryOptions = () => {
+  const categorySelect = document.querySelector(".test-info-section select");
+  if (!categorySelect) {
+    return;
+  }
+  const categories = JSON.parse(localStorage.getItem("categories")) || [];
+
+  categorySelect.innerHTML = '<option value="">Chọn danh mục</option>';
+
+  categories.forEach((cat) => {
+    const option = document.createElement("option");
+    const fullCategoryName = `${cat.emoji} ${cat.name}`;
+    option.value = fullCategoryName;
+    option.textContent = fullCategoryName;
+    categorySelect.appendChild(option);
+  });
+};
+
 window.onload = function () {
   checkLogin();
+  renderCategoryOptions();
 
-  // --- LẤY ID TỪ URL VÀ ĐIỀN DỮ LIỆU ---
   let urlParams = new URLSearchParams(window.location.search);
-  let testId = urlParams.get("id") || 1; // Mặc định lấy id 1 nếu không có tham số
+  let testId = urlParams.get("id") || 1;
+  STORAGE_KEY = `editTestQuestions_${testId}`;
 
-  // Tìm kiếm trong mảng mockTests vừa tạo ở trên
-  let testData = mockTests.find((t) => t.id == testId);
+  getQuestionsFromTable();
+  loadFromLocalStorage();
+
+  let allTests = JSON.parse(localStorage.getItem("tests")) || mockTests;
+  let testData = allTests.find((t) => t.id == testId);
 
   if (testData) {
-    // Điền tên bài test
     const nameInput = document.querySelector(
       '.test-info-section input[type="text"]',
     );
     if (nameInput) nameInput.value = testData.name;
 
-    // Điền danh mục (so khớp text bên trong mảng với các option)
     const categorySelect = document.querySelector(".test-info-section select");
     if (categorySelect) {
-      for (let i = 0; i < categorySelect.options.length; i++) {
-        // So sánh chuỗi
-        if (
-          testData.category.includes(categorySelect.options[i].text) ||
-          categorySelect.options[i].text.includes(testData.category)
-        ) {
-          categorySelect.selectedIndex = i;
-          break;
+      if (testData.category) {
+        categorySelect.value = testData.category;
+        if (categorySelect.selectedIndex <= 0) {
+          for (let i = 0; i < categorySelect.options.length; i++) {
+            if (
+              testData.category.includes(categorySelect.options[i].text) ||
+              categorySelect.options[i].text.includes(testData.category)
+            ) {
+              categorySelect.selectedIndex = i;
+              break;
+            }
+          }
         }
+      } else {
+        categorySelect.selectedIndex = 0;
       }
     }
 
-    // Điền thời gian
     const timeInput = document.querySelector(".flex-time input");
     if (timeInput) timeInput.value = parseInt(testData.time);
   }
@@ -146,15 +246,15 @@ window.onload = function () {
   );
   if (addBtn) addBtn.onclick = () => openModal(false);
 
+  const btnSaveAll = document.querySelector(".btn-save-all");
+  if (btnSaveAll) btnSaveAll.onclick = saveTest;
+
   document
     .querySelectorAll(".btn-edit")
     .forEach((btn) => (btn.onclick = () => editCurrentRow(btn)));
   document
     .querySelectorAll(".btn-delete")
     .forEach((btn) => (btn.onclick = () => prepareDelete(btn)));
-
-  document.querySelector(".btn-save-all").onclick = () =>
-    alert("Đã cập nhật bài test thành công!");
 
   window.onclick = (e) => {
     if (e.target.classList.contains("modal-overlay")) {
@@ -163,3 +263,5 @@ window.onload = function () {
     }
   };
 };
+
+window.onbeforeunload = saveToLocalStorage;

@@ -9,11 +9,16 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/add-test.css" />
+    <link rel="stylesheet" href="../css/toast.css" />
   </head>
   <body>
     <header class="navbar">
       <div class="container">
-        <div class="logo">QuizzForge</div>
+        <div class="logo">
+          <a href="./home.html" style="text-decoration: none; color: inherit"
+            >QuizzForge</a
+          >
+        </div>
         <nav class="nav-links">
           <a href="./category-manager.html">Danh mục</a>
           <a href="./test-manager.html" class="active">Bài test</a>
@@ -127,6 +132,9 @@
       </div>
     </div>
 
+    <div id="toast-container"></div>
+
     <script src="../js/add-test.js"></script>
+    <script src="../js/toast.js"></script>
   </body>
 </html>

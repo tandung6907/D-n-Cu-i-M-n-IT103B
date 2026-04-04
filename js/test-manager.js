@@ -39,11 +39,11 @@ const toggleModal = (modalElement, show) => {
   }
 };
 
-// 4. Render bảng bài test
-const renderTable = () => {
+// 4. Render filtered/sorted table
+const renderTable = (filteredTests = tests) => {
   tableBody.innerHTML = "";
 
-  tests.forEach((item) => {
+  filteredTests.forEach((item) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
             <td class="text-center" data-label="ID">${item.id}</td>
@@ -53,7 +53,8 @@ const renderTable = () => {
             <td data-label="Thời gian">${item.time}</td>
             <td class="text-center" data-label="Hành động">
                 <div class="action-group">
-                    <a href="./edit-test.html" class="btn btn-edit" style="text-decoration: none;">Sửa</a>
+                    <a href="./edit-test.html?id=${item.id}" class="btn btn-edit" style="text-decoration: none;">Sửa</a>
+                    
                     <button class="btn btn-delete" onclick="prepareDelete(${item.id})">Xoá</button>
                 </div>
             </td>
@@ -77,11 +78,16 @@ const confirmDelete = () => {
   // Lọc bỏ phần tử bị xoá
   tests = tests.filter((t) => t.id !== idToDelete);
 
+  // Renumber IDs from 1
+  tests.forEach((test, index) => {
+    test.id = index + 1;
+  });
+
   syncStorage();
   renderTable();
   toggleModal(deleteModal, false);
+  createToast("success", "Xóa bài test thành công!");
 };
-
 
 // Kiểm tra đăng nhập admin
 const checkLogin = () => {
@@ -98,16 +104,46 @@ const checkLogin = () => {
     window.location.href = "../pages/login.html";
     return;
   }
-  
+
   if (currentUser.role !== "admin") {
     window.location.href = "../pages/home.html";
     return;
   }
-}
+};
 
 // 6. Gán sự kiện cho các nút bấm in DOMContentLoaded
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   checkLogin();
+
+  // Filter & Sort handlers
+  const sortSelect = document.querySelector(".filters select");
+  const searchInput = document.querySelector(".filters input");
+
+  const applyFilters = () => {
+    let filteredTests = [...tests];
+    if (searchInput.value.trim()) {
+      const searchTerm = searchInput.value.trim().toLowerCase();
+      filteredTests = filteredTests.filter((test) =>
+        test.name.toLowerCase().includes(searchTerm),
+      );
+    }
+    const sortValue = sortSelect.value;
+
+    if (sortValue === "newest") {
+      filteredTests.sort((a, b) => b.id - a.id);
+    } else if (sortValue === "az") {
+      filteredTests.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortValue === "questions") {
+      filteredTests.sort((a, b) => b.questions - a.questions);
+    } else if (sortValue === "time") {
+      filteredTests.sort((a, b) => parseInt(b.time) - parseInt(a.time));
+    }
+
+    renderTable(filteredTests);
+  };
+
+  if (sortSelect) sortSelect.onchange = applyFilters;
+  if (searchInput) searchInput.oninput = applyFilters;
 
   // Nút Xoá trong modal
   const btnConfirmDelete = document.querySelector("#deleteModal .btn-danger");

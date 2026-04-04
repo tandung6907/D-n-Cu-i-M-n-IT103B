@@ -1,12 +1,34 @@
-// 1. Dữ liệu mẫu ban đầu
-let questions = [
-  { id: 1, text: "What is the capital of France?" },
-  { id: 2, text: "Which planet is known as the Red Planet?" },
-];
-
+// 1. Dữ liệu mẫu ban đầu & LocalStorage
+const STORAGE_KEY = "addTestQuestions";
+let questions = [];
 let editingRow = null;
 let rowToDelete = null;
-let questionIdCounter = 3; // Tiếp theo là ID 3
+let questionIdCounter = 3;
+
+const saveToLocalStorage = () => {
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify({
+      questions,
+      questionIdCounter,
+    }),
+  );
+};
+
+const loadFromLocalStorage = () => {
+  const data = localStorage.getItem(STORAGE_KEY);
+  if (data) {
+    const parsed = JSON.parse(data);
+    questions = parsed.questions || [];
+    questionIdCounter = Math.max(3, parsed.questionIdCounter || 3);
+  } else {
+    // Fallback to initial data
+    questions = [
+      { id: 1, text: "What is the capital of France?" },
+      { id: 2, text: "Which planet is known as the Red Planet?" },
+    ];
+  }
+};
 
 // 2. Render bảng dữ liệu mẫu
 const renderTable = () => {
@@ -93,6 +115,8 @@ const saveQuestion = () => {
   }
   renderTable();
   closeModal();
+  saveToLocalStorage();
+  createToast("success", "Lưu câu hỏi thành công!");
 };
 
 // 6. Xử lý Xóa với Popup xác nhận
@@ -111,11 +135,12 @@ document.getElementById("confirmDeleteBtn").onclick = () => {
     renderTable();
   }
   closeDeleteModal();
+  saveToLocalStorage();
+  createToast("success", "Xóa câu hỏi thành công!");
 };
 
 const editRow = (btn) => openModal(true, btn.closest("tr"));
 
-// Check login first
 const checkLogin = () => {
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
   if (!currentUser || currentUser.role !== "admin") {
@@ -126,13 +151,21 @@ const checkLogin = () => {
 // 7. Khởi tạo khi trang load
 window.onload = () => {
   checkLogin();
-  renderTable(); // Vẽ 2 câu hỏi mẫu ra bảng
+  loadCategories();
+  loadFromLocalStorage();
+  renderTable();
 
   // Gán sự kiện cho nút "Thêm câu hỏi" chính
   const btnAdd = document.querySelector(
     ".action-bar .btn-primary:not(.btn-save-all)",
   );
   if (btnAdd) btnAdd.onclick = () => openModal(false);
+
+  // Nút Lưu tất cả bài test
+  const btnSaveAll = document.querySelector(".btn-save-all");
+  if (btnSaveAll) {
+    btnSaveAll.onclick = saveTest;
+  }
 
   // Đóng modal khi click ra ngoài vùng tối
   window.onclick = (e) => {
@@ -142,3 +175,56 @@ window.onload = () => {
     }
   };
 };
+
+// Load categories from localStorage and populate select
+const loadCategories = () => {
+  const categories = JSON.parse(localStorage.getItem("categories")) || [];
+  const select = document.querySelector(".test-info-section select");
+  if (select) {
+    select.innerHTML = '<option value="">Chọn danh mục</option>';
+    categories.forEach((cat) => {
+      const option = document.createElement("option");
+      option.value = cat.emoji + " " + cat.name;
+      option.textContent = cat.emoji + " " + cat.name;
+      select.appendChild(option);
+    });
+  }
+};
+
+// Hàm lưu bài test và redirect
+const saveTest = () => {
+  const nameInput = document.querySelector(
+    '.test-info-section input[type="text"]',
+  );
+  const categorySelect = document.querySelector(".test-info-section select");
+  const timeInput = document.querySelector(".flex-time input");
+
+  if (!nameInput.value.trim()) {
+    return createToast("error", "Vui lòng nhập tên bài test!");
+  }
+
+  // Get tests array
+  let tests = JSON.parse(localStorage.getItem("tests")) || [];
+  const newId = tests.length > 0 ? Math.max(...tests.map((t) => t.id)) + 1 : 1;
+
+  const newTest = {
+    id: newId,
+    name: nameInput.value.trim(),
+    category: categorySelect.options[categorySelect.selectedIndex].text,
+    questions: questions.length,
+    time: timeInput.value,
+  };
+
+  tests.push(newTest);
+  localStorage.setItem("tests", JSON.stringify(tests));
+
+  // Save questions
+  saveToLocalStorage();
+
+  createToast("success", "Lưu bài test thành công!");
+  setTimeout(() => {
+    window.location.href = "./test-manager.html";
+  }, 1500);
+};
+
+window.onbeforeunload = saveToLocalStorage;

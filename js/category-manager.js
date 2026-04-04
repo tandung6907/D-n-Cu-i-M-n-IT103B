@@ -148,6 +148,7 @@ const saveData = () => {
   syncStorage(); // Lưu lại
   renderTable(); // Vẽ lại bảng
   toggleModal(modal, false); // Đóng popup
+  createToast("success", "Thao tác danh mục thành công!");
 };
 
 //6. Logic xoá
@@ -165,9 +166,15 @@ const confirmDelete = () => {
   // Lọc bỏ phần tử bị xoá
   categories = categories.filter((c) => c.id !== idToDelete);
 
+  // Renumber IDs from 1
+  categories.forEach((cat, index) => {
+    cat.id = index + 1;
+  });
+
   syncStorage();
   renderTable();
   toggleModal(deleteModal, false);
+  createToast("success", "Xóa danh mục thành công!");
 };
 
 // Kiểm tra đăng nhập admin
