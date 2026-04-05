@@ -13,6 +13,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🧠 Khoa học",
         question: 20,
         time: "15 min",
+
     },
     {
         id: 3,
@@ -20,6 +21,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+
     },
     {
         id: 4,
@@ -27,6 +29,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+
     },
     {
         id: 5,
@@ -34,6 +37,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+
     },
     {
         id: 6,
@@ -41,6 +45,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+
     },
     {
         id: 7,
@@ -48,6 +53,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+
     },
     {
         id: 8,
@@ -55,6 +61,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+
     },
     {
         id: 9,
@@ -62,6 +69,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+
     },
     {
         id: 10,
@@ -69,6 +77,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+
     },
     {
         id: 11,
@@ -76,6 +85,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+
     },
     {
         id: 12,
@@ -83,6 +93,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+
     },
 ]
 let currentPage = 1;
@@ -126,17 +137,7 @@ function searchItems() {
 let editId = null;
 
 function clickUpd(id) {
-    editId = id;
-    document.querySelector(".modal-header h3").innerText = "Sửa bài test";
-    
-    let item = tests.find(val => val.id === id);
-    if (item) {
-        document.getElementById("testName").value = item.name;
-        document.getElementById("testCategory").value = item.category;
-        document.getElementById("testQuestion").value = item.question;
-        document.getElementById("testTime").value = item.time;
-    }
-    document.getElementById("testModal").style.display = "flex";
+    window.location.href = `./editTest.html?id=${id}`;
 }
 
 function closeModal() {
@@ -222,6 +223,19 @@ function sortItems (){
             tests = result4;
             showUp();
             break;
+            case "5":
+            tests.sort((a, b) => {
+                return a.name.localeCompare(b.name);
+            });
+            showUp();
+            break;
+
+        case "6":
+            tests.sort((a, b) => {
+                return b.name.localeCompare(a.name);
+            });
+            showUp();
+            break
         default:
             let result5 = tests.sort((value1, value2)=>{
                 return value1.id - value2.id;
@@ -251,8 +265,17 @@ function changePage(page) {
     currentPage = page;
     showUp();
 }
+
 function logout() {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userLogin");
-    window.location.href = "../index/logIn.html";
+    Swal.fire({
+      text: 'Đăng xuất tài khoản thành công',
+      icon: 'success',
+      timer: 1500,
+      showConfirmButton: false,
+      timerProgressBar: true
+    }).then(() => {
+          window.location.href = "../index/logIn.html";
+    });
 }

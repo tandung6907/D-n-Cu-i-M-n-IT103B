@@ -1,27 +1,103 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chuyển hướng</title>
-        <link rel="icon" href="../img/20260402-150420.jpg">
+    <link rel="icon" href="../img/20260402-150420.jpg">
+    <style>
+        *{
+            cursor: none;
+        }
+        .custom-loader-container {
+            position: relative;
+            width: 220px; 
+            height: 220px;
+            margin: 20px auto 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .custom-swal-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 2; 
+            background: black;
+        }
+        .rainbow-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            width: 212px; 
+            height: 212px;
+            border-radius: 50%;
+            z-index: 1; 
+            opacity: 0.7; 
+            background: conic-gradient(red, orange, yellow, green, cyan, blue, violet, red);
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #fff calc(100% - 5px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #fff calc(100% - 5px));
+            animation: rotateRainbow 2s linear infinite;
+        }
+        @keyframes rotateRainbow {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        .swal2-html-container #swal-text {
+            margin-top: 20px;
+            display: block;
+            font-weight: 500;
+        }
+    </style>
+    <link rel="stylesheet" href="../style/specialCursor.css">
 
 </head>
-
 <body>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        const imgUrl = '../img/1818-removebg-preview.png';
         Swal.fire({
-            text: 'Đang chuyển hướng tới trang đăng nhập',
-            icon: "info",
-            timer: 1000,
+            html: `
+                <div class="custom-loader-container">
+                    <div class="rainbow-ring"></div>
+                    <img src="${imgUrl}" alt="User Avatar" class="custom-swal-image" onerror="this.src='https://via.placeholder.com/200'">
+                </div>
+                <span id="swal-text">Đang chuyển hướng tới trang đăng nhập</span>
+            `,
+            timer: 6000,
             showConfirmButton: false,
-            timerProgressBar: true
+            timerProgressBar: false,
+            width: '400px',
+            background: '#fff',
         }).then(() => {
             window.location.href = "./logIn.html";
         });
     </script>
-</body>
+    <div id="solar-cursor">
+        <div class="sun"></div>
 
-<script>
+        <div class="orbit-line l-1"></div>
+        <div class="orbit-line l-2"></div>
+        <div class="orbit-line l-3"></div>
+        <div class="orbit-line l-4"></div>
+        <div class="orbit-line l-5"></div>
+        <div class="orbit-line l-6"></div>
+        <div class="orbit-line l-7"></div>
+        <div class="orbit-line l-8"></div>
+
+        <div class="planet mercury"></div>
+        <div class="planet venus"></div>
+        <div class="planet earth"></div>
+        <div class="planet mars"></div>
+        <div class="planet jupiter"></div>
+        <div class="planet saturn"></div>
+        <div class="planet uranus"></div>
+        <div class="planet neptune"></div>
+    </div>
+</body>
+    <script src="../script/specialCursor.js"></script>
+
+</html>

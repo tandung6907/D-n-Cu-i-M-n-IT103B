@@ -95,7 +95,15 @@ function saveCategory() {
 }
 function clickDel(index) {
     idToDelete = index;
+    let item = accounts.find(value => value.id === index);
+
+    if (item) {
+        let categoryNameOnly = item.category.split(" ").slice(1).join(" ");
+        document.querySelector("#deleteModal .modal-body p").innerHTML =
+            `Bạn chắc chắn muốn xoá category <strong>"${categoryNameOnly}"</strong>?`;
+    }
     document.getElementById("deleteModal").style.display = "flex";
+
 }
 
 function closeDeleteModal() {
@@ -152,5 +160,13 @@ function changePage(page) {
 function logout() {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userLogin");
-    window.location.href = "../index/logIn.html";
+    Swal.fire({
+      text: 'Đăng xuất tài khoản thành công',
+      icon: 'success',
+      timer: 1500,
+      showConfirmButton: false,
+      timerProgressBar: true
+    }).then(() => {
+          window.location.href = "../index/logIn.html";
+    });
 }

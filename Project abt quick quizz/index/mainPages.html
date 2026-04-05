@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../script/checkLogin.js"></script>
     <title>QuizzForge</title>
     <link rel="stylesheet" href="../style/mainPages.css">
@@ -35,114 +36,11 @@
             <h2>⭐ Các câu đố nổi bật</h2>
             <div class="sorty">
                 Sắp xếp theo:
-                <button class="asc">Lượt chơi tăng dần</button>
-                <button class="desc">Lượt chơi giảm dần</button>
+                <button class="asc" onclick="ascClick()">Lượt chơi tăng dần</button>
+                <button class="desc" onclick="descClick()">Lượt chơi giảm dần</button>
             </div>
             <div class="cards">
-                <div class="containers">
-                    <div class="poster">
-                        <img src="../img/8160b25e90a83127a613c90527e7cea2365c88ea.png" alt="vungtienquatran">
-                    </div>
-                    <div class="information">
-                        <p>🏠 Đời sống</p>
-                        <h3>Thách thức sự hiểu biết của bạn</h3>
-                        <p>15 câu hỏi - 1 lượt chơi</p>
-                    </div>
-                    <div class="playBtnss">
-                        <button class="playBtn"><a href="./doTest.html">Chơi</a></button>
-                    </div>
-                </div>
-                <div class="containers">
-                    <div class="poster">
-                        <img src="../img/8160b25e90a83127a613c90527e7cea2365c88ea.png" alt="vungtienquatran">
-                    </div>
-                    <div class="information">
-                        <p>🏠 Đời sống</p>
-                        <h3>Thách thức sự hiểu biết của bạn</h3>
-                        <p>15 câu hỏi - 2 lượt chơi</p>
-                    </div>
-                    <div class="playBtnss">
-                        <button class="playBtn"><a href="./doTest.html">Chơi</a></button>
-                    </div>
-                </div>
-                <div class="containers">
-                    <div class="poster">
-                        <img src="../img/8160b25e90a83127a613c90527e7cea2365c88ea.png" alt="vungtienquatran">
-                    </div>
-                    <div class="information">
-                        <p>🏠 Đời sống</p>
-                        <h3>Thách thức sự hiểu biết của bạn</h3>
-                        <p>15 câu hỏi - 2 lượt chơi</p>
-                    </div>
-                    <div class="playBtnss">
-                        <button class="playBtn"><a href="./doTest.html">Chơi</a></button>
-                    </div>
-                </div>
-                <div class="containers">
-                    <div class="poster">
-                        <img src="../img/8160b25e90a83127a613c90527e7cea2365c88ea.png" alt="vungtienquatran">
-                    </div>
-                    <div class="information">
-                        <p>🏠 Đời sống</p>
-                        <h3>Thách thức sự hiểu biết của bạn</h3>
-                        <p>15 câu hỏi - 2 lượt chơi</p>
-                    </div>
-                    <div class="playBtnss">
-                        <button class="playBtn"><a href="./doTest.html">Chơi</a></button>
-                    </div>
-                </div>
-                <div class="containers">
-                    <div class="poster">
-                        <img src="../img/8160b25e90a83127a613c90527e7cea2365c88ea.png" alt="vungtienquatran">
-                    </div>
-                    <div class="information">
-                        <p>🏠 Đời sống</p>
-                        <h3>Thách thức sự hiểu biết của bạn</h3>
-                        <p>15 câu hỏi - 2 lượt chơi</p>
-                    </div>
-                    <div class="playBtnss">
-                        <button class="playBtn"><a href="./doTest.html">Chơi</a></button>
-                    </div>
-                </div>
-                <div class="containers">
-                    <div class="poster">
-                        <img src="../img/8160b25e90a83127a613c90527e7cea2365c88ea.png" alt="vungtienquatran">
-                    </div>
-                    <div class="information">
-                        <p>🏠 Đời sống</p>
-                        <h3>Thách thức sự hiểu biết của bạn</h2>
-                            <p>15 câu hỏi - 2 lượt chơi</p>
-                    </div>
-                    <div class="playBtnss">
-                        <button class="playBtn"><a href="./doTest.html">Chơi</a></button>
-                    </div>
-                </div>
-                <div class="containers">
-                    <div class="poster">
-                        <img src="../img/8160b25e90a83127a613c90527e7cea2365c88ea.png" alt="vungtienquatran">
-                    </div>
-                    <div class="information">
-                        <p>🏠 Đời sống</p>
-                        <h3>Thách thức sự hiểu biết của bạn</h3>
-                        <p>15 câu hỏi - 2 lượt chơi</p>
-                    </div>
-                    <div class="playBtnss">
-                        <button class="playBtn"><a href="./doTest.html">Chơi</a></button>
-                    </div>
-                </div>
-                <div class="containers">
-                    <div class="poster">
-                        <img src="../img/8160b25e90a83127a613c90527e7cea2365c88ea.png" alt="vungtienquatran">
-                    </div>
-                    <div class="information">
-                        <p>🏠 Đời sống</p>
-                        <h3>Thách thức sự hiểu biết của bạn</h3>
-                        <p>15 câu hỏi - 2 lượt chơi</p>
-                    </div>
-                    <div class="playBtnss">
-                        <button class="playBtn"><a href="./doTest.html">Chơi</a></button>
-                    </div>
-                </div>
+                
             </div>
             <div class="pages">
                 <button class="special">&lt;</button>

@@ -1,0 +1,33 @@
+#countdown-container {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.timer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.timer div {
+    background: #333;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    min-width: 70px;
+}
+
+.timer span {
+    font-size: 2rem;
+    font-weight: bold;
+    display: block;
+}
+
+.timer p {
+    margin: 5px 0 0;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}

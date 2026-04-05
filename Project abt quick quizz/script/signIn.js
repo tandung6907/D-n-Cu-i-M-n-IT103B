@@ -82,7 +82,15 @@ function siClick(event){
     }
     information.push(infObj);
     localStorage.setItem("quizzAcc",JSON.stringify(information));
-    document.location.href = "../index/logIn.html";
+    Swal.fire({
+            text: 'Đang chuyển hướng tới trang đăng nhập',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false,
+            timerProgressBar: true
+        }).then(() => {
+            window.location.href = "../index/logIn.html";
+        });
 }
 function validateEmail(email) {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

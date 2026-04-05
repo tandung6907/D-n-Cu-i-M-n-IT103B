@@ -368,3 +368,6 @@ tbody tr {
 #delBtn{
     cursor: pointer;
 }
+table{
+    border: 1px solid rgba(222, 226, 230, 1);
+}

@@ -62,6 +62,9 @@
     height: 65px;
 
 }
+#psw{
+    margin-left: 45px;
+}
 #asking p{
     font-weight: 400;
     width: 444px;
@@ -85,7 +88,7 @@
     display: none;
 }
 .labels{
-    margin-right: 400px;
+    margin-right: 425px;
     font-weight: 400;
     font-size: 18px;
     color: black;
@@ -161,4 +164,9 @@
     #siForm {
         border-radius: 15px;
     }
+}
+#siBtn:hover {  
+    cursor: url('../img/1818-removebg-preview.png'), auto;
+    opacity: 0.9;
+    
 }

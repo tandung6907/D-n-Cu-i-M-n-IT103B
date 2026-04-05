@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../script/checkLogin.js"></script>
     <title>Edit Test</title>
     <link rel="stylesheet" href="../style/editTest.css">
@@ -57,7 +58,7 @@
                 <button id="addBtn" onclick="addClick()">Thêm câu hỏi</button>
                 <button id="saveBtn" onclick="saveClick()">Lưu</button>
             </div>
-            <table id="tble" border="0" cellspacing="0">
+            <table id="tble" border="1" cellspacing="0">
                 <thead>
                     <tr>
                         <th class="id">ID</th>
@@ -69,6 +70,7 @@
 
                 </tbody>
             </table>
+            <div class="pages pages-container"></div>
         </div>
     </div>
     <div class="footer">
@@ -127,6 +129,7 @@
         </div>
     </div>
     <script src="../script/editTest.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

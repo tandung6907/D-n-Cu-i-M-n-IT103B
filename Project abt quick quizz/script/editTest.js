@@ -1,217 +1,258 @@
-let somesome = JSON.parse(localStorage.getItem("anc"));
-let smthsmth = JSON.parse(localStorage.getItem("ttts"));
-function printCategory (){
+let somesome = JSON.parse(localStorage.getItem("anc")) || [];
+let smthsmth = JSON.parse(localStorage.getItem("ttts")) || [];
+
+const urlParams = new URLSearchParams(window.location.search);
+const editTestId = urlParams.get('id');
+
+let question = [];
+let currentPage = 1;
+let perPage = 5;
+let totalPages = 0;
+
+function printCategory() {
     let catStr = `<option value="">Chọn danh mục</option>`;
-    for(let i = 0;i<somesome.length;i++){
-        catStr +=`            
-            <option value="${somesome[i].category}">${somesome[i].category}</option>    
-        `
+    for (let i = 0; i < somesome.length; i++) {
+        catStr += `<option value="${somesome[i].category}">${somesome[i].category}</option>`;
     }
     document.getElementById("sorts").innerHTML = catStr;
 }
-printCategory();
-function errorAnnouncement(lass,announcement,value){
-    document.querySelector(lass).style.display = value;
-    document.querySelector(lass).textContent = announcement;
-}
 
-let question = [
-    {id: 1, name: "What is the capital of France?", answers: []},
-    {id: 2, name: "Which planet is known as the Red Planet?", answers: []},
-    {id: 3, name: "Which planet is known as the Red Planet?", answers: []},
-    {id: 4, name: "Which planet is known as the Red Planet?", answers: []},
-    {id: 5, name: "Which planet is known as the Red Planet?", answers: []},
+window.onload = function () {
+    printCategory();
 
-]
-function showUp(){
+    if (editTestId) {
+        document.querySelector(".format h2").innerText = "Sửa bài test";
+        let testItem = smthsmth.find(t => t.id == editTestId);
+
+        if (testItem) {
+            document.getElementById("tName").value = testItem.name;
+            document.getElementById("sorts").value = testItem.category;
+            document.getElementById("times").value = parseInt(testItem.time);
+
+            if (testItem.detailQuestion) {
+                question = [...testItem.detailQuestion];
+            }
+        }
+    }
+    showUp();
+};
+
+function showUp() {
+    let start = (currentPage - 1) * perPage;
+    let end = currentPage * perPage;
+    let currentQuestions = question.slice(start, end);
+
     let str = "";
-    for(let i =0;i<question.length;i++){
-        str+=`
-            <tr class="${i%2==0? 'odd' : ''}">
-                        <td class="num">${i+1}</td>
+    for (let i = 0; i < currentQuestions.length; i++) {
+        let displayIndex = (currentPage - 1) * perPage + i + 1;
 
-                        <td>${question[i].name}</td>
-                        <td class="grBtn">
-                            <button id="updBtn" onclick = "clickUpd(${question[i].id})">Sửa</button>
-                            <button id="delBtn" onclick = "clickDel(${question[i].id})">Xoá</button>
-                        </td>
-                    </tr>
-        `
+        str += `
+            <tr class="${i % 2 == 0 ? 'odd' : ''}">
+                <td class="num">${displayIndex}</td>
+                <td>${currentQuestions[i].name}</td>
+                <td class="grBtn">
+                    <button id="updBtn" onclick="clickUpd(${currentQuestions[i].id})">Sửa</button>
+                    <button id="delBtn" onclick="clickDel(${currentQuestions[i].id})">Xoá</button>
+                </td>
+            </tr>`;
     }
     document.getElementById("tMain").innerHTML = str;
+    renderPagination();
 }
-showUp();
-function saveClick(){
+
+function renderPagination() {
+    totalPages = Math.ceil(question.length / perPage);
+    let paginationStr = "";
+    paginationStr += `<button class="special ${currentPage === 1 ? 'disabled' : ''}" 
+                      onclick="changePage(${currentPage - 1})">&lt;</button>`;
+
+    for (let i = 1; i <= totalPages; i++) {
+        paginationStr += `<button class="${i === currentPage ? 'current' : 'other'}" 
+                          onclick="changePage(${i})">${i}</button>`;
+    }
+    paginationStr += `<button class="other next ${currentPage === totalPages || totalPages === 0 ? 'disabled' : ''}" 
+                      onclick="changePage(${currentPage + 1})">&gt;</button>`;
+    let container = document.querySelector(".pages-container");
+    if (container) {
+        container.innerHTML = paginationStr;
+    }
+}
+
+function changePage(page) {
+    if (page < 1 || page > totalPages) return;
+    currentPage = page;
+    showUp();
+}
+
+function saveClick() {
     let tName = document.getElementById("tName").value.trim();
     let tCat = document.getElementById("sorts").value.trim();
     let tTime = document.getElementById("times").value.trim();
-    if(tName.length==0){
-        errorAnnouncement(".error-msg","Tên bài test không được để trống","block");
+    errorAnnouncement(".error-msg", "", "none");
+    if (!tName || !tCat || !tTime) {
+        errorAnnouncement(".error-msg", "Vui lòng điền đầy đủ thông tin bài test", "block");
         return;
     }
-        errorAnnouncement(".error-msg","","none");
-    if(tCat.length == 0){
-        errorAnnouncement(".error-msg","Tên danh mục không được để trống","block");
-        return;
 
-
-    }
-        errorAnnouncement(".error-msg","","none");
-    if(tTime.length ==0){
-        errorAnnouncement(".error-msg","Thời gian làm không được để trống","block");
-        return;
-
-        
-    }
-        errorAnnouncement(".error-msg","","none");
-        let createId = smthsmth.length;
-   let addInto = {
-            id: ++createId,
+    if (editTestId) {
+        let index = smthsmth.findIndex(t => t.id == editTestId);
+        if (index !== -1) {
+            smthsmth[index].name = tName;
+            smthsmth[index].category = tCat;
+            smthsmth[index].time = tTime + " min";
+            smthsmth[index].question = question.length;
+            smthsmth[index].detailQuestion = question;
+            Swal.fire({
+                text: 'Thành công',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+                timerProgressBar: true
+            }).then(() => {
+                window.location.href = "../index/testManager.html";
+            });
+        }
+    } else {
+        let newId = smthsmth.length > 0 ? Math.max(...smthsmth.map(t => t.id)) + 1 : 1;
+        let addInto = {
+            id: newId,
             name: tName,
             category: tCat,
             question: question.length,
-            time: tTime + ` min`,
-            detailQuestion: question,
-   }
-   smthsmth.push(addInto);
-   localStorage.setItem("ttts", JSON.stringify(smthsmth));
-   window.location.href ="./testManager.html"
+            time: tTime + " min",
+            detailQuestion: question
+        };
+        smthsmth.push(addInto);
+        Swal.fire({
+            text: 'Thành công',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false,
+            timerProgressBar: true
+        }).then(() => {
+            window.location.href = "../index/testManager.html";
+        });
+    }
+    localStorage.setItem("ttts", JSON.stringify(smthsmth));
+
 }
-let editId = null; 
+let editId = null;
+
 function addClick() {
     editId = null;
     document.querySelector(".modal-header h3").innerText = "Thêm câu hỏi";
     document.getElementById("testName").value = "";
-
-    document.getElementById("answerContainer").innerHTML = `
-        <div class="answer-group">
-            <div class="check-box-wrapper">
-                <input type="checkbox" class="is-correct">
-            </div>
-            <input type="text" placeholder="Nhập câu trả lời" class="answer-input">
-            <button class="delete-btn" onclick="this.parentElement.remove()">
-                <i class="fa-solid fa-trash-can"></i>
-            </button>
-        </div>
-    `; 
+    document.getElementById("answerContainer").innerHTML = "";
+    addAnswerRow();
     document.getElementById("testModal").style.display = "flex";
 }
 
-function addAnswerRow() {
-    const container = document.getElementById("answerContainer");
-    const div = document.createElement("div");
-    div.className = "answer-group";
-    div.innerHTML = `
-        <div class="check-box-wrapper">
-            <input type="checkbox" class="is-correct">
-        </div>
-        <input type="text" placeholder="Nhập câu trả lời" class="answer-input">
-        <button class="delete-btn" onclick="this.parentElement.remove()">
-            <i class="fa-solid fa-trash-can"></i>
-        </button>
-    `;
-    container.appendChild(div);
-}
-
 function saveModal() {
-    let questionName = document.getElementById("testName").value.trim();
-    let answerRows = document.querySelectorAll(".answer-group"); 
-    let answers = [];
+    let qName = document.getElementById("testName").value.trim();
+    let rows = document.querySelectorAll(".answer-group");
+    let ansArr = [];
 
-    answerRows.forEach(row => {
-        let text = row.querySelector(".answer-input").value.trim();
-        let correct = row.querySelector(".is-correct").checked;
-        if (text) {
-            answers.push({ text: text, correct: correct });
-        }
+    rows.forEach(row => {
+        let txt = row.querySelector(".answer-input").value.trim();
+        let isCorrect = row.querySelector(".is-correct").checked;
+        if (txt) ansArr.push({ text: txt, correct: isCorrect });
     });
 
-    if (!questionName || answers.length === 0) {
-        alert("Vui lòng nhập câu hỏi và ít nhất một câu trả lời!");
+    if (!qName || ansArr.length === 0) {
+        alert("Vui lòng nhập câu hỏi và câu trả lời!");
         return;
     }
 
     if (editId === null) {
-        question.push({
-            id: Date.now(),
-            name: questionName,
-            answers: answers 
-        });
+        question.push({ id: Date.now(), name: qName, answers: ansArr });
+        currentPage = Math.ceil(question.length / perPage);
     } else {
         let idx = question.findIndex(q => q.id === editId);
         if (idx !== -1) {
-            question[idx].name = questionName;
-            question[idx].answers = answers;
+            question[idx].name = qName;
+            question[idx].answers = ansArr;
         }
     }
-    
     showUp();
     closeModal();
 }
-function closeModal() {
-    document.getElementById("testModal").style.display = "none";
-}
-let idToDelete = null;
 
-function clickDel(id) {
-    idToDelete = id;
-    document.getElementById("deleteModal").style.display = "flex";
-}
-
-function closeDeleteModal() {
-    document.getElementById("deleteModal").style.display = "none";
-}
-
-function confirmDelete() {
-    if (idToDelete !== null) {
-        question = question.filter(t => t.id !== idToDelete); 
-        showUp(); 
-        closeDeleteModal();
-    }
-    idToDelete = null;
+function addAnswerRow() {
+    const div = document.createElement("div");
+    div.className = "answer-group";
+    div.innerHTML = `
+        <div class="check-box-wrapper"><input type="checkbox" class="is-correct"></div>
+        <input type="text" placeholder="Nhập câu trả lời" class="answer-input">
+        <button class="delete-btn" onclick="this.parentElement.remove()">
+            <i class="fa-solid fa-trash-can"></i>
+        </button>`;
+    document.getElementById("answerContainer").appendChild(div);
 }
 
-showUp();
-
-window.onclick = function (event) {
-    let testModal = document.getElementById("testModal");
-    let deleteModal = document.getElementById("deleteModal");
-    if (event.target == testModal) closeModal();
-    if (event.target == deleteModal) closeDeleteModal();
-}
 function clickUpd(id) {
     editId = id;
     let item = question.find(q => q.id === id);
     if (!item) return;
-
     document.querySelector(".modal-header h3").innerText = "Sửa câu hỏi";
     document.getElementById("testName").value = item.name;
-
     let container = document.getElementById("answerContainer");
-    container.innerHTML = ""; 
-
-    if (item.answers && item.answers.length > 0) {
-        item.answers.forEach(ans => {
-            const div = document.createElement("div");
-            div.className = "answer-group";
-            div.innerHTML = `
-                <div class="check-box-wrapper">
-                    <input type="checkbox" class="is-correct" ${ans.correct ? 'checked' : ''}>
-                </div>
-                <input type="text" placeholder="Nhập câu trả lời" class="answer-input" value="${ans.text}">
-                <button class="delete-btn" onclick="this.parentElement.remove()">
-                    <i class="fa-solid fa-trash-can"></i>
-                </button>
-            `;
-            container.appendChild(div);
-        });
-    } else {
-        addAnswerRow(); 
-    }
+    container.innerHTML = "";
+    item.answers.forEach(ans => {
+        const div = document.createElement("div");
+        div.className = "answer-group";
+        div.innerHTML = `
+            <div class="check-box-wrapper"><input type="checkbox" class="is-correct" ${ans.correct ? 'checked' : ''}></div>
+            <input type="text" placeholder="Nhập câu trả lời" class="answer-input" value="${ans.text}">
+            <button class="delete-btn" onclick="this.parentElement.remove()">
+                <i class="fa-solid fa-trash-can"></i>
+            </button>`;
+        container.appendChild(div);
+    });
     document.getElementById("testModal").style.display = "flex";
 }
+
+function clickDel(id) {
+    if (idToDelete !== null) {
+        question = question.filter(t => t.id !== idToDelete);
+        if ((currentPage - 1) * perPage >= question.length && currentPage > 1) {
+            currentPage--;
+        }
+        showUp();
+        closeDeleteModal();
+    }
+    idToDelete = null;
+}
+function confirmDelete() {
+    question = question.filter(q => q.id !== idToDelete);
+    showUp();
+    closeDeleteModal();
+}
+function closeModal() {
+    document.getElementById("testModal").style.display = "none";
+}
+function closeDeleteModal() {
+    document.getElementById("deleteModal").style.display = "none";
+}
+function errorAnnouncement(lass, ann, val) {
+    let el = document.querySelector(lass);
+    if (el) { el.style.display = val; el.textContent = ann; }
+}
+
 function logout() {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userLogin");
-    window.location.href = "../index/logIn.html";
+    Swal.fire({
+      text: 'Đăng xuất tài khoản thành công',
+      icon: 'success',
+      timer: 1500,
+      showConfirmButton: false,
+      timerProgressBar: true
+    }).then(() => {
+          window.location.href = "../index/logIn.html";
+    });
+}
+
+window.onclick = function (event) {
+    if (event.target == document.getElementById("testModal")) closeModal();
+    if (event.target == document.getElementById("deleteModal")) closeDeleteModal();
 }

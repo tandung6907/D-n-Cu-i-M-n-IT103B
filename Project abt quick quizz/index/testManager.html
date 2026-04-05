@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../script/checkLogin.js"></script>
     <title>Test Manager</title>
     <link rel="stylesheet" href="../style/testManager.css">
@@ -12,6 +13,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik+Distressed&display=swap"
         rel="stylesheet">
+        <link rel="icon" href="../img/20260402-150420.jpg">
 </head>
 
 <body>
@@ -35,15 +37,17 @@
                 <div class="sortNf">
                     <select name="" id="sorts" onchange="sortItems()">
                         <option value="">Sắp xếp theo</option>
-                        <option value="1" ondrop="">Sắp xếp theo số câu hỏi từ nhỏ đến lớn</option>
-                        <option value="2">Sắp xếp theo số câu hỏi từ lớn đến nhỏ</option>
-                        <option value="3">Sắp xếp theo thời gian từ thấp đến cao</option>
-                        <option value="4">Sắp xếp theo thời gian từ cao đến thấp</option>
+                        <option value="1">Câu hỏi(nhỏ-lớn)</option>
+                        <option value="2">Câu hỏi(lớn-nhỏ)</option>
+                        <option value="3">Thời gian(thấp-cao)</option>
+                        <option value="4">Thời gian(cao-thấp)</option>
+                        <option value="5">Tên (A-Z)</option>
+                        <option value="6">Tên (Z-A)</option>
                     </select>
                     <input type="text" placeholder="Tìm kiếm theo tên" id="found" oninput="searchItems()">
                 </div>
             </div>
-            <table id="tble" border="0" cellspacing="0">
+            <table id="tble" border="1" cellspacing="0">
                 <thead>
                     <tr>
                         <th class="id">ID</th>

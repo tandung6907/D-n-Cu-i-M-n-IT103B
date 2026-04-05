@@ -92,13 +92,6 @@
     color: red;
     display: none;
 }
-#siBtn:hover{
-    transform: translateY(-12px);
-    border: 1px solid rgba(13, 110, 253, 1);
-    background-color: white;
-    color: rgba(13, 110, 253, 1);
-    cursor: pointer;
-}
 @media screen and (max-width: 768px) {
     #bdySi {
         padding: 20px 10px;

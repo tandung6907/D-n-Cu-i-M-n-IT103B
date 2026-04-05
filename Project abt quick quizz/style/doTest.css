@@ -36,7 +36,18 @@
     font-size: 14px;
     text-decoration: none;
 }
-
+.smth{  
+    width: 80px;
+    height: 27px;
+    color: white;
+    background-color: black;
+    margin: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 14px;
+    margin-right: 12px;
+}
 .findingNemo {
     width: 300px;
     height: 39px;
@@ -69,11 +80,14 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    width: 200px;
+    width: 250px;
     height: 457px;
     border-right: 1px solid rgba(204, 204, 204, 1);
     background-color: rgba(255, 255, 255, 1);
     margin-top: 36px;
+    margin-left: 36px;
+    border-top-left-radius: 1px;
+    border-bottom-left-radius: 1px;
 }
 
 .quickDir h2 {
@@ -133,14 +147,19 @@
 }
 
 .description {
-    width: 1672px;
+    max-width: 1200px; 
+    width: 100%;
     height: 457px;
+    min-height: 457px;
     background-color: white;
     display: flex;
-    padding: 20px;
-    flex: 1;
     flex-direction: column;
-    margin-top: 36px;
+    padding: 40px; 
+    flex: 1;
+    margin: 36px auto; 
+    border-top-right-radius: 1px;
+    border-bottom-right-radius: 1px;
+    margin-right: 35px;
 }
 
 .hr {
@@ -387,4 +406,47 @@
 .tMain{
     color: white;
     text-decoration: none;
+}
+.answer {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px;            
+    margin-top: 15px;
+}
+
+.answer label {
+    display: flex;
+    align-items: center;  
+    cursor: pointer;
+    padding: 5px;
+}
+
+.answer input[type="checkbox"] {
+    margin-right: 10px; 
+}
+.answer-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+    padding-left: 10px;
+}
+
+.answer-item label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.answer-item label:hover {
+    color: #007bff;
+}
+
+.ans-check {
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    cursor: pointer;
 }

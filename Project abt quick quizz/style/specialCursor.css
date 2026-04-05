@@ -1,0 +1,59 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #050508;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#solar-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+.sun {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: radial-gradient(circle, #fff700 0%, #ff8c00 100%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 40px 15px rgba(255, 140, 0, 0.6);
+    z-index: 10;
+}
+.orbit-line {
+    position: absolute;
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    pointer-events: none;
+}
+.planet {
+    position: absolute;
+    border-radius: 50%;
+    transform-origin: center;
+    top: 50%;
+    left: 50%;
+}
+.mercury { width: 5px; height: 5px; background: #A5A5A5; box-shadow: 0 0 10px #fff; animation: orbit 3s linear infinite; }
+.venus   { width: 8px; height: 8px; background: #E3BB76; box-shadow: 0 0 12px #E3BB76; animation: orbit 5s linear infinite; }
+.earth   { width: 9px; height: 9px; background: #2271B3; box-shadow: 0 0 15px #2271B3; animation: orbit 7s linear infinite; }
+.mars    { width: 7px; height: 7px; background: #E27B58; box-shadow: 0 0 12px #E27B58; animation: orbit 9s linear infinite; }
+.jupiter { width: 16px; height: 16px; background: #D39C7E; box-shadow: 0 0 18px #D39C7E; animation: orbit 13s linear infinite; }
+.saturn  { width: 14px; height: 14px; background: #C5AB6E; box-shadow: 0 0 15px #C5AB6E; animation: orbit 17s linear infinite; }
+.uranus  { width: 11px; height: 11px; background: #BBE1E4; box-shadow: 0 0 12px #BBE1E4; animation: orbit 21s linear infinite; }
+.neptune { width: 11px; height: 11px; background: #6081FF; box-shadow: 0 0 12px #6081FF; animation: orbit 25s linear infinite; }
+@keyframes orbit {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg) translateX(var(--distance)) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg) translateX(var(--distance)) rotate(-360deg);
+    }
+}
