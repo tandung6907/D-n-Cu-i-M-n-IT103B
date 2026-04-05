@@ -1,45 +1,34 @@
-// 1. Dữ liệu mẫu ban đầu & LocalStorage
-const STORAGE_KEY = "addTestQuestions";
+const STORAGE_TEMP_KEY = "temp_add_test_questions";
 let questions = [];
 let editingRow = null;
-let rowToDelete = null;
-let questionIdCounter = 3;
 
-const saveToLocalStorage = () => {
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify({
-      questions,
-      questionIdCounter,
-    }),
-  );
-};
-
-const loadFromLocalStorage = () => {
-  const data = localStorage.getItem(STORAGE_KEY);
-  if (data) {
-    const parsed = JSON.parse(data);
-    questions = parsed.questions || [];
-    questionIdCounter = Math.max(3, parsed.questionIdCounter || 3);
-  } else {
-    // Fallback to initial data
-    questions = [
-      { id: 1, text: "What is the capital of France?" },
-      { id: 2, text: "Which planet is known as the Red Planet?" },
-    ];
+const checkLogin = () => {
+  let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser || currentUser.role !== "admin") {
+    window.location.href = "../pages/login.html";
   }
 };
 
-// 2. Render bảng dữ liệu mẫu
+const saveToLocalStorage = () => {
+  localStorage.setItem(STORAGE_TEMP_KEY, JSON.stringify({ questions }));
+};
+
+const loadFromLocalStorage = () => {
+  const data = localStorage.getItem(STORAGE_TEMP_KEY);
+  if (data) {
+    const parsed = JSON.parse(data);
+    questions = parsed.questions || [];
+  }
+};
+
 const renderTable = () => {
-  const tbody =
-    document.getElementById("questionTableBody") ||
-    document.querySelector("tbody");
+  const tbody = document.getElementById("questionTableBody");
+  if (!tbody) return;
   tbody.innerHTML = "";
-  questions.forEach((q) => {
+  questions.forEach((q, index) => {
     const row = document.createElement("tr");
     row.innerHTML = `
-            <td class="text-center">${q.id}</td>
+            <td class="text-center">${index + 1}</td>
             <td>${q.text}</td>
             <td class="text-center">
                 <div class="action-group">
@@ -52,48 +41,49 @@ const renderTable = () => {
   });
 };
 
-// 3. Hàm tạo một dòng trả lời (Checkbox + Input + Thùng rác)
-const addAnswerRow = (val = "") => {
+const addAnswerRow = (val = "", isCorrect = false) => {
   const answerList = document.getElementById("modalAnswerList");
   const div = document.createElement("div");
-  div.className = "answer-item-row"; // Đổi tên class để tránh trùng lặp style cũ
+  div.className = "answer-item-row";
   div.innerHTML = `
         <div class="checkbox-section">
-            <input type="checkbox" class="answer-checkbox">
+            <input type="checkbox" class="answer-checkbox" ${isCorrect ? "checked" : ""}>
         </div>
         <input type="text" placeholder="Nhập câu trả lời" class="answer-input-field" value="${val}">
         <button class="btn-remove-answer-row" onclick="this.parentElement.remove()">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="3 6 5 6 21 6"></polyline>
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                <line x1="10" y1="11" x2="10" y2="17"></line>
-                <line x1="14" y1="11" x2="14" y2="17"></line>
+                <line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line>
             </svg>
-        </button>
-    `;
+        </button>`;
   answerList.appendChild(div);
 };
 
-// 4. Mở Popup (Mặc định 4 ô nếu thêm mới)
 const openModal = (isEdit = false, row = null) => {
   const modal = document.getElementById("questionModal");
   const questionInput = document.getElementById("modalQuestionInput");
   const answerList = document.getElementById("modalAnswerList");
-
   modal.classList.add("active");
-  answerList.innerHTML = ""; // Xóa sạch các ô cũ
+  answerList.innerHTML = "";
 
   if (isEdit && row) {
     editingRow = row;
+    const rowIndex = row.rowIndex - 1;
+    const qData = questions[rowIndex];
+
     document.getElementById("modalTitle").innerText = "Sửa câu hỏi";
-    questionInput.value = row.cells[1].innerText;
-    // Giả lập hiện 4 ô khi sửa
-    for (let i = 0; i < 4; i++) addAnswerRow();
+    questionInput.value = qData.text;
+
+    if (qData.answers && qData.answers.length > 0) {
+      qData.answers.forEach((ans) => addAnswerRow(ans.text, ans.isCorrect));
+    } else {
+      for (let i = 0; i < 4; i++) addAnswerRow();
+    }
   } else {
     editingRow = null;
     document.getElementById("modalTitle").innerText = "Thêm câu hỏi";
     questionInput.value = "";
-    // MẶC ĐỊNH TẠO 4 Ô TRẢ LỜI KHI THÊM MỚI
     for (let i = 0; i < 4; i++) addAnswerRow();
   }
 };
@@ -101,27 +91,42 @@ const openModal = (isEdit = false, row = null) => {
 const closeModal = () =>
   document.getElementById("questionModal").classList.remove("active");
 
-// 5. Lưu câu hỏi vào mảng và Render lại bảng
 const saveQuestion = () => {
   const questionText = document.getElementById("modalQuestionInput").value;
-  if (!questionText.trim()) return alert("Vui lòng nhập câu hỏi!");
+  if (!questionText.trim()) {
+    return createToast("error", "Vui lòng nhập câu hỏi!");
+  }
+
+  const answerRows = document.querySelectorAll(".answer-item-row");
+  const answers = [];
+  answerRows.forEach((row) => {
+    const text = row.querySelector(".answer-input-field").value.trim();
+    const isCorrect = row.querySelector(".answer-checkbox").checked;
+    if (text) {
+      answers.push({ text, isCorrect });
+    }
+  });
+
+  if (answers.length < 2)
+    return createToast("error", "Vui lòng nhập ít nhất 2 đáp án!");
+  if (!answers.some((a) => a.isCorrect))
+    return createToast("error", "Vui lòng chọn ít nhất 1 đáp án đúng!");
 
   if (editingRow) {
-    const id = parseInt(editingRow.cells[0].innerText);
-    const index = questions.findIndex((q) => q.id === id);
-    questions[index].text = questionText;
+    const rowIndex = editingRow.rowIndex - 1;
+    questions[rowIndex] = { text: questionText, answers: answers };
   } else {
-    questions.push({ id: questionIdCounter++, text: questionText });
+    questions.push({ text: questionText, answers: answers });
   }
+
   renderTable();
   closeModal();
   saveToLocalStorage();
   createToast("success", "Lưu câu hỏi thành công!");
 };
 
-// 6. Xử lý Xóa với Popup xác nhận
 const prepareDelete = (btn) => {
-  rowToDelete = btn.closest("tr");
+  editingRow = btn.closest("tr");
   document.getElementById("deleteModal").classList.add("active");
 };
 
@@ -129,9 +134,9 @@ const closeDeleteModal = () =>
   document.getElementById("deleteModal").classList.remove("active");
 
 document.getElementById("confirmDeleteBtn").onclick = () => {
-  if (rowToDelete) {
-    const id = parseInt(rowToDelete.cells[0].innerText);
-    questions = questions.filter((q) => q.id !== id);
+  if (editingRow) {
+    const rowIndex = editingRow.rowIndex - 1;
+    questions.splice(rowIndex, 1);
     renderTable();
   }
   closeDeleteModal();
@@ -141,57 +146,6 @@ document.getElementById("confirmDeleteBtn").onclick = () => {
 
 const editRow = (btn) => openModal(true, btn.closest("tr"));
 
-const checkLogin = () => {
-  let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  if (!currentUser || currentUser.role !== "admin") {
-    window.location.href = "../pages/login.html";
-  }
-};
-
-// 7. Khởi tạo khi trang load
-window.onload = () => {
-  checkLogin();
-  loadCategories();
-  loadFromLocalStorage();
-  renderTable();
-
-  // Gán sự kiện cho nút "Thêm câu hỏi" chính
-  const btnAdd = document.querySelector(
-    ".action-bar .btn-primary:not(.btn-save-all)",
-  );
-  if (btnAdd) btnAdd.onclick = () => openModal(false);
-
-  // Nút Lưu tất cả bài test
-  const btnSaveAll = document.querySelector(".btn-save-all");
-  if (btnSaveAll) {
-    btnSaveAll.onclick = saveTest;
-  }
-
-  // Đóng modal khi click ra ngoài vùng tối
-  window.onclick = (e) => {
-    if (e.target.classList.contains("modal-overlay")) {
-      closeModal();
-      closeDeleteModal();
-    }
-  };
-};
-
-// Load categories from localStorage and populate select
-const loadCategories = () => {
-  const categories = JSON.parse(localStorage.getItem("categories")) || [];
-  const select = document.querySelector(".test-info-section select");
-  if (select) {
-    select.innerHTML = '<option value="">Chọn danh mục</option>';
-    categories.forEach((cat) => {
-      const option = document.createElement("option");
-      option.value = cat.emoji + " " + cat.name;
-      option.textContent = cat.emoji + " " + cat.name;
-      select.appendChild(option);
-    });
-  }
-};
-
-// Hàm lưu bài test và redirect
 const saveTest = () => {
   const nameInput = document.querySelector(
     '.test-info-section input[type="text"]',
@@ -203,14 +157,25 @@ const saveTest = () => {
     return createToast("error", "Vui lòng nhập tên bài test!");
   }
 
-  // Get tests array
+  if (!categorySelect.value.trim()) {
+    return createToast("error", "Vui lòng chọn danh mục!");
+  }
+
+  if (!timeInput.value || parseInt(timeInput.value) <= 0) {
+    return createToast("error", "Thời gian phải lớn hơn 0!");
+  }
+
+  if (questions.length < 2) {
+    return createToast("error", "Phải có ít nhất 2 câu hỏi!");
+  }
+
   let tests = JSON.parse(localStorage.getItem("tests")) || [];
   const newId = tests.length > 0 ? Math.max(...tests.map((t) => t.id)) + 1 : 1;
 
   const newTest = {
     id: newId,
     name: nameInput.value.trim(),
-    category: categorySelect.options[categorySelect.selectedIndex].text,
+    category: categorySelect.value,
     questions: questions.length,
     time: timeInput.value,
   };
@@ -218,8 +183,17 @@ const saveTest = () => {
   tests.push(newTest);
   localStorage.setItem("tests", JSON.stringify(tests));
 
-  // Save questions
-  saveToLocalStorage();
+  const finalQuestions = questions.map((q, idx) => ({
+    id: idx + 1,
+    text: q.text,
+    answers: q.answers,
+  }));
+
+  localStorage.setItem(
+    `testQuestions_${newId}`,
+    JSON.stringify({ questions: finalQuestions }),
+  );
+  localStorage.removeItem(STORAGE_TEMP_KEY);
 
   createToast("success", "Lưu bài test thành công!");
   setTimeout(() => {
@@ -227,4 +201,23 @@ const saveTest = () => {
   }, 1500);
 };
 
-window.onbeforeunload = saveToLocalStorage;
+window.onload = () => {
+  checkLogin();
+  const categories = JSON.parse(localStorage.getItem("categories")) || [];
+  const select = document.querySelector(".test-info-section select");
+  if (select) {
+    select.innerHTML = '<option value="">Chọn danh mục</option>';
+    categories.forEach((cat) => {
+      const option = document.createElement("option");
+      option.value = cat.emoji + " " + cat.name;
+      option.textContent = cat.emoji + " " + cat.name;
+      select.appendChild(option);
+    });
+  }
+  loadFromLocalStorage();
+  renderTable();
+  document.querySelector(
+    ".action-bar .btn-primary:not(.btn-save-all)",
+  ).onclick = () => openModal(false);
+  document.querySelector(".btn-save-all").onclick = saveTest;
+};
