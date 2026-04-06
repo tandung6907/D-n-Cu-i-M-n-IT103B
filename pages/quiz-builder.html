@@ -8,11 +8,12 @@
     <link rel="icon" href="/assets/images/istockphoto-1616906708-612x612.jpg" type="image/x-icon">
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/quiz-builder.css">
+    <link rel="stylesheet" href="/css/modal.css">
 </head>
- 
+
 <body>
     <header>
-        <p class="logo">QuizzForge</p>
+        <a href="/pages/dashboard.html" class="logo">QuizzForge</a>
         <nav class="header-nav">
             <a href="/pages/category-manager.html">Danh mục</a>
             <a href="/pages/product-manager.html" class="active">Bài test</a>
@@ -45,7 +46,7 @@
                 </div>
             </div>
 
-            <!-- Quản lý câu hỏi -->
+            
             <div class="section-header">
                 <h3>Quản lý câu hỏi</h3>
                 <div class="section-actions">
@@ -53,6 +54,7 @@
                     <button class="btn-save-test" id="btnSaveTest">Lưu</button>
                 </div>
             </div>
+            <p class="error-text" id="errorForm"></p>
 
             <div class="table-wrapper">
                 <table>
@@ -64,46 +66,7 @@
                         </tr>
                     </thead>
                     <tbody id="questionTableBody">
-                        <tr>
-                            <td>1</td>
-                            <td>What is the capital of France?</td>
-                            <td class="action-cell">
-                                <button class="btn-edit">Sửa</button>
-                                <button class="btn-delete">Xoá</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Which planet is known as the Red Planet?</td>
-                            <td class="action-cell">
-                                <button class="btn-edit">Sửa</button>
-                                <button class="btn-delete">Xoá</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Which planet is known as the Red Planet?</td>
-                            <td class="action-cell">
-                                <button class="btn-edit">Sửa</button>
-                                <button class="btn-delete">Xoá</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Which planet is known as the Red Planet?</td>
-                            <td class="action-cell">
-                                <button class="btn-edit">Sửa</button>
-                                <button class="btn-delete">Xoá</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Which planet is known as the Red Planet?</td>
-                            <td class="action-cell">
-                                <button class="btn-edit">Sửa</button>
-                                <button class="btn-delete">Xoá</button>
-                            </td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
@@ -111,6 +74,53 @@
         </div>
     </main>
 
+    
+    <div class="modal-overlay" id="questionModal">
+        <div class="modal-container modal-lg">
+            <div class="modal-header">
+                <h2>Thêm/sửa câu hỏi</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label for="questionContent">Câu hỏi</label>
+                    <input type="text" id="questionContent" placeholder="Nhập câu hỏi">
+                    <span class="error-text" id="errorQuestion"></span>
+                </div>
+
+                <div class="input-group">
+                    <label>Câu trả lời</label>
+                    <div id="answerListContainer"></div>
+                    <button class="btn-add-answer" id="btnAddAnswer">Thêm câu trả lời</button>
+                    <span class="error-text" id="errorAnswer"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel">Huỷ</button>
+                <button class="btn btn-save" id="btnSaveQuestion">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal-overlay" id="questionDeleteModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Xác nhận xóa</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn xóa câu hỏi này?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-cancel">Huỷ</button>
+                <button class="btn btn-delete" id="deleteQuestionBtn">Xoá</button>
+            </div>
+        </div>
+    </div>
+    
     <footer>
         <p>&copy; 2025 Quiz App. All rights reserved.</p>
     </footer>

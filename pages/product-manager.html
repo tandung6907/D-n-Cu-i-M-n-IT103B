@@ -8,20 +8,18 @@
     <link rel="icon" href="/assets/images/istockphoto-1616906708-612x612.jpg" type="image/x-icon">
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/product-manager.css">
-    <!-- <link rel="stylesheet" href="/css/popup/popup-edit-quiz.css"> -->
-    <!-- <link rel="stylesheet" href="/css/popup/popup-delete.css"> -->
+    <link rel="stylesheet" href="/css/modal.css">
 </head>
 
 <body>
     <header>
-        <p class="logo">QuizzForge</p>
+        <a href="/pages/dashboard.html" class="logo">QuizzForge</a>
         <nav class="header-nav">
             <a href="/pages/category-manager.html">Danh mục</a>
             <a href="/pages/product-manager.html" class="active">Bài test</a>
             <a href="/pages/login.html" class="btn-logout" onclick="logout()">Đăng xuất</a>
         </nav>
     </header>
-
 
     <main>
         <h2>Quản lý bài test</h2>
@@ -153,67 +151,8 @@
         </div>
     </main>
 
-    <!-- <div class="modal-overlay">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h2>Thêm/sửa câu hỏi</h2>
-                <button class="close-btn">&times;</button>
-            </div>
- 
-            <div class="modal-body">
-                <div class="input-group">
-                    <label>Câu hỏi</label>
-                    <input type="text" placeholder="Nhập câu hỏi">
-                </div>
 
-                <div class="answer-section">
-                    <label>Câu trả lời</label>
-
-                    <div class="answer-item">
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox">
-                        </div>
-                        <input type="text" placeholder="Nhập câu trả lời" class="answer-input">
-                        <button class="delete-icon">🗑️</button>
-                    </div>
-
-                    <div class="answer-item">
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox">
-                        </div>
-                        <input type="text" placeholder="Nhập câu trả lời" class="answer-input">
-                        <button class="delete-icon">🗑️</button>
-                    </div>
-
-                    <div class="answer-item">
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox">
-                        </div>
-                        <input type="text" placeholder="Nhập câu trả lời" class="answer-input">
-                        <button class="delete-icon">🗑️</button>
-                    </div>
-
-                    <div class="answer-item">
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox">
-                        </div>
-                        <input type="text" placeholder="Nhập câu trả lời" class="answer-input">
-                        <button class="delete-icon">🗑️</button>
-                    </div>
-                </div>
-
-                <button class="btn-add-answer">Thêm câu trả lời</button>
-            </div>
-
-            <div class="modal-footer">
-                <button class="btn btn-cancel">Huỷ</button>
-                <button class="btn btn-save">Lưu</button>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- popup xóa
-    <div class="modal-overlay">
+    <div class="modal-overlay" id="quizDeleteModal">
         <div class="modal-container">
             <div class="modal-header">
                 <h2>Xác nhận xóa</h2>
@@ -226,10 +165,10 @@
 
             <div class="modal-footer">
                 <button class="btn btn-cancel">Huỷ</button>
-                <button class="btn btn-delete">Xoá</button>
+                <button class="btn btn-delete" id="deleteQuizBtn">Xoá</button>
             </div>
         </div>
-    </div> -->
+    </div>
     <footer>
         <p>&copy; 2025 Quiz App. All rights reserved.</p>
     </footer>

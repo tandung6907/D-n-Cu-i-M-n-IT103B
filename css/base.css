@@ -51,7 +51,12 @@
     font-style: normal;
     font-display: swap;
 }
-
+.error-text {
+    display: none;
+    color: #ff4d4f;
+    font-size: 13px;
+    margin-top: 6px;
+}
 @font-face {
     font-family: "Poppins";
     src: url("../assets/fonts/Poppins/Poppins-Bold.woff2") format("woff2");

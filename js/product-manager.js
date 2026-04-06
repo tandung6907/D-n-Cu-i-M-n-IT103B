@@ -1,12 +1,16 @@
+
 const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-if (!currentUser || currentUser.email !== "admin@gmail.com") {
+if (!currentUser || currentUser.role !== "admin") {
     window.location.href = "/pages/login.html";
 }
- 
-const logout = () => {
+
+function logout() {
     localStorage.removeItem("currentUser");
 }
 
-const changePage = () => {
+function changePage() {
+    localStorage.removeItem("currentEditingTestId");
     window.location.href = "/pages/quiz-builder.html";
 }
+ 
+

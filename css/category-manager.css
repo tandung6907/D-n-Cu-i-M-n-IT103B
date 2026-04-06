@@ -19,6 +19,7 @@ header .logo {
     font-weight: 700;
     font-size: 22px;
     color: #FFFFFF;
+    text-decoration: none;
 }
 
 header .header-nav {

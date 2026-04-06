@@ -8,7 +8,7 @@
     <link rel="icon" href="/assets/images/istockphoto-1616906708-612x612.jpg" type="image/x-icon">
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/take-quiz.css">
-    <!-- <link rel="stylesheet" href="/css/popup.css/popup-total.css"> -->
+    <link rel="stylesheet" href="/css/modal.css">
 </head>
 
 <body>
@@ -59,7 +59,7 @@
 
             <section class="quiz-content">
                 <div class="quiz-timer">
-                    <p class="timer-total">Thời gian: 25 phút</p>
+                    <p class="timer-total" id="timerTotal">Thời gian: 25 phút</p>
                     <p class="timer-remaining" id="timerDisplay">Còn lại: 23:40 phút</p>
                 </div>
 
@@ -98,11 +98,12 @@
         </div>
     </div>
 
-    <!-- <div class="modal-overlay">
-        <div class="modal-container">
-            <div class="modal-header">
+    
+    <div class="modal-overlay" id="resultModal">
+        <div class="modal-container modal-result">
+            <div class="modal-header text-center">
                 <h2 class="title-main">Hoàn thành</h2>
-                <button class="close-btn">&times;</button>
+                <button class="close-btn" id="resultCloseBtn">&times;</button>
             </div>
 
             <div class="modal-body">
@@ -136,12 +137,12 @@
 
             </div>
 
-            <div class="modal-footer">
-                <button class="btn btn-primary">Làm lại</button>
-                <button class="btn btn-success">Trang chủ</button>
+            <div class="modal-footer justify-center">
+                <button class="btn btn-primary" id="btnRetry">Làm lại</button>
+                <button class="btn btn-success" id="btnGoHome" onclick="window.location.href='/pages/dashboard.html'">Trang chủ</button>
             </div>
         </div>
-    </div> -->
+    </div>
 
     <footer>
         <p>&copy; 2025 Quiz App. All rights reserved.</p>
