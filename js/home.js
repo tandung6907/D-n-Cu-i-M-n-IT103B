@@ -117,6 +117,21 @@ const renderPagination = (filteredTests) => {
 document.addEventListener("DOMContentLoaded", () => {
   checkLogin();
 
+  // Add admin manage link
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (currentUser && currentUser.role === "admin") {
+    const nav = document.querySelector("nav");
+    if (nav) {
+      const homeLink = nav.querySelector('a[href="./home.html"]');
+      if (homeLink) {
+        const manageLink = document.createElement("a");
+        manageLink.href = "./category-manager.html";
+        manageLink.textContent = "Quản lý";
+        homeLink.insertAdjacentElement("afterend", manageLink);
+      }
+    }
+  }
+
   // Load data
   let categories = JSON.parse(localStorage.getItem("categories")) || [];
   let tests = JSON.parse(localStorage.getItem("tests")) || [];
