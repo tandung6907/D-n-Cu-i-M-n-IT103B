@@ -29,11 +29,16 @@
         <input type="text" placeholder="Tìm kiếm bài test" />
       </div>
       <nav>
-
         <a href="./home.html">Trang chủ</a>
-        <a href="./login.html" onclick="localStorage.removeItem('currentUser'); return true;">Đăng xuất</a>
+        <a
+          href="./login.html"
+          onclick="
+            localStorage.removeItem('currentUser');
+            return true;
+          "
+          >Đăng xuất</a
+        >
       </nav>
-
     </header>
 
     <section class="hero">
@@ -128,7 +133,6 @@
     </main>
 
     <footer>© 2025 Quiz App. All rights reserved.</footer>
-
 
     <script src="../js/home.js"></script>
   </body>

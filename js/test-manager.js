@@ -4,7 +4,7 @@
 const tableBody = document.querySelector(".responsive-table tbody");
 const deleteModal = document.getElementById("deleteModal");
 const deleteIdInput = document.getElementById("deleteId");
-const paginationWrapper = document.querySelector('.pagination-wrapper');
+const paginationWrapper = document.querySelector(".pagination-wrapper");
 
 // 2. Pagination
 let currentPage = 1;
@@ -12,9 +12,27 @@ const ITEMS_PER_PAGE = 5;
 
 // 3. Data
 let tests = JSON.parse(localStorage.getItem("tests")) || [
-  { id: 1, name: "History Quiz", category: "📚 Lịch sử", questions: 15, time: "10 min" },
-  { id: 2, name: "Science Challenge", category: "🧠 Khoa học", questions: 20, time: "15 min" },
-  { id: 3, name: "Entertainment Trivia", category: "🎤 Đời sống", questions: 10, time: "5 min" },
+  {
+    id: 1,
+    name: "History Quiz",
+    category: "📚 Lịch sử",
+    questions: 15,
+    time: "10 min",
+  },
+  {
+    id: 2,
+    name: "Science Challenge",
+    category: "🧠 Khoa học",
+    questions: 20,
+    time: "15 min",
+  },
+  {
+    id: 3,
+    name: "Entertainment Trivia",
+    category: "🎤 Đời sống",
+    questions: 10,
+    time: "5 min",
+  },
 ];
 
 const syncStorage = () => localStorage.setItem("tests", JSON.stringify(tests));
@@ -27,40 +45,43 @@ const toggleModal = (modalElement, show) => {
 // 5. Render Pagination (copied from category-manager)
 const renderPagination = () => {
   if (!paginationWrapper || !tests.length) return;
-  
+
   const totalPages = Math.ceil(tests.length / ITEMS_PER_PAGE);
-  
-  let html = `<button class="page-item arrow ${currentPage === 1 ? 'disabled' : ''}" data-page="${currentPage - 1}"><</button>`;
-  
+
+  let html = `<button class="page-item arrow ${currentPage === 1 ? "disabled" : ""}" data-page="${currentPage - 1}"><</button>`;
+
   const maxVisible = 5;
   let startPage = Math.max(1, currentPage - 2);
   let endPage = Math.min(totalPages, startPage + maxVisible - 1);
-  
+
   if (startPage > 1) {
     html += `<button class="page-item" data-page="1">1</button>`;
     if (startPage > 2) html += '<span class="page-item ellipsis">...</span>';
   }
-  
+
   for (let i = startPage; i <= endPage; i++) {
-    html += `<button class="page-item ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+    html += `<button class="page-item ${i === currentPage ? "active" : ""}" data-page="${i}">${i}</button>`;
   }
-  
+
   if (endPage < totalPages) {
-    if (endPage < totalPages - 1) html += '<span class="page-item ellipsis">...</span>';
+    if (endPage < totalPages - 1)
+      html += '<span class="page-item ellipsis">...</span>';
     html += `<button class="page-item" data-page="${totalPages}">${totalPages}</button>`;
   }
-  
-  html += `<button class="page-item arrow ${currentPage === totalPages ? 'disabled' : ''}" data-page="${currentPage + 1}">></button>`;
-  
+
+  html += `<button class="page-item arrow ${currentPage === totalPages ? "disabled" : ""}" data-page="${currentPage + 1}">></button>`;
+
   paginationWrapper.innerHTML = html;
-  
+
   // Events
-  paginationWrapper.querySelectorAll('.page-item:not(.disabled):not(.ellipsis)').forEach(btn => {
-    btn.onclick = (e) => {
-      currentPage = parseInt(e.target.dataset.page);
-      renderTable();
-    };
-  });
+  paginationWrapper
+    .querySelectorAll(".page-item:not(.disabled):not(.ellipsis)")
+    .forEach((btn) => {
+      btn.onclick = (e) => {
+        currentPage = parseInt(e.target.dataset.page);
+        renderTable();
+      };
+    });
 };
 
 // 6. Render Table with Pagination
@@ -68,9 +89,9 @@ const renderTable = (filteredTests = tests) => {
   const start = (currentPage - 1) * ITEMS_PER_PAGE;
   const end = start + ITEMS_PER_PAGE;
   const pageData = filteredTests.slice(start, end);
-  
+
   tableBody.innerHTML = "";
-  
+
   if (pageData.length === 0) {
     tableBody.innerHTML = `
       <tr>
@@ -82,7 +103,7 @@ const renderTable = (filteredTests = tests) => {
     renderPagination(filteredTests);
     return;
   }
-  
+
   pageData.forEach((item) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -100,10 +121,9 @@ const renderTable = (filteredTests = tests) => {
     `;
     tableBody.appendChild(tr);
   });
-  
+
   renderPagination(filteredTests);
 };
-
 
 // 7. Delete logic
 window.prepareDelete = (id) => {
@@ -114,8 +134,8 @@ window.prepareDelete = (id) => {
 const confirmDelete = () => {
   const idToDelete = parseInt(deleteIdInput.value);
   tests = tests.filter((t) => t.id !== idToDelete);
-  
-  tests.forEach((test, index) => test.id = index + 1);
+
+  tests.forEach((test, index) => (test.id = index + 1));
   syncStorage();
   currentPage = 1;
   renderTable();
@@ -148,19 +168,22 @@ const applyFilters = () => {
   let filteredTests = [...tests];
   const searchInput = document.querySelector(".filters input");
   const sortSelect = document.querySelector(".filters select");
-  
+
   if (searchInput?.value.trim()) {
     filteredTests = filteredTests.filter((test) =>
-      test.name.toLowerCase().includes(searchInput.value.trim().toLowerCase())
+      test.name.toLowerCase().includes(searchInput.value.trim().toLowerCase()),
     );
   }
-  
+
   const sortValue = sortSelect?.value;
   if (sortValue === "newest") filteredTests.sort((a, b) => b.id - a.id);
-  else if (sortValue === "az") filteredTests.sort((a, b) => a.name.localeCompare(b.name));
-  else if (sortValue === "questions") filteredTests.sort((a, b) => b.questions - a.questions);
-  else if (sortValue === "time") filteredTests.sort((a, b) => parseInt(b.time) - parseInt(a.time));
-  
+  else if (sortValue === "az")
+    filteredTests.sort((a, b) => a.name.localeCompare(b.name));
+  else if (sortValue === "questions")
+    filteredTests.sort((a, b) => b.questions - a.questions);
+  else if (sortValue === "time")
+    filteredTests.sort((a, b) => parseInt(b.time) - parseInt(a.time));
+
   currentPage = 1;
   renderTable(filteredTests);
 };
@@ -168,20 +191,19 @@ const applyFilters = () => {
 // 10. Init
 document.addEventListener("DOMContentLoaded", () => {
   checkLogin();
-  
+
   const sortSelect = document.querySelector(".filters select");
   const searchInput = document.querySelector(".filters input");
-  
+
   if (sortSelect) sortSelect.onchange = applyFilters;
   if (searchInput) searchInput.oninput = applyFilters;
-  
+
   const btnConfirmDelete = document.querySelector("#deleteModal .btn-danger");
   if (btnConfirmDelete) btnConfirmDelete.onclick = confirmDelete;
-  
-  document.querySelectorAll(".close-btn, .btn-secondary").forEach(btn => {
+
+  document.querySelectorAll(".close-btn, .btn-secondary").forEach((btn) => {
     btn.onclick = () => toggleModal(deleteModal, false);
   });
-  
+
   renderTable();
 });
-
