@@ -2,6 +2,8 @@ let questions = [];
 let editingRow = null;
 let testId = null;
 let STORAGE_KEY = "";
+let selectedImageFile = null;
+let imagePreview = null;
 
 const checkLogin = () => {
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -30,7 +32,6 @@ const renderTable = () => {
   tbody.innerHTML = "";
   questions.forEach((q, index) => {
     const row = tbody.insertRow();
-    
     row.innerHTML = `
             <td class="text-center">${q.id || index + 1}</td>
             <td>${q.text}</td>
@@ -43,6 +44,7 @@ const renderTable = () => {
   });
 };
 
+// --- QUẢN LÝ CÂU HỎI ---
 const addAnswerRow = (val = "", isCorrect = false) => {
   const answerList = document.getElementById("modalAnswerList");
   const div = document.createElement("div");
@@ -88,8 +90,10 @@ const openModal = (isEdit = false, row = null) => {
   }
 };
 
-const closeModal = () =>
+const closeModal = () => {
   document.getElementById("questionModal").classList.remove("active");
+  document.getElementById("deleteModal").classList.remove("active");
+};
 
 const saveQuestion = () => {
   const text = document.getElementById("modalQuestionInput").value;
@@ -124,14 +128,72 @@ const saveQuestion = () => {
   createToast("success", "Lưu câu hỏi thành công!");
 };
 
+// --- QUẢN LÝ ẢNH ---
+const handleImageSelect = () => {
+  const fileInput = document.getElementById("test-img");
+  const fileNameSpan = document.getElementById("file-name");
+  const fileWrapper = document.querySelector(".file-input-wrapper");
+
+  const file = fileInput.files[0];
+  if (file) {
+    selectedImageFile = file;
+    fileNameSpan.textContent = file.name;
+
+    if (!imagePreview) {
+      imagePreview = document.createElement("img");
+      imagePreview.style.cssText =
+        "max-width: 100px; max-height: 100px; margin-top: 10px; border-radius: 6px; object-fit: cover; display: block;";
+      fileWrapper.parentNode.appendChild(imagePreview);
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      imagePreview.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+const loadImagePreview = (imageSrc) => {
+  const fileNameSpan = document.getElementById("file-name");
+  const fileWrapper = document.querySelector(".file-input-wrapper");
+  fileNameSpan.textContent = "Ảnh hiện tại";
+
+  if (!imagePreview) {
+    imagePreview = document.createElement("img");
+    imagePreview.style.cssText =
+      "max-width: 100px; max-height: 100px; margin-top: 10px; border-radius: 6px; object-fit: cover; display: block;";
+    fileWrapper.parentNode.appendChild(imagePreview);
+  }
+  imagePreview.src = imageSrc;
+};
+
 const saveTest = () => {
-  const name = document.querySelector(
+  const nameInput = document.querySelector(
     '.test-info-section input[type="text"]',
-  ).value;
-  const category = document.querySelector(".test-info-section select").value;
-  const time = document.querySelector(".flex-time input").value;
+  );
+  const categorySelect = document.querySelector(".test-info-section select");
+  const timeInput = document.querySelector(".flex-time input");
+
+  const name = nameInput.value.trim();
+  const category = categorySelect.value;
+  const time = timeInput.value;
+
+  if (!name) return createToast("error", "Vui lòng nhập tên bài test!");
 
   let allTests = JSON.parse(localStorage.getItem("tests")) || [];
+  const testData = allTests.find((t) => t.id == testId);
+
+  // Kiểm tra ảnh an toàn
+  const currentImage = imagePreview
+    ? imagePreview.src
+    : testData
+      ? testData.image
+      : "";
+  if (!currentImage) {
+    return createToast("error", "Vui lòng chọn ảnh bài test!");
+  }
+
   const index = allTests.findIndex((t) => t.id == testId);
   if (index !== -1) {
     allTests[index] = {
@@ -140,6 +202,7 @@ const saveTest = () => {
       category,
       time,
       questions: questions.length,
+      image: currentImage,
     };
     localStorage.setItem("tests", JSON.stringify(allTests));
     saveToLocalStorage();
@@ -163,7 +226,7 @@ const confirmDeleteRow = () => {
     saveToLocalStorage();
     createToast("success", "Xóa câu hỏi thành công!");
   }
-  document.getElementById("deleteModal").classList.remove("active");
+  closeModal();
 };
 
 const editCurrentRow = (btn) => openModal(true, btn.closest("tr"));
@@ -176,6 +239,7 @@ window.onload = function () {
 
   STORAGE_KEY = `testQuestions_${testId}`;
 
+  // Load danh mục vào select
   const categories = JSON.parse(localStorage.getItem("categories")) || [];
   const select = document.querySelector(".test-info-section select");
   if (select) {
@@ -188,6 +252,7 @@ window.onload = function () {
     });
   }
 
+  // Load dữ liệu bài test hiện tại
   const allTests = JSON.parse(localStorage.getItem("tests")) || [];
   const testData = allTests.find((t) => t.id == testId);
   if (testData) {
@@ -196,6 +261,7 @@ window.onload = function () {
     document.querySelector(".test-info-section select").value =
       testData.category;
     document.querySelector(".flex-time input").value = testData.time;
+    if (testData.image) loadImagePreview(testData.image);
   }
 
   loadFromLocalStorage();
@@ -205,11 +271,11 @@ window.onload = function () {
     ".action-bar .btn-primary:not(.btn-save-all)",
   ).onclick = () => openModal(false);
   document.querySelector(".btn-save-all").onclick = saveTest;
+  document
+    .getElementById("test-img")
+    .addEventListener("change", handleImageSelect);
 
   window.onclick = (e) => {
-    if (e.target.classList.contains("modal-overlay")) {
-      closeModal();
-      document.getElementById("deleteModal").classList.remove("active");
-    }
+    if (e.target.classList.contains("modal-overlay")) closeModal();
   };
 };

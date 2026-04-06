@@ -24,6 +24,10 @@ let categories = JSON.parse(localStorage.getItem("categories")) || [
   { id: 4, name: "Đời sống", emoji: "🏠" },
 ];
 
+let currentPage = 1;
+const ITEMS_PER_PAGE = 5;
+
+
 // Hàm lưu dữ liệu vào Local Storage
 const syncStorage = () => {
   localStorage.setItem("categories", JSON.stringify(categories));
@@ -43,11 +47,58 @@ const resetError = () => {
   errorMsg.style.display = "none";
 };
 
-//4. Render bảng
-const renderTable = () => {
+//4. Render bảng + Pagination
+const renderPagination = () => {
+  const totalPages = Math.ceil(categories.length / ITEMS_PER_PAGE);
+  const paginationWrapper = document.querySelector('.pagination-wrapper');
+  if (!paginationWrapper) return;
+  
+  let html = '<button class="page-item arrow ' + (currentPage === 1 ? 'disabled' : '') + '" data-page="' + (currentPage - 1) + '"><</button>';
+  
+  const maxVisible = 5;
+  let startPage = Math.max(1, currentPage - 2);
+  let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+  
+  if (endPage - startPage + 1 < maxVisible) {
+    startPage = Math.max(1, endPage - maxVisible + 1);
+  }
+  
+  if (startPage > 1) {
+    html += '<button class="page-item" data-page="1">1</button>';
+    if (startPage > 2) html += '<span class="page-item ellipsis">...</span>';
+  }
+  
+  for (let i = startPage; i <= endPage; i++) {
+    html += '<button class="page-item ' + (i === currentPage ? 'active' : '') + '" data-page="' + i + '">' + i + '</button>';
+  }
+  
+  if (endPage < totalPages) {
+    if (endPage < totalPages - 1) html += '<span class="page-item ellipsis">...</span>';
+    html += '<button class="page-item" data-page="' + totalPages + '">' + totalPages + '</button>';
+  }
+  
+  html += '<button class="page-item arrow ' + (currentPage === totalPages ? 'disabled' : '') + '" data-page="' + (currentPage + 1) + '">></button>';
+  
+  paginationWrapper.innerHTML = html;
+  
+  paginationWrapper.querySelectorAll('.page-item:not(.disabled):not(.ellipsis)').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      currentPage = parseInt(e.target.dataset.page);
+      renderTable();
+    });
+  });
+};
+
+const renderTable = (page = currentPage) => {
+  renderPagination();
+
+  const start = (page - 1) * ITEMS_PER_PAGE;
+  const end = start + ITEMS_PER_PAGE;
+  const pageCategories = categories.slice(start, end);
+  
   tableBody.innerHTML = ""; // Xoá sạch bảng trước khi vẽ
 
-  categories.forEach((item) => {
+  pageCategories.forEach((item) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
             <td class="text-center">${item.id}</td>
@@ -62,6 +113,7 @@ const renderTable = () => {
     tableBody.appendChild(tr);
   });
 };
+
 
 //5. Logic thêm và sửa
 
@@ -99,8 +151,8 @@ const saveData = () => {
     errors.push(
       "Tên danh mục không được trống, chỉ chứa khoảng trắng hoặc có dấu cách đầu/cuối",
     );
-  } else if (nameVal.length < 3 || nameVal.length > 50) {
-    errors.push("Tên danh mục phải từ 3 đến 50 ký tự");
+  } else if (nameVal.length < 3 || nameVal.length > 20) {
+    errors.push("Tên danh mục phải từ 3 đến 20 ký tự");
   }
 
   if (!emojiVal) {
@@ -146,7 +198,10 @@ const saveData = () => {
   }
 
   syncStorage(); // Lưu lại
+  currentPage = 1;
   renderTable(); // Vẽ lại bảng
+  renderPagination();
+
   toggleModal(modal, false); // Đóng popup
   createToast("success", "Thao tác danh mục thành công!");
 };

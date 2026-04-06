@@ -153,9 +153,14 @@ const saveTest = () => {
   const categorySelect = document.querySelector(".test-info-section select");
   const timeInput = document.querySelector(".flex-time input");
 
+
+  if (!selectedImageFile) {
+    return createToast("error", "Vui lòng chọn ảnh bài test!");
+  }
   if (!nameInput.value.trim()) {
     return createToast("error", "Vui lòng nhập tên bài test!");
   }
+
 
   if (!categorySelect.value.trim()) {
     return createToast("error", "Vui lòng chọn danh mục!");
@@ -178,6 +183,7 @@ const saveTest = () => {
     category: categorySelect.value,
     questions: questions.length,
     time: timeInput.value,
+    image: selectedImageFile ? imagePreview.src : null,
   };
 
   tests.push(newTest);
@@ -201,6 +207,42 @@ const saveTest = () => {
   }, 1500);
 };
 
+let selectedImageFile = null;
+let imagePreview = null;
+
+const handleImageSelect = () => {
+  const fileInput = document.getElementById('test-img');
+  const fileNameSpan = document.getElementById('file-name');
+  const fileWrapper = document.querySelector('.file-input-wrapper');
+  
+  const file = fileInput.files[0];
+  if (file) {
+    selectedImageFile = file;
+    fileNameSpan.textContent = file.name;
+    
+    // Create preview
+    if (!imagePreview) {
+      imagePreview = document.createElement('img');
+      imagePreview.className = 'image-preview';
+      imagePreview.style.cssText = 'max-width: 100px; max-height: 100px; margin-top: 10px; border-radius: 6px; object-fit: cover;';
+      fileWrapper.parentNode.appendChild(imagePreview);
+    }
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      imagePreview.src = e.target.result;
+      imagePreview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  } else {
+    selectedImageFile = null;
+    fileNameSpan.textContent = 'Chưa chọn ảnh';
+    if (imagePreview) {
+      imagePreview.style.display = 'none';
+    }
+  }
+};
+
 window.onload = () => {
   checkLogin();
   const categories = JSON.parse(localStorage.getItem("categories")) || [];
@@ -220,4 +262,8 @@ window.onload = () => {
     ".action-bar .btn-primary:not(.btn-save-all)",
   ).onclick = () => openModal(false);
   document.querySelector(".btn-save-all").onclick = saveTest;
+  
+  // Add image handler
+  document.getElementById('test-img').addEventListener('change', handleImageSelect);
 };
+

@@ -103,7 +103,7 @@ registerForm.addEventListener("submit", (e) => {
         fullname: fullname,
         email: email,
         password: password,
-        role: "user", //"admin" là để chuyển sang trang admin
+        role: "admin", //"admin" là để chuyển sang trang admin
       };
 
       users.push(newUser);
