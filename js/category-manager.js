@@ -50,7 +50,9 @@ const resetError = () => {
 const renderPagination = () => {
   const totalPages = Math.ceil(categories.length / ITEMS_PER_PAGE);
   const paginationWrapper = document.querySelector(".pagination-wrapper");
-  if (!paginationWrapper) return;
+  if (!paginationWrapper) {
+    return;
+  }
 
   let html =
     '<button class="page-item arrow ' +
@@ -69,7 +71,9 @@ const renderPagination = () => {
 
   if (startPage > 1) {
     html += '<button class="page-item" data-page="1">1</button>';
-    if (startPage > 2) html += '<span class="page-item ellipsis">...</span>';
+    if (startPage > 2) {
+      html += '<span class="page-item ellipsis">...</span>';
+    }
   }
 
   for (let i = startPage; i <= endPage; i++) {
@@ -84,8 +88,9 @@ const renderPagination = () => {
   }
 
   if (endPage < totalPages) {
-    if (endPage < totalPages - 1)
+    if (endPage < totalPages - 1) {
       html += '<span class="page-item ellipsis">...</span>';
+    }
     html +=
       '<button class="page-item" data-page="' +
       totalPages +
@@ -114,13 +119,25 @@ const renderPagination = () => {
 };
 
 const renderTable = (page = currentPage) => {
-  renderPagination();
-
   const start = (page - 1) * ITEMS_PER_PAGE;
   const end = start + ITEMS_PER_PAGE;
   const pageCategories = categories.slice(start, end);
 
-  tableBody.innerHTML = ""; // Xoá sạch bảng trước khi vẽ
+  tableBody.innerHTML = "";
+
+  if (categories.length === 0) {
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="3" style="text-align: center; padding: 40px; color: #6c757d;">
+          Không có danh mục nào
+        </td>
+      </tr>
+    `;
+    renderPagination();
+    return;
+  }
+
+  renderPagination();
 
   pageCategories.forEach((item) => {
     const tr = document.createElement("tr");
