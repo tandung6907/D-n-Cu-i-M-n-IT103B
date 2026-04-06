@@ -243,15 +243,17 @@ const editCurrentRow = (btn) => openModal(true, btn.closest("tr"));
 window.onload = function () {
   checkLogin();
   const urlParams = new URLSearchParams(window.location.search);
-  testId = urlParams.get("id");
+  testId = parseInt(urlParams.get("id"));
   if (!testId) {
+    alert("Không có ID bài test");
+    window.location.href = "./test-manager.html";
     return;
   }
 
   STORAGE_KEY = `testQuestions_${testId}`;
 
-  // Load danh mục vào select
-  const categories = JSON.parse(localStorage.getItem("categories")) || [];
+  // Load categories
+  const categories = JSON.parse(localStorage.getItem("categories") || "[]");
   const select = document.querySelector(".test-info-section select");
   if (select) {
     select.innerHTML = '<option value="">Chọn danh mục</option>';
@@ -263,9 +265,9 @@ window.onload = function () {
     });
   }
 
-  // Load dữ liệu bài test hiện tại
-  const allTests = JSON.parse(localStorage.getItem("tests")) || [];
-  const testData = allTests.find((t) => t.id == testId);
+  // Load test data
+  const allTests = JSON.parse(localStorage.getItem("tests") || "[]");
+  const testData = allTests.find((t) => t.id === testId);
   if (testData) {
     document.querySelector('.test-info-section input[type="text"]').value =
       testData.name;
@@ -277,6 +279,7 @@ window.onload = function () {
     }
   }
 
+  // Load questions
   loadFromLocalStorage();
   renderTable();
 
@@ -289,8 +292,6 @@ window.onload = function () {
     .addEventListener("change", handleImageSelect);
 
   window.onclick = (e) => {
-    if (e.target.classList.contains("modal-overlay")) {
-      closeModal();
-    }
+    if (e.target.classList.contains("modal-overlay")) closeModal();
   };
 };

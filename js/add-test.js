@@ -26,7 +26,7 @@ const renderTable = () => {
   if (!tbody) {
     return;
   }
-  
+
   tbody.innerHTML = "";
   questions.forEach((q, index) => {
     const row = document.createElement("tr");
@@ -156,11 +156,12 @@ const saveTest = () => {
   const categorySelect = document.querySelector(".test-info-section select");
   const timeInput = document.querySelector(".flex-time input");
 
-  if (!selectedImageFile) {
-    return createToast("error", "Vui lòng chọn ảnh bài test!");
-  }
   if (!nameInput.value.trim()) {
     return createToast("error", "Vui lòng nhập tên bài test!");
+  }
+
+  if (!selectedImageFile) {
+    return createToast("error", "Vui lòng chọn ảnh bài test!");
   }
 
   if (!categorySelect.value.trim()) {
@@ -206,6 +207,32 @@ const saveTest = () => {
   setTimeout(() => {
     window.location.href = "./test-manager.html";
   }, 1500);
+};
+
+const validateTestForm = () => {
+  const nameInput = document.querySelector(
+    '.test-info-section input[type="text"]',
+  );
+  const categorySelect = document.querySelector(".test-info-section select");
+  const timeInput = document.querySelector(".flex-time input");
+
+  if (
+    !selectedImageFile ||
+    !nameInput.value.trim() ||
+    !categorySelect.value.trim() ||
+    !timeInput.value ||
+    parseInt(timeInput.value) <= 0 ||
+    questions.length < 2
+  ) {
+    createToast("error", "Vui lòng điền đủ thông tin!");
+    return false;
+  }
+  return true;
+};
+
+document.querySelector(".btn-save-all").onclick = () => {
+  if (!validateTestForm()) return;
+  saveTest();
 };
 
 let selectedImageFile = null;

@@ -128,7 +128,37 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initial render
   renderQuizGrid(tests);
 
-  // Play buttons (use testId from hidden input)
+  // Random question play - fixed function definition
+  const playRandomQuestion = () => {
+    const allTests = JSON.parse(localStorage.getItem("tests") || "[]");
+    if (allTests.length === 0) {
+      createToast("error", "Không có bài test nào");
+      return;
+    }
+
+    const randomIndex = Math.floor(Math.random() * allTests.length);
+    const randomTest = allTests[randomIndex];
+
+    const questionsData = JSON.parse(
+      localStorage.getItem(`testQuestions_${randomTest.id}`) || "{}",
+    );
+
+    if (questionsData.questions && questionsData.questions.length > 0) {
+      allTests[randomIndex].plays = (allTests[randomIndex].plays || 0) + 1;
+      localStorage.setItem("tests", JSON.stringify(allTests));
+
+      window.location.href = `./do-test.html?testId=${randomTest.id}`;
+    } else {
+      alert("Bài test ngẫu nhiên chưa có câu hỏi! Đang thử lại bài khác...");
+      playRandomQuestion();
+    }
+  };
+
+  const randomBtn = document.querySelector(".btn-play-random");
+  if (randomBtn) {
+    randomBtn.addEventListener("click", playRandomQuestion);
+  }
+
   document.addEventListener("click", (e) => {
     if (e.target.classList.contains("btn-card-play")) {
       const quizCard = e.target.closest(".quiz-card");
@@ -159,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
-  // Filter buttons - active color #fff3cd
+  // Filter buttons
   document.querySelectorAll(".btn-filter").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       document.querySelectorAll(".btn-filter").forEach((b) => {
