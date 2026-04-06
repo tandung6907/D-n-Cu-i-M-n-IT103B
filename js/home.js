@@ -70,8 +70,9 @@ const renderQuizGrid = (filteredTests = tests) => {
 // Render pagination (from test-manager)
 const renderPagination = (filteredTests) => {
   const paginationWrapper = document.querySelector(".pagination-wrapper");
-  if (!paginationWrapper) return;
-
+  if (!paginationWrapper) {
+    return;
+  }
   const totalPages = Math.ceil(filteredTests.length / ITEMS_PER_PAGE);
 
   let html = `<button class="page-item arrow ${currentPage === 1 ? "disabled" : ""}" data-page="${currentPage - 1}"><</button>`;
@@ -82,7 +83,9 @@ const renderPagination = (filteredTests) => {
 
   if (startPage > 1) {
     html += `<button class="page-item" data-page="1">1</button>`;
-    if (startPage > 2) html += "<span>...</span>";
+    if (startPage > 2) {
+      html += "<span>...</span>";
+    }
   }
 
   for (let i = startPage; i <= endPage; i++) {
@@ -90,7 +93,9 @@ const renderPagination = (filteredTests) => {
   }
 
   if (endPage < totalPages) {
-    if (endPage < totalPages - 1) html += "<span>...</span>";
+    if (endPage < totalPages - 1) {
+      html += "<span>...</span>";
+    }
     html += `<button class="page-item" data-page="${totalPages}">${totalPages}</button>`;
   }
 
@@ -166,11 +171,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       let filtered = [...tests];
       const sortType = clickedBtn.textContent;
-      if (sortType.includes("tăng"))
+      if (sortType.includes("tăng")) {
         filtered.sort((a, b) => (a.plays || 0) - (b.plays || 0));
-      else if (sortType.includes("giảm"))
+      } else if (sortType.includes("giảm")) {
         filtered.sort((a, b) => (b.plays || 0) - (a.plays || 0));
-
+      }
       currentPage = 1;
       renderQuizGrid(filtered);
     });

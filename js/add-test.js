@@ -23,7 +23,10 @@ const loadFromLocalStorage = () => {
 
 const renderTable = () => {
   const tbody = document.getElementById("questionTableBody");
-  if (!tbody) return;
+  if (!tbody) {
+    return;
+  }
+  
   tbody.innerHTML = "";
   questions.forEach((q, index) => {
     const row = document.createElement("tr");

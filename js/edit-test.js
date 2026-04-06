@@ -28,7 +28,9 @@ const saveToLocalStorage = () => {
 
 const renderTable = () => {
   const tbody = document.querySelector("tbody");
-  if (!tbody) return;
+  if (!tbody) {
+    return;
+  }
   tbody.innerHTML = "";
   questions.forEach((q, index) => {
     const row = tbody.insertRow();
@@ -97,25 +99,32 @@ const closeModal = () => {
 
 const saveQuestion = () => {
   const text = document.getElementById("modalQuestionInput").value;
-  if (!text.trim()) return createToast("error", "Vui lòng nhập câu hỏi!");
+  if (!text.trim()) {
+    return createToast("error", "Vui lòng nhập câu hỏi!");
+  }
 
   const answerRows = document.querySelectorAll(".answer-item-row");
   const answers = [];
   answerRows.forEach((row) => {
     const aText = row.querySelector(".answer-input-field").value.trim();
     const isCorrect = row.querySelector(".answer-checkbox").checked;
-    if (aText) answers.push({ text: aText, isCorrect });
+    if (aText) {
+      answers.push({ text: aText, isCorrect });
+    }
   });
 
-  if (answers.length < 2) return createToast("error", "Cần ít nhất 2 đáp án!");
-  if (!answers.some((a) => a.isCorrect))
+  if (answers.length < 2) {
+    return createToast("error", "Cần ít nhất 2 đáp án!");
+  }
+  if (!answers.some((a) => a.isCorrect)) {
     return createToast("error", "Cần ít nhất 1 đáp án đúng!");
-
+  }
   if (editingRow) {
     const qId = parseInt(editingRow.cells[0].innerText);
     const index = questions.findIndex((q) => q.id === qId);
-    if (index !== -1)
+    if (index !== -1) {
       questions[index] = { ...questions[index], text: text, answers: answers };
+    }
   } else {
     const nextId =
       questions.length > 0 ? Math.max(...questions.map((q) => q.id)) + 1 : 1;
@@ -235,7 +244,9 @@ window.onload = function () {
   checkLogin();
   const urlParams = new URLSearchParams(window.location.search);
   testId = urlParams.get("id");
-  if (!testId) return;
+  if (!testId) {
+    return;
+  }
 
   STORAGE_KEY = `testQuestions_${testId}`;
 
@@ -261,7 +272,9 @@ window.onload = function () {
     document.querySelector(".test-info-section select").value =
       testData.category;
     document.querySelector(".flex-time input").value = testData.time;
-    if (testData.image) loadImagePreview(testData.image);
+    if (testData.image) {
+      loadImagePreview(testData.image);
+    }
   }
 
   loadFromLocalStorage();
@@ -276,6 +289,8 @@ window.onload = function () {
     .addEventListener("change", handleImageSelect);
 
   window.onclick = (e) => {
-    if (e.target.classList.contains("modal-overlay")) closeModal();
+    if (e.target.classList.contains("modal-overlay")) {
+      closeModal();
+    }
   };
 };

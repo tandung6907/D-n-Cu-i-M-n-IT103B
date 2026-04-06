@@ -176,13 +176,15 @@ const applyFilters = () => {
   }
 
   const sortValue = sortSelect?.value;
-  if (sortValue === "newest") filteredTests.sort((a, b) => b.id - a.id);
-  else if (sortValue === "az")
+  if (sortValue === "newest") {
+    filteredTests.sort((a, b) => b.id - a.id);
+  } else if (sortValue === "az") {
     filteredTests.sort((a, b) => a.name.localeCompare(b.name));
-  else if (sortValue === "questions")
+  } else if (sortValue === "questions") {
     filteredTests.sort((a, b) => b.questions - a.questions);
-  else if (sortValue === "time")
+  } else if (sortValue === "time") {
     filteredTests.sort((a, b) => parseInt(b.time) - parseInt(a.time));
+  }
 
   currentPage = 1;
   renderTable(filteredTests);
@@ -195,11 +197,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const sortSelect = document.querySelector(".filters select");
   const searchInput = document.querySelector(".filters input");
 
-  if (sortSelect) sortSelect.onchange = applyFilters;
-  if (searchInput) searchInput.oninput = applyFilters;
+  if (sortSelect) {
+    sortSelect.onchange = applyFilters;
+  }
+  if (searchInput) {
+    searchInput.oninput = applyFilters;
+  }
 
   const btnConfirmDelete = document.querySelector("#deleteModal .btn-danger");
-  if (btnConfirmDelete) btnConfirmDelete.onclick = confirmDelete;
+  if (btnConfirmDelete) {
+    btnConfirmDelete.onclick = confirmDelete;
+  }
 
   document.querySelectorAll(".close-btn, .btn-secondary").forEach((btn) => {
     btn.onclick = () => toggleModal(deleteModal, false);
