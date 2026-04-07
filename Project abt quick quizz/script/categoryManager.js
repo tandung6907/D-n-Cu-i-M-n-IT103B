@@ -1,4 +1,10 @@
 let somesome = JSON.parse(localStorage.getItem("anc"));
+
+function errors(lass,announcement,value){
+    document.querySelector(lass).style.display = value;
+    document.querySelector(lass).textContent = announcement;
+}
+
 let accounts = somesome ? somesome : [
     { id: 1, category: "📚 Lịch sử" },
     { id: 2, category: "🧠 Khoa học" },
@@ -17,6 +23,7 @@ let currentPage = 1;
 let limit = 5;
 let editId = null;
 let idToDelete = null;
+
 function showUp() {
     let start = (currentPage - 1) * limit;
     let end = start + limit;
@@ -42,6 +49,7 @@ function showUp() {
     renderPagination();
 }
 showUp();
+
 let modal = document.getElementById("categoryModal");
 function clickAdd() {
     editId = null;
@@ -57,6 +65,7 @@ function clickAdd() {
     document.getElementById("empty-msg").style.display = "none";
     document.getElementById("categoryModal").style.display = "flex";
 }
+
 function clickUpd(index) {
     editId = index;
     document.querySelector(".modal-header h3").innerText = "Sửa danh mục";
@@ -70,6 +79,7 @@ function clickUpd(index) {
 
     document.getElementById("categoryModal").style.display = "flex";
 }
+
 function closeModal() {
     document.getElementById("categoryModal").style.display = "none";
 }
@@ -123,6 +133,7 @@ function saveCategory() {
     showUp();
     closeModal();
 }
+
 function clickDel(index) {
     idToDelete = index;
     let item = accounts.find(value => value.id === index);
@@ -141,6 +152,7 @@ function closeDeleteModal() {
     document.getElementById("error-msg").style.display = "none";
     document.getElementById("empty-msg").style.display = "none";
 }
+
 function confirmDelete() {
     if (idToDelete !== null) {
         for (let i = 0; i < accounts.length; i++) {
@@ -153,11 +165,13 @@ function confirmDelete() {
         closeDeleteModal();
     }
 }
+
 window.onclick = function (event) {
     if (event.target == modal) {
         closeModal();
     }
 }
+
 function renderPagination() {
     const totalPages = Math.ceil(accounts.length / limit);
     let paginationHTML = "";
@@ -188,6 +202,7 @@ function changePage(page) {
     currentPage = page;
     showUp();
 }
+
 function logout() {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userLogin");

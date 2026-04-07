@@ -1,4 +1,9 @@
-const quizData = JSON.parse(localStorage.getItem("currentQuiz"));
+let quizData = JSON.parse(localStorage.getItem("currentQuiz"));
+
+function errors(lass,announcement,value){
+    document.querySelector(lass).style.display = value;
+    document.querySelector(lass).textContent = announcement;
+}
 
 if (!quizData) {
     alert("Không tìm thấy dữ liệu câu đố!");

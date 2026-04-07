@@ -3,6 +3,11 @@ let smthsmth = JSON.parse(localStorage.getItem("ttts")) || [];
 const urlParams = new URLSearchParams(window.location.search);
 const editTestId = urlParams.get('id');
 
+function errors(lass,announcement,value){
+    document.querySelector(lass).style.display = value;
+    document.querySelector(lass).textContent = announcement;
+}
+
 let question = [];
 let currentPage = 1;
 let perPage = 5;
@@ -100,6 +105,7 @@ function saveClick() {
             smthsmth[index].question = question.length;
             smthsmth[index].detailQuestion = question;
         }
+
     } else {
         let newId = smthsmth.length > 0 ? Math.max(...smthsmth.map(t => t.id)) + 1 : 1;
         smthsmth.push({
@@ -113,7 +119,6 @@ function saveClick() {
             played: 0
         });
     }
-
     localStorage.setItem("ttts", JSON.stringify(smthsmth));
     Swal.fire({
         text: 'Lưu bài test thành công',
@@ -126,7 +131,7 @@ function saveClick() {
 }
 
 function addClick() {
-    editId = null
+    editId = null;
     document.querySelector(".modal-header h3").innerText = "Thêm câu hỏi";
     document.getElementById("testName").value = "";
     document.getElementById("answerContainer").innerHTML = "";
@@ -143,6 +148,7 @@ function saveModal() {
         let isCorrect = row.querySelector(".is-correct").checked;
         if (txt) ansArr.push({ text: txt, correct: isCorrect });
     });
+
     if (!qName) {
         Swal.fire('Thông báo', 'Vui lòng nhập nội dung câu hỏi!', 'info');
         return;
@@ -227,6 +233,7 @@ function confirmDelete() {
         closeDeleteModal();
 }
 }
+
 function closeModal() {
     document.getElementById("testModal").style.display = "none";
 }

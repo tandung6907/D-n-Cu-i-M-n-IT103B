@@ -9,6 +9,45 @@
         * {
             cursor: none;
         }
+
+        /* --- BẮT ĐẦU CSS CHO NỀN GALAXY (MỚI THÊM) --- */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden; /* Ngăn scrollbar do các hiệu ứng tràn ra */
+            background-color: #050510; /* Nền đen sâu thẳm */
+            /* Tạo các đám tinh vân phát sáng đan xen nhau giống vụ nổ Galaxy */
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(140, 30, 255, 0.25) 0%, transparent 60%),
+                radial-gradient(circle at 80% 20%, rgba(20, 100, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(255, 80, 30, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 30%);
+        }
+
+        /* Lớp các vì sao lấp lánh đằng sau */
+        .stars-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background-image: 
+                radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #e0e0ff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2.5px 2.5px at 160px 120px, #ffdddd, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 240px 90px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 300px 180px, #cceeff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 350px 350px;
+            animation: twinkle 4s infinite alternate ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+        /* --- KẾT THÚC CSS CHO NỀN GALAXY --- */
+
         .custom-loader-container {
             position: relative;
             width: 220px; 
@@ -19,7 +58,7 @@
             justify-content: center;
         }
 
-        /* --- BẮT ĐẦU CSS CHO KHỐI SCENE 3D --- */
+        /* --- BẮT ĐẦU CSS CHO KHỐI SCENE 3D (GIỮ NGUYÊN) --- */
         .scene {
             position: absolute;
             width: 200px;
@@ -31,17 +70,17 @@
             transform: translate(-50%, -50%);
         }
 
-        /* --- Vòng cầu vồng và container 3D tách biệt, nằm phía trước cube --- */
         .rainbow-scene {
             position: absolute;
             width: 200px;
             height: 200px;
             perspective: 800px;
-            z-index: 1; /* Nằm sau khối lập phương */
+            z-index: 1; 
             top: 0;
             left: 0;
             transform-style: preserve-3d;
             animation: rainbowTransformSequence 5.8s ease-in-out forwards;
+            will-change: transform; 
         }
 
         .rainbow-ring {
@@ -64,23 +103,42 @@
             to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
-        /* Timeline cho việc tách vòng cầu vồng */
         @keyframes rainbowTransformSequence {
             0%   { transform: translateZ(0); }
-            35%  { transform: translateZ(0); } /* Bắt đầu tách */
-            45%  { transform: translateZ(50px); } /* Tách ra 50px */
-            85%  { transform: translateZ(50px); } /* Giữ vị trí */
-            95%  { transform: translateZ(0); } /* Trở về vị trí ban đầu */
-            100% { transform: translateZ(0); } /* Dừng lại */
+            35%  { transform: translateZ(0); } 
+            45%  { transform: translateZ(50px); } 
+            85%  { transform: translateZ(50px); } 
+            95%  { transform: translateZ(0); } 
+            100% { transform: translateZ(0); } 
         }
 
-        /* --- Khối lập phương 3D --- */
+        .scene-mask {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden; 
+            border-radius: 50%; 
+            transform-style: flat; 
+            z-index: 2; 
+            animation: maskSequence 5.8s ease-in-out forwards;
+            will-change: border-radius; 
+        }
+
+        @keyframes maskSequence {
+            0%, 35% { border-radius: 50%; } 
+            45%, 85% { border-radius: 0%; } 
+            95%, 100% { border-radius: 50%; } 
+        }
+
         .cube {
             width: 100%;
             height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            animation: cubeSequence 5.8s ease-in-out forwards; /* Tổng timeline là 5.8s (dưới 6s) */
+            animation: cubeSequence 5.8s ease-in-out forwards; 
+            will-change: transform; 
         }
 
         .cube-face {
@@ -90,24 +148,22 @@
             background-size: cover;
             background-position: center;
             background-color: black;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.5); /* Đổ bóng nhẹ các góc */
-            /* Ban đầu là hình tròn */
-            border-radius: 50%;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5); 
             transform: translateZ(0);
+            border-radius: 0%; 
+            will-change: transform; 
         }
 
-        /* Timeline cho toàn bộ khối Cube (Xoay phẳng -> Nổi lên -> Bung ra -> Xoay 3D -> Trở về) */
         @keyframes cubeSequence {
             0%   { transform: rotateZ(0deg) scale(1); }
-            25%  { transform: rotateZ(360deg) scale(1); } /* Xong 1 vòng 2D */
-            35%  { transform: rotateZ(360deg) scale(1.2); } /* Nổi lên */
-            45%  { transform: rotateZ(360deg) scale(0.65) rotateX(-20deg) rotateY(-30deg); } /* Bung ra thành cube */
-            85%  { transform: rotateZ(360deg) scale(0.65) rotateX(-20deg) rotateY(330deg); } /* Xoay 1 vòng 3D trọn vẹn */
-            95%  { transform: rotateZ(360deg) scale(1) rotateX(0deg) rotateY(0deg); } /* Trở về vị trí và hình dạng phẳng ban đầu */
-            100% { transform: rotateZ(360deg) scale(1) rotateX(0deg) rotateY(0deg); } /* Dừng lại */
+            25%  { transform: rotateZ(360deg) scale(1); } 
+            35%  { transform: rotateZ(360deg) scale(1.2); } 
+            45%  { transform: rotateZ(360deg) scale(0.65) rotateX(-20deg) rotateY(-30deg); } 
+            85%  { transform: rotateZ(360deg) scale(0.65) rotateX(-20deg) rotateY(330deg); } 
+            95%  { transform: rotateZ(360deg) scale(1) rotateX(0deg) rotateY(0deg); } 
+            100% { transform: rotateZ(360deg) scale(1) rotateX(0deg) rotateY(0deg); } 
         }
 
-        /* Timeline biến đổi từng mặt cắt từ Hình Tròn -> Mặt Lập Phương -> Hình Tròn */
         .cube-front  { animation: popFront 5.8s ease-in-out forwards; }
         .cube-right  { animation: popRight 5.8s ease-in-out forwards; }
         .cube-back   { animation: popBack 5.8s ease-in-out forwards; }
@@ -115,13 +171,12 @@
         .cube-top    { animation: popTop 5.8s ease-in-out forwards; }
         .cube-bottom { animation: popBottom 5.8s ease-in-out forwards; }
 
-        /* Ban đầu phẳng (translateZ(0), border-radius: 50%). Bung ra (35%-45%). Trở về (85%-95%). */
-        @keyframes popFront  { 0%, 35% { transform: rotateY(0deg) translateZ(0px); border-radius: 50%; } 45%, 85% { transform: rotateY(0deg) translateZ(100px); border-radius: 0%;} 95%, 100% { transform: rotateY(0deg) translateZ(0px); border-radius: 50%;} }
-        @keyframes popRight  { 0%, 35% { transform: rotateY(90deg) translateZ(0px); border-radius: 50%; } 45%, 85% { transform: rotateY(90deg) translateZ(100px); border-radius: 0%;} 95%, 100% { transform: rotateY(90deg) translateZ(0px); border-radius: 50%;} }
-        @keyframes popBack   { 0%, 35% { transform: rotateY(180deg) translateZ(0px); border-radius: 50%; } 45%, 85% { transform: rotateY(180deg) translateZ(100px); border-radius: 0%;} 95%, 100% { transform: rotateY(180deg) translateZ(0px); border-radius: 50%;} }
-        @keyframes popLeft   { 0%, 35% { transform: rotateY(-90deg) translateZ(0px); border-radius: 50%; } 45%, 85% { transform: rotateY(-90deg) translateZ(100px); border-radius: 0%;} 95%, 100% { transform: rotateY(-90deg) translateZ(0px); border-radius: 50%;} }
-        @keyframes popTop    { 0%, 35% { transform: rotateX(90deg) translateZ(0px); border-radius: 50%; } 45%, 85% { transform: rotateX(90deg) translateZ(100px); border-radius: 0%;} 95%, 100% { transform: rotateX(90deg) translateZ(0px); border-radius: 50%;} }
-        @keyframes popBottom { 0%, 35% { transform: rotateX(-90deg) translateZ(0px); border-radius: 50%; } 45%, 85% { transform: rotateX(-90deg) translateZ(100px); border-radius: 0%;} 95%, 100% { transform: rotateX(-90deg) translateZ(0px); border-radius: 50%;} }
+        @keyframes popFront  { 0%, 35% { transform: rotateY(0deg) translateZ(0px); } 45%, 85% { transform: rotateY(0deg) translateZ(100px); } 95%, 100% { transform: rotateY(0deg) translateZ(0px); } }
+        @keyframes popRight  { 0%, 35% { transform: rotateY(90deg) translateZ(0px); } 45%, 85% { transform: rotateY(90deg) translateZ(100px); } 95%, 100% { transform: rotateY(90deg) translateZ(0px); } }
+        @keyframes popBack   { 0%, 35% { transform: rotateY(180deg) translateZ(0px); } 45%, 85% { transform: rotateY(180deg) translateZ(100px); } 95%, 100% { transform: rotateY(180deg) translateZ(0px); } }
+        @keyframes popLeft   { 0%, 35% { transform: rotateY(-90deg) translateZ(0px); } 45%, 85% { transform: rotateY(-90deg) translateZ(100px); } 95%, 100% { transform: rotateY(-90deg) translateZ(0px); } }
+        @keyframes popTop    { 0%, 35% { transform: rotateX(90deg) translateZ(0px); } 45%, 85% { transform: rotateX(90deg) translateZ(100px); } 95%, 100% { transform: rotateX(90deg) translateZ(0px); } }
+        @keyframes popBottom { 0%, 35% { transform: rotateX(-90deg) translateZ(0px); } 45%, 85% { transform: rotateX(-90deg) translateZ(100px); } 95%, 100% { transform: rotateX(-90deg) translateZ(0px); } }
         /* --- KẾT THÚC CSS 3D --- */
 
         .swal2-html-container #swal-text {
@@ -133,6 +188,8 @@
     <link rel="stylesheet" href="../style/specialCursor.css">
 </head>
 <body>
+    <div class="stars-bg"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const imgUrl = '../img/20260402-150420.jpg';
@@ -147,24 +204,30 @@
                             <div class="rainbow-ring"></div>
                         </div>
 
-                        <div class="cube">
-                            <div class="cube-face cube-front" style="background-image: url('${imgUrl}')"></div>
-                            <div class="cube-face cube-back" style="background-image: url('${imgUrl}')"></div>
-                            <div class="cube-face cube-right" style="background-image: url('${imgUrl}')"></div>
-                            <div class="cube-face cube-left" style="background-image: url('${imgUrl}')"></div>
-                            <div class="cube-face cube-top" style="background-image: url('${imgUrl}')"></div>
-                            <div class="cube-face cube-bottom" style="background-image: url('${imgUrl}')"></div>
+                        <div class="scene-mask">
+                            
+                            <div class="cube">
+                                <div class="cube-face cube-front" style="background-image: url('${imgUrl}')"></div>
+                                <div class="cube-face cube-back" style="background-image: url('${imgUrl}')"></div>
+                                <div class="cube-face cube-right" style="background-image: url('${imgUrl}')"></div>
+                                <div class="cube-face cube-left" style="background-image: url('${imgUrl}')"></div>
+                                <div class="cube-face cube-top" style="background-image: url('${imgUrl}')"></div>
+                                <div class="cube-face cube-bottom" style="background-image: url('${imgUrl}')"></div>
+                            </div>
                         </div>
+
                     </div>
 
                 </div>
                 <span id="swal-text">Đang chuyển hướng tới trang đăng nhập</span>
             `,
-            timer: 6000,
+            timer: 6500,
             showConfirmButton: false,
             timerProgressBar: false,
             width: '400px',
             background: '#fff',
+            // MỚI: Điều chỉnh backdrop tối mờ (70% opacity) để tôn lên nền galaxy phía sau thay vì che lấp
+            backdrop: 'rgba(0, 0, 0, 0.7)' 
         }).then(() => {
             window.location.href = "./logIn.html";
         });

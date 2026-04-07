@@ -1,4 +1,10 @@
 let smthsmth = JSON.parse(localStorage.getItem("ttts"));
+
+function errors(lass,announcement,value){
+    document.querySelector(lass).style.display = value;
+    document.querySelector(lass).textContent = announcement;
+}
+
 let tests = smthsmth ? smthsmth : [
     {
         id: 1,
@@ -111,6 +117,7 @@ let tests = smthsmth ? smthsmth : [
 let currentPage = 1;
 let perPage = 5; 
 let totalPages = 0;
+
 function showUp() {
     let start = (currentPage - 1) * perPage;
     let end = currentPage * perPage;
@@ -136,6 +143,7 @@ function showUp() {
     localStorage.setItem("ttts", JSON.stringify(tests))
 }
 showUp();
+
 function searchItems() {
     let result = document.getElementById("found").value.toLowerCase();
     let original = [...tests];
@@ -150,33 +158,6 @@ let editId = null;
 
 function clickUpd(id) {
     window.location.href = `./editTest.html?id=${id}`;
-}
-
-function closeModal() {
-    document.getElementById("testModal").style.display = "none";
-}
-
-function saveModal() {
-    let name = document.getElementById("testName").value.trim();
-    let category = document.getElementById("testCategory").value.trim();
-    let question = document.getElementById("testQuestion").value.trim();
-    let time = document.getElementById("testTime").value.trim();
-
-    if (!name || !category || !question || !time) {
-        alert("Vui lòng điền đầy đủ thông tin");
-        return;
-    }
-
-    let index = tests.findIndex(val => val.id == editId);
-    if (index !== -1) {
-        tests[index].name = name;
-        tests[index].category = category;
-        tests[index].question = question;
-        tests[index].time = time + ` min`;
-    }
-
-    showUp(); 
-    closeModal();
 }
 
 let idToDelete = null;
@@ -204,6 +185,7 @@ window.onclick = function (event) {
     if (event.target == testModal) closeModal();
     if (event.target == deleteModal) closeDeleteModal();
 }
+
 function sortItems (){
     let sortBy = document.getElementById("sorts").value;
     switch(sortBy){
@@ -257,12 +239,12 @@ function sortItems (){
         break;
     }
 }
+
 function renderPagination() {
     totalPages = Math.ceil(tests.length / perPage);
     let paginationStr = "";
     paginationStr += `<button class="special ${currentPage === 1 ? 'disabled' : ''}" 
                       onclick="changePage(${currentPage - 1})">&lt;</button>`;
-
     for (let i = 1; i <= totalPages; i++) {
         paginationStr += `<button class="${i === currentPage ? 'current' : 'other'}" 
                           onclick="changePage(${i})">${i}</button>`;
@@ -272,6 +254,7 @@ function renderPagination() {
 
     document.querySelector(".pages").innerHTML = paginationStr;
 }
+
 function changePage(page) {
     if (page < 1 || page > totalPages) return; 
     currentPage = page;

@@ -1,4 +1,10 @@
 let smthsmth = JSON.parse(localStorage.getItem("ttts")) || [];
+
+function errors(lass,announcement,value){
+    document.querySelector(lass).style.display = value;
+    document.querySelector(lass).textContent = announcement;
+}
+
 function logout() {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userLogin");
@@ -12,6 +18,7 @@ function logout() {
           window.location.href = "../index/logIn.html";
     });
 }
+
 smthsmth = smthsmth.map(item => {
     if (item.play === undefined) {
         item.play = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
@@ -53,6 +60,7 @@ function showUp(){
     renderPagination();
 }
 showUp();
+
 function renderPagination() {
     let totalPages = Math.ceil(smthsmth.length / perPage);
     let paginationStr = "";
@@ -67,10 +75,12 @@ function renderPagination() {
 
     document.querySelector(".pages").innerHTML = paginationStr;
 }
+
 function changePage(page) {
     currentPage = page;
     showUp();
 }
+
 function findResult() {
     let inputElement = document.querySelector(".findingNemo");
     let result = inputElement.value.toLowerCase();
@@ -85,6 +95,7 @@ function findResult() {
     showUp();
 }
 showUp();
+
 function ascClick(){
     document.querySelector('.asc').classList.add('active');
     document.querySelector('.desc').classList.remove('active');
@@ -92,6 +103,7 @@ function ascClick(){
     currentPage = 1;
     showUp();
 }
+
 function descClick(){
     document.querySelector('.desc').classList.add('active');
     document.querySelector('.asc').classList.remove('active');
@@ -99,6 +111,7 @@ function descClick(){
     currentPage = 1;
     showUp();
 }
+
 function goToQuiz(index){
     let selectedQuiz = smthsmth[index];
     selectedQuiz.play = (selectedQuiz.play || 0) + 1;
@@ -111,6 +124,7 @@ function goToQuiz(index){
     localStorage.setItem("currentQuiz", JSON.stringify(selectedQuiz));
     window.location.href = "./doTest.html";
 }
+
 function randomPlay(){
      if (smthsmth.length === 0) {
         Swal.fire("Lỗi", "Không có bài test nào để chơi!", "error");

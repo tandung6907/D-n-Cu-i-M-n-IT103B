@@ -10,7 +10,7 @@ let account = JSON.parse(localStorage.getItem("quizzAcc"));
     const allowedForUser = ["doTest.html", "mainPages.html", "signIn.html", "logIn.html", ""]; 
     if (userLogin.role === "user") {
         if (!allowedForUser.includes(currentPage)) {
-            redirectWithError('Bạn không có quyền truy cập vào khu vực quản trị!', "./mainPages.html");
+            redirectWithError('Bạn cần có quyền admin để truy cập trang này', "./mainPages.html");
         }
     }
     function redirectWithError(message, targetUrl) {

@@ -1,12 +1,15 @@
 let account = JSON.parse(localStorage.getItem("quizzAcc"));
+
 function errorAnnouncement(lass, announcement, value) {
   document.querySelector(lass).style.display = value;
   document.querySelector(lass).textContent = announcement;
 }
+
 function validateEmail(email) {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return re.test(String(email).toLowerCase());
 }
+
 function liClick(event) {
   event.preventDefault();
   let mails = document.getElementById("siEmail").value.trim();
@@ -47,7 +50,7 @@ function liClick(event) {
 
   if (userFound.role === "admin") {
     Swal.fire({
-      text: 'Đang chuyển hướng tới trang chỉnh sửa danh mục',
+      text: 'Chào mừng admin',
       icon: 'success',
       timer: 1500,
       showConfirmButton: false,
@@ -57,7 +60,7 @@ function liClick(event) {
     });
   } else {
     Swal.fire({
-      text: 'Đang chuyển hướng tới trang chủ',
+      text: 'Châo mừng đến với trang web',
       icon: 'success',
       timer: 1500,
       showConfirmButton: false,
