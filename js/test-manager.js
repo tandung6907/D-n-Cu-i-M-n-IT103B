@@ -1,10 +1,12 @@
 const ITEMS_PER_PAGE = 5;
 const TEST_KEY = "tests";
+const CATEGORY_KEY = "categories";
 
 let tests = [];
 let currentPage = 1;
 let pendingDeleteId = null;
 let filtered = [];
+let categories = [];
 
 const tbody = document.getElementById("table-body");
 const pagination = document.getElementById("pagination");
@@ -23,6 +25,17 @@ function saveTestToLocalStorage() {
   localStorage.setItem(TEST_KEY, JSON.stringify(tests));
 }
 
+function loadCategories() {
+  const data = localStorage.getItem(CATEGORY_KEY);
+  return data ? JSON.parse(data) : [];
+}
+
+// Lấy icon ảnh của danh mục theo categoryId
+function getCategoryIcon(categoryId) {
+  const cat = categories.find((c) => c.id === categoryId);
+  return cat && cat.img ? cat.img : null;
+}
+
 // FILTER AND SORT
 function getFiltered() {
   const query = searchInput.value.trim().toLowerCase();
@@ -31,12 +44,12 @@ function getFiltered() {
   if (sort === "asc") result.sort((a, b) => a.name.localeCompare(b.name, "vi"));
   if (sort === "desc")
     result.sort((a, b) => b.name.localeCompare(a.name, "vi"));
+  if (sort === "ascT") result.sort((a, b) => (parseFloat(a.time) || 0) - (parseFloat(b.time) || 0));
+  if (sort === "descT") result.sort((a, b) => (parseFloat(b.time) || 0) - (parseFloat(a.time) || 0));
   return result;
 }
 
 // RENDER BẢNG
-// ... (Các phần filter/sort giữ nguyên)
-
 function renderTable() {
   filtered = getFiltered();
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE) || 1;
@@ -52,27 +65,37 @@ function renderTable() {
       .map((t) => {
         // Xử lý hiển thị ảnh hoặc SVG mặc định
         const imgDisplay = t.img
-          ? `<img src="${t.img}" style="width:32px;height:32px;object-fit:cover;border-radius:6px;margin-right:8px;" />`
+          ? `<img src="${t.img}" style="width:60px;height:60px;object-fit:cover;border-radius:6px;margin-right:8px;" />`
           : `<svg class="category-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="#555" width="20" height="20" style="margin-right:8px;">
                          <path d="M96 0C43 0 0 43 0 96v320c0 53 43 96 96 96h256c17.7 0 32-14.3 32-32s-14.3-32-32-32H96c-17.7 0-32-14.3-32-32s14.3-32 32-32h288c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H96zm32 128h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H128c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H128c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/>
                        </svg>`;
+        // ICON NHỎ: icon ảnh của danh mục
+        const catIcon = getCategoryIcon(t.categoryId);
+        const categoryIconHtml = catIcon
+          ? `<img src="${catIcon}" alt="icon" class="icon" />`
+          : `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#555" width="14" height="14">
+            <path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24h48c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zm152 16c-17.7 0-32 14.3-32 32s14.3 32 32 32H488c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H488c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H488c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24h48c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h48c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"/>
+          </svg>`;
 
         return `
                 <tr>
                     <td class="col-id">${t.id}</td>
                     <td class="col-name">
+                        <div>
+                          ${imgDisplay}
+                        </div>
                         <div class="category-name">
                             <span>${t.name}</span>
                         </div>
                     </td>
                     <td class="col-category">
                     <div style="display:flex; align-items: center;">
-                      ${imgDisplay}
+                      ${categoryIconHtml}
                       ${t.category || "—"}
                     </div>
                     </td>
                     <td class="col-question">${t.questions ? t.questions.length : 0} câu</td>
-                    <td class="col-time">${t.time} phút</td>
+                    <td class="col-time">${t.time || 0} phút</td>
                     <td>
                         <div class="action-cell">
                             <a class="btn-edit" href="../pages/test-edit.html?id=${t.id}">Sửa</a>
@@ -88,19 +111,51 @@ function renderTable() {
 
 // PHÂN TRANG
 function renderPagination(totalPages) {
-  let html = `<button class="page-arrow" onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? "disabled" : ""}>&#8249;</button>`;
-  for (let i = 1; i <= totalPages; i++) {
-    html += `<button class="${i === currentPage ? "active" : ""}" onclick="goPage(${i})">${i}</button>`;
-  }
-  html += `<button class="page-arrow" onclick="goPage(${currentPage + 1})" ${currentPage === totalPages ? "disabled" : ""}>&#8250;</button>`;
-  pagination.innerHTML = html;
-}
+  const pagination = document.querySelector(".pagination");
+  if (!pagination) return;
 
-function goPage(page) {
-  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE) || 1;
-  if (page < 1 || page > totalPages) return;
-  currentPage = page;
-  renderTable();
+  pagination.innerHTML = "";
+
+  const prev = document.createElement("a");
+  prev.href = "#";
+  prev.className = "page-arrow" + (currentPage === 1 ? " disabled" : "");
+  prev.innerHTML = "&#8249;";
+  prev.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (currentPage > 1) {
+      currentPage--;
+      renderTable();
+    }
+  });
+  pagination.appendChild(prev);
+
+  for (let i = 1; i <= totalPages; i++) {
+    const a = document.createElement("a");
+    a.href = "#";
+    a.textContent = i;
+    if (i === currentPage) a.className = "active";
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      currentPage = i;
+      renderTable();
+    });
+    pagination.appendChild(a);
+  }
+
+  const next = document.createElement("a");
+  next.href = "#";
+  next.className =
+    "page-arrow" +
+    (currentPage === totalPages || totalPages === 0 ? " disabled" : "");
+  next.innerHTML = "&#8250;";
+  next.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderTable();
+    }
+  });
+  pagination.appendChild(next);
 }
 
 // XÓA
@@ -151,4 +206,5 @@ window.addEventListener("storage", (e) => {
 });
 
 tests = loadTestFromLocalStorage();
+categories = loadCategories();
 renderTable();

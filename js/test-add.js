@@ -10,13 +10,22 @@ let nextQuesId = 1;
 let editingQuesId = null;
 let deleteQuesId = null;
 
+// Mảng đáp án tạm thời trong popup
+let tempAnswers = [];
+// tempAnswers: [{ id, text, isCorrect }]
+
 let testName, testImg, testTime, previewImg;
 let listCategory, fileName, quesName;
 let overlay, popupForm, popupConfirm, confirmName;
 let questionList;
 let currentBase64Img = "";
 
-let errorTest, errorTime, errorQuestion, missingQuestion;
+let errorTest,
+  errorTime,
+  errorQuestion,
+  errorAnswer,
+  missingQuestion,
+  errorIcon;
 
 // LOCAL STORAGE
 function saveTestToLocalStorage() {
@@ -54,6 +63,7 @@ window.onload = function () {
   questionList = document.querySelector(".question-test");
   errorTest = document.querySelector(".error-test");
   errorQuestion = document.querySelector(".error-question");
+  errorAnswer = document.querySelector(".error-answer");
   errorTime = document.querySelector(".error-time");
   errorIcon = document.querySelector(".error-icon");
   missingQuestion = document.querySelector(".missing-question");
@@ -68,6 +78,7 @@ window.onload = function () {
 
   document.getElementById("btn-save").onclick = handleSubmitQuestion;
   document.getElementById("btn-confirm-delete").onclick = handleDeleteQuestion;
+  document.getElementById("btn-add-answer").onclick = addAnswerRow;
 
   document.getElementById("popup-close").onclick = closePopup;
   document.getElementById("btn-cancel").onclick = closePopup;
@@ -78,14 +89,13 @@ window.onload = function () {
     closeConfirm();
   };
 
-  // UPDATE PREVIEW AND SAVE IMGG4
+  // Preview ảnh
   testImg.onchange = function () {
     const file = this.files[0];
     if (!file) {
       currentBase64Img = "";
       return;
     }
-
     fileName.textContent = file.name;
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -97,55 +107,90 @@ window.onload = function () {
   };
 };
 
-// RENDER CATEFORY
-function renderCategories(categories) {
-  listCategory.innerHTML = "";
-
-  if (categories.length === 0) {
-    listCategory.innerHTML = `<option disabled>Chưa có danh mục</option>`;
+// QUẢN LÝ ĐÁP ÁN TRONG POPUP
+// Render danh sách đáp án tạm
+function renderAnswerList() {
+  const container = document.getElementById("answer-list");
+  if (tempAnswers.length === 0) {
+    container.innerHTML = `<p class="answer-empty">Chưa có đáp án nào. Nhấn "+ Thêm đáp án" để bắt đầu.</p>`;
     return;
   }
 
-  categories.forEach((c) => {
-    listCategory.innerHTML += `<option value="${c.id}">${c.name}</option>`;
-  });
-}
-
-// RENDER QUESTIONS
-function renderQuestions() {
-  if (!questionList) return;
-
-  if (questions.length === 0) {
-    questionList.innerHTML = `
-      <tr>
-        <td colspan="3" style="text-align:center;color:#888;">
-          Chưa có câu hỏi nào...
-        </td>
-      </tr>`;
-    return;
-  }
-
-  questionList.innerHTML = questions
+  container.innerHTML = tempAnswers
     .map(
-      (q) => `
-      <tr>
-        <td class="col-id">${q.id}</td>
-        <td class="col-name">${q.name}</td>
-        <td class="col-action">
-          <button class="btn-edit" onclick="openEditPopup(${q.id})">Sửa</button>
-          <button class="btn-delete" onclick="openConfirmDelete(${q.id})">Xoá</button>
-        </td>
-      </tr>`,
+      (a, idx) => `
+      <div class="answer-row" data-id="${a.id}">
+        <span class="answer-index">${idx + 1}.</span>
+        <input
+          type="text"
+          class="answer-input"
+          value="${escapeHtml(a.text)}"
+          placeholder="Nhập đáp án..."
+          oninput="updateAnswerText(${a.id}, this.value)"
+        />
+        <label class="correct-label" title="Đáp án đúng">
+          <input
+            type="radio"
+            name="correct-answer"
+            class="correct-radio"
+            ${a.isCorrect ? "checked" : ""}
+            onchange="setCorrectAnswer(${a.id})"
+          />
+          <span class="correct-text">Đúng</span>
+        </label>
+        <button type="button" class="btn-remove-answer" onclick="removeAnswer(${a.id})" title="Xoá đáp án">&#x2715;</button>
+      </div>`,
     )
     .join("");
 }
 
-// POPUP
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+// Thêm 1 hàng đáp án mới
+function addAnswerRow() {
+  const newId = Date.now();
+  tempAnswers.push({ id: newId, text: "", isCorrect: false });
+  renderAnswerList();
+  // Focus vào input vừa thêm
+  const inputs = document.querySelectorAll(".answer-input");
+  if (inputs.length > 0) inputs[inputs.length - 1].focus();
+}
+
+// Cập nhật text đáp án
+function updateAnswerText(id, value) {
+  const ans = tempAnswers.find((a) => a.id === id);
+  if (ans) ans.text = value;
+}
+
+// Chọn đáp án đúng (radio → chỉ 1 cái được chọn)
+function setCorrectAnswer(id) {
+  tempAnswers.forEach((a) => (a.isCorrect = a.id === id));
+}
+
+// Xoá 1 đáp án
+function removeAnswer(id) {
+  tempAnswers = tempAnswers.filter((a) => a.id !== id);
+  renderAnswerList();
+}
+
+// POPUP CÂU HỎI
 function openAddPopup() {
   editingQuesId = null;
+  document.getElementById("popup-title").textContent = "Thêm câu hỏi";
   quesName.value = "";
+  tempAnswers = [];
+  renderAnswerList();
+  hideAnswerError();
+  errorQuestion.style.display = "none";
   overlay.classList.add("active");
   popupForm.classList.add("active");
+  quesName.focus();
 }
 
 function openEditPopup(id) {
@@ -153,10 +198,22 @@ function openEditPopup(id) {
   if (!q) return;
 
   editingQuesId = id;
+  document.getElementById("popup-title").textContent = "Sửa câu hỏi";
   quesName.value = q.name;
 
+  // Clone đáp án vào temp (dùng Date.now + index để tạo id tạm)
+  tempAnswers = q.answers.map((a, idx) => ({
+    id: Date.now() + idx,
+    text: a.text,
+    isCorrect: a.isCorrect,
+  }));
+
+  renderAnswerList();
+  hideAnswerError();
+  errorQuestion.style.display = "none";
   overlay.classList.add("active");
   popupForm.classList.add("active");
+  quesName.focus();
 }
 
 function closePopup() {
@@ -179,39 +236,155 @@ function closeConfirm() {
   popupConfirm.classList.remove("active");
 }
 
-// DELETE QUESTION
 function handleDeleteQuestion() {
   questions = questions.filter((q) => q.id !== deleteQuesId);
   renderQuestions();
   closeConfirm();
 }
 
-// SAVE QUESTION
+// LƯU CÂU HỎI
 function handleSubmitQuestion() {
   const name = quesName.value.trim();
 
+  // Validate nội dung câu hỏi
   if (!validateQuestion(name)) return;
 
-  // EDIT
+  // Sync text từ input hiện tại vào tempAnswers trước khi validate
+  document.querySelectorAll(".answer-row").forEach((row) => {
+    const id = Number(row.dataset.id);
+    const input = row.querySelector(".answer-input");
+    const ans = tempAnswers.find((a) => a.id === id);
+    if (ans && input) ans.text = input.value.trim();
+  });
+
+  // Validate đáp án
+  if (!validateAnswers()) return;
+
+  // Chuẩn hóa đáp án lưu
+  const answersToSave = tempAnswers.map((a) => ({
+    text: a.text.trim(),
+    isCorrect: a.isCorrect,
+  }));
+
   if (editingQuesId !== null) {
+    // SỬA
     const q = questions.find((x) => x.id === editingQuesId);
-    if (q) q.name = name;
+    if (q) {
+      q.name = name;
+      q.answers = answersToSave;
+    }
   } else {
-    // ADD
-    questions.push({ id: nextQuesId++, name });
+    // THÊM
+    questions.push({ id: nextQuesId++, name, answers: answersToSave });
   }
 
   renderQuestions();
   closePopup();
 }
 
-// SAVE TEST
+// VALIDATE
+function validateQuestion(name) {
+  errorQuestion.style.display = "none";
+  if (name.length === 0) {
+    errorQuestion.style.display = "block";
+    errorQuestion.textContent = "Nhập nội dung câu hỏi!";
+    return false;
+  }
+  if (name.length < 10 || name.length > 100000) {
+    errorQuestion.style.display = "block";
+    errorQuestion.textContent = "Câu hỏi phải từ 10 đến 100000 ký tự!";
+    return false;
+  }
+  return true;
+}
+
+function validateAnswers() {
+  // Lọc đáp án không rỗng
+  const nonEmpty = tempAnswers.filter((a) => a.text.trim().length > 0);
+
+  if (nonEmpty.length < 2) {
+    showAnswerError("Phải có ít nhất 2 đáp án!");
+    return false;
+  }
+
+  const hasCorrect = tempAnswers.some((a) => a.isCorrect);
+  if (!hasCorrect) {
+    showAnswerError("Phải chọn 1 đáp án đúng!");
+    return false;
+  }
+
+  // Kiểm tra đáp án đúng có nội dung không
+  const correctAns = tempAnswers.find((a) => a.isCorrect);
+  if (!correctAns || correctAns.text.trim().length === 0) {
+    showAnswerError("Đáp án đúng không được để trống!");
+    return false;
+  }
+
+  hideAnswerError();
+  return true;
+}
+
+function showAnswerError(msg) {
+  errorAnswer.style.display = "block";
+  errorAnswer.textContent = msg;
+}
+
+function hideAnswerError() {
+  errorAnswer.style.display = "none";
+  errorAnswer.textContent = "";
+}
+
+// RENDER BẢNG CÂU HỎI
+function renderCategories(categories) {
+  listCategory.innerHTML = "";
+  if (categories.length === 0) {
+    listCategory.innerHTML = `<option disabled>Chưa có danh mục</option>`;
+    return;
+  }
+  categories.forEach((c) => {
+    listCategory.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+  });
+}
+
+function renderQuestions() {
+  if (!questionList) return;
+
+  if (questions.length === 0) {
+    questionList.innerHTML = `
+      <tr>
+        <td colspan="3" style="text-align:center;color:#888;padding:20px 0;">
+          Chưa có câu hỏi nào...
+        </td>
+      </tr>`;
+    return;
+  }
+
+  questionList.innerHTML = questions
+    .map(
+      (q) => `
+      <tr>
+        <td class="col-id">${q.id}</td>
+        <td class="col-name">
+          <div class="question-cell">
+            <span class="question-text">${q.name}</span>
+            <span class="answer-count">${q.answers.length} đáp án</span>
+          </div>
+        </td>
+        <td class="col-action">
+          <button class="btn-edit" onclick="openEditPopup(${q.id})">Sửa</button>
+          <button class="btn-delete" onclick="openConfirmDelete(${q.id})">Xoá</button>
+        </td>
+      </tr>`,
+    )
+    .join("");
+}
+
+// LƯU BÀI TEST
 function handleSubmitTest() {
   const name = testName.value.trim();
   const time = testTime.value.trim();
 
   if (!validateTest(name, time)) return;
-
   if (!validateQuestionList()) return;
 
   const selected = listCategory.options[listCategory.selectedIndex];
@@ -222,8 +395,8 @@ function handleSubmitTest() {
     category: selected?.textContent || "",
     categoryId: Number(selected?.value) || null,
     questions: [...questions],
-    time,
-    img: currentBase64Img, // Đã có dữ liệu ảnh
+    time: parseInt(time) || 0,
+    img: currentBase64Img,
   };
 
   tests.push(newTest);
@@ -231,7 +404,6 @@ function handleSubmitTest() {
 
   // RESET
   questions = [];
-  // nextQuesId = 1;
   currentBase64Img = "";
   renderQuestions();
 
@@ -241,10 +413,9 @@ function handleSubmitTest() {
   previewImg.style.display = "none";
   fileName.textContent = "Chưa chọn file";
 
-  handleSave();
+  showSuccessPopup();
 }
 
-// VALIDATE TEST
 function validateTest(name, time) {
   errorTest.style.display = "none";
   errorTime.style.display = "none";
@@ -277,7 +448,7 @@ function validateTest(name, time) {
 
   if (!currentBase64Img) {
     errorIcon.style.display = "block";
-    errorIcon.textContent = "Chưa chọn icon!";
+    errorIcon.textContent = "Chưa chọn ảnh!";
     return false;
   }
 
@@ -287,43 +458,24 @@ function validateTest(name, time) {
   return true;
 }
 
-// VALIDATE QUESTION
-function validateQuestion(questions) {
-  errorQuestion.style.display = "none";
-
-  if (questions.length === 0) {
-    errorQuestion.style.display = "block";
-    errorQuestion.textContent = "Nhập ít nhất 1 câu hỏi!";
-    return false;
-  }
-
-  if (questions.length < 10 || questions.length > 100) {
-    errorQuestion.style.display = "block";
-    errorQuestion.textContent = "Mỗi câu hỏi yêu cầu 10-100 ký tự!";
-    return false;
-  }
-
-  errorQuestion.style.display = "none";
-  return true;
-}
-
 function validateQuestionList() {
   missingQuestion.style.display = "none";
-
   if (questions.length === 0) {
     missingQuestion.style.display = "block";
     missingQuestion.textContent = "Danh sách câu hỏi không được trống!";
     return false;
   }
-
-  missingQuestion.style.display = "none";
   return true;
 }
 
-function handleSave() {
+function showSuccessPopup() {
   document.getElementById("popup-success").classList.add("active");
-
   setTimeout(() => {
     window.location.href = "../pages/test-manager.html";
   }, 1000);
+}
+
+// Giữ tương thích nếu nút Lưu gọi handleSave()
+function handleSave() {
+  handleSubmitTest();
 }

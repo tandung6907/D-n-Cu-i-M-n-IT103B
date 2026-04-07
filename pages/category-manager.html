@@ -36,13 +36,7 @@
         </table>
       </section>
 
-      <nav class="pagination">
-        <a href="#" class="page-arrow">&#8249;</a>
-        <a href="#" class="active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#" class="page-arrow">&#8250;</a>
-      </nav>
+      <nav class="pagination"></nav>
 
       <!-- POPUP THÊM / SỬA -->
       <div class="overlay" id="overlay"></div>
@@ -70,6 +64,7 @@
               <span class="file-name" id="file-name">Chưa chọn ảnh</span>
             </div>
             <img id="preview-img" src="" alt="preview" />
+            <p class="error-icon">Chưa chọn file icon!</p>
           </div>
         </div>
         <div class="popup-footer">
@@ -100,6 +95,44 @@
 
     <footer>© 2025 QuizForge. All rights reserved.</footer>
 
+    <!-- OVERLAY ĐĂNG XUẤT -->
+    <div
+      id="overlay-logout"
+      class="overlay-play"
+      onclick="closeLogoutConfirm()"
+    ></div>
+
+    <!-- POPUP CONFIRM ĐĂNG XUẤT -->
+    <div id="popup-confirm-logout" class="popup-play">
+      <div class="popup-play__header">
+        <h3>Xác nhận đăng xuất</h3>
+        <button class="popup-play__close" onclick="closeLogoutConfirm()">
+          &times;
+        </button>
+      </div>
+      <div
+        class="popup-play__body"
+        style="justify-content: center; padding: 24px 18px"
+      >
+        <p
+          style="
+            font-size: 18px;
+            color: #333;
+            font-family: &quot;Inter&quot;, sans-serif;
+          "
+        >
+          Bạn có chắc chắn muốn đăng xuất không?
+        </p>
+      </div>
+      <div class="popup-play__footer">
+        <button class="popup-play__cancel" onclick="closeLogoutConfirm()">
+          Huỷ
+        </button>
+        <button class="btn-logout" onclick="confirmLogOut()">Đăng xuất</button>
+      </div>
+    </div>
+
+    <!-- POPUP ĐĂNG XUẤT THÀNH CÔNG -->
     <div id="popup-logout">
       <div class="popup-box">
         <p>Đăng xuất thành công!</p>
@@ -113,4 +146,3 @@
     </script>
   </body>
 </html>
- 

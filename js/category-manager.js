@@ -8,7 +8,7 @@ let deleteId = null;
 
 let categoryName, categoryImg, listCategory, errorName;
 let overlay, popupForm, popupConfirm;
-let previewImg, fileName;
+let previewImg, fileName, currentBase64Img, errorIcon;
 
 // 2 BIẾN PHÂN TRANG
 const ITEMS_PER_PAGE = 5;
@@ -41,6 +41,9 @@ window.onload = function () {
   popupConfirm = document.getElementById("popup-confirm");
   previewImg = document.getElementById("preview-img");
   fileName = document.getElementById("file-name");
+  currentBase64Img = "";
+
+  errorIcon = document.querySelector(".error-icon");
 
   // MỞ POPUP THÊM
   document.querySelector(".btn-add").addEventListener("click", openAddPopup);
@@ -67,11 +70,15 @@ window.onload = function () {
   // Preview ảnh
   categoryImg.addEventListener("change", function () {
     const file = categoryImg.files[0];
-    if (!file) return;
+    if (!file) {
+      currentBase64Img = "";
+      return;
+    }
     fileName.textContent = file.name;
     const reader = new FileReader();
     reader.onload = (e) => {
-      previewImg.src = e.target.result;
+      currentBase64Img = e.target.result;
+      previewImg.src = currentBase64Img;
       previewImg.style.display = "block";
     };
     reader.readAsDataURL(file);
@@ -89,6 +96,7 @@ function openAddPopup() {
   fileName.textContent = "Chưa chọn ảnh";
   previewImg.style.display = "none";
   previewImg.src = "";
+  currentBase64Img = "";
   errorName.style.display = "none";
   overlay.classList.add("active");
   popupForm.classList.add("active");
@@ -106,8 +114,10 @@ function openEditPopup(id) {
   if (item.img) {
     previewImg.src = item.img;
     previewImg.style.display = "block";
+    currentBase64Img = item.img;
   } else {
     previewImg.style.display = "none";
+    currentBase64Img = "";
   }
   errorName.style.display = "none";
   overlay.classList.add("active");
@@ -177,11 +187,35 @@ function handleDelete() {
 // VALIDATE
 function validateName(name) {
   errorName.style.display = "none";
+  errorIcon.style.display = "none";
+
   if (name.length === 0) {
     errorName.style.display = "block";
     errorName.textContent = "Tên danh mục không được để trống!";
     return false;
   }
+
+  const duplicated = categories.some((p) => p.name === name);
+  if (duplicated) {
+    errorName.style.display = "block";
+    errorName.textContent = "Danh mục đã tồn tại!";
+    return false;
+  }
+
+  if (name.length < 2 || name.length > 30) {
+    errorName.style.display = "block";
+    errorName.textContent = "Tên danh mục phải từ 2-30 ký tự!";
+    return false;
+  }
+
+  if (!currentBase64Img) {
+    errorIcon.style.display = "block";
+    errorIcon.textContent = "Chưa chọn icon!";
+    return false;
+  }
+
+  errorName.style.display = "none";
+  errorIcon.style.display = "none";
   return true;
 }
 
@@ -189,15 +223,12 @@ function validateName(name) {
 function renderCategories() {
   const totalPages = Math.ceil(categories.length / ITEMS_PER_PAGE);
 
-  // Nếu xoá hết trang cuối thì lùi về trang trước
   if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
   if (totalPages === 0) currentPage = 1;
 
-  // Cắt dữ liệu theo trang
   const start = (currentPage - 1) * ITEMS_PER_PAGE;
   const pageData = categories.slice(start, start + ITEMS_PER_PAGE);
 
-  // Render bảng
   if (categories.length === 0) {
     listCategory.innerHTML = `<tr><td colspan="3" class="empty-state">Chưa có danh mục nào...!!!</td></tr>`;
   } else {
@@ -230,7 +261,6 @@ function renderPagination(totalPages) {
 
   pagination.innerHTML = "";
 
-  // Nút prev
   const prev = document.createElement("a");
   prev.href = "#";
   prev.className = "page-arrow" + (currentPage === 1 ? " disabled" : "");
@@ -244,7 +274,6 @@ function renderPagination(totalPages) {
   });
   pagination.appendChild(prev);
 
-  // Số trang
   for (let i = 1; i <= totalPages; i++) {
     const a = document.createElement("a");
     a.href = "#";
@@ -258,7 +287,6 @@ function renderPagination(totalPages) {
     pagination.appendChild(a);
   }
 
-  // Nút next
   const next = document.createElement("a");
   next.href = "#";
   next.className =
@@ -275,10 +303,23 @@ function renderPagination(totalPages) {
   pagination.appendChild(next);
 }
 
+// LOG OUT
+// Bước 1: Mở popup xác nhận đăng xuất
 function handleLogOut() {
-  //HIỂN THỊ POPUP ĐĂNG XUẤT THÀNH CÔNG + CHUYỂN SANG TRANG ĐĂNG NHẬP
-  document.getElementById("popup-logout").classList.add("active");
+  document.getElementById("overlay-logout").classList.add("active");
+  document.getElementById("popup-confirm-logout").classList.add("active");
+}
 
+// Đóng popup xác nhận
+function closeLogoutConfirm() {
+  document.getElementById("overlay-logout").classList.remove("active");
+  document.getElementById("popup-confirm-logout").classList.remove("active");
+}
+
+// Bước 2: Xác nhận đóng confirm, hiện thông báo thành công, rồi chuyển trang
+function confirmLogOut() {
+  closeLogoutConfirm();
+  document.getElementById("popup-logout").classList.add("active");
   setTimeout(() => {
     window.location.href = "../pages/login.html";
   }, 1000);

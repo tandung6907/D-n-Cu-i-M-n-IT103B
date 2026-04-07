@@ -13,9 +13,7 @@
         <a href="">QuizzForge</a>
       </section>
       <nav class="pages-link">
-        <a href="../pages/category-manager.html">Danh mục</a>
         <a href="../pages/test-manager.html">Bài test</a>
-        <a href="../pages/register.html">Đăng xuất</a>
       </nav>
     </header>
 
@@ -27,9 +25,9 @@
         <input type="text" id="test-name" placeholder="Điền tên bài test" />
         <p class="error-test">Không để trống tên bài test!</p>
         <div class="form-group">
-          <label>Icon danh mục</label>
+          <label>Ảnh bài test</label>
           <div class="file-input-wrapper">
-            <label for="test-img" class="btn-file"> 📁 Chọn Icon </label>
+            <label for="test-img" class="btn-file"> 📁 Chọn ảnh </label>
             <input type="file" id="test-img" accept="image/*" />
             <span class="file-name" id="file-name">Chưa chọn ảnh</span>
           </div>
@@ -40,12 +38,7 @@
         <div class="form-row">
           <div class="form-group category">
             <label for="test-category">Danh mục</label>
-            <select id="test-category">
-              <!-- <option value="">Chọn danh mục</option>
-              <option value="1">Toán học</option>
-              <option value="2">Lịch sử</option>
-              <option value="3">Tiếng Anh</option> -->
-            </select>
+            <select id="test-category"></select>
           </div>
 
           <div class="form-group time">
@@ -60,7 +53,9 @@
 
       <div class="action-bar">
         <button class="btn-add">Thêm câu hỏi</button>
-        <button type="button" class="btn-save" onclick="handleSave()">Lưu</button>
+        <button type="button" class="btn-save" onclick="handleSave()">
+          Lưu
+        </button>
       </div>
       <p class="missing-question"></p>
 
@@ -73,70 +68,48 @@
               <th class="col-action">Hành động</th>
             </tr>
           </thead>
-          <tbody class="question-test">
-            <!-- <tr>
-              <td class="col-id">1</td>
-              <td class="col-name">What is the capital of France?</td>
-              <td class="col-action">
-                <button class="btn-edit">Sửa</button>
-                <button class="btn-delete">Xoá</button>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-id">2</td>
-              <td class="col-name">Which planet is known as the Red Planet?</td>
-              <td class="col-action">
-                <button class="btn-edit">Sửa</button>
-                <button class="btn-delete">Xoá</button>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-id">3</td>
-              <td class="col-name">Which planet is known as the Red Planet?</td>
-              <td class="col-action">
-                <button class="btn-edit">Sửa</button>
-                <button class="btn-delete">Xoá</button>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-id">4</td>
-              <td class="col-name">Which planet is known as the Red Planet?</td>
-              <td class="col-action">
-                <button class="btn-edit">Sửa</button>
-                <button class="btn-delete">Xoá</button>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-id">5</td>
-              <td class="col-name">Which planet is known as the Red Planet?</td>
-              <td class="col-action">
-                <button class="btn-edit">Sửa</button>
-                <button class="btn-delete">Xoá</button>
-              </td>
-            </tr> -->
-          </tbody>
+          <tbody class="question-test"></tbody>
         </table>
       </section>
     </main>
 
-    <!-- POPUP THÊM/ SỬA CÂU HỎI  -->
+    <!-- OVERLAY -->
     <div class="overlay" id="overlay"></div>
 
+    <!-- POPUP THÊM / SỬA CÂU HỎI -->
     <div class="popup" id="popup-form">
       <div class="popup-header">
         <h2 class="popup-title" id="popup-title">Thêm câu hỏi</h2>
         <button class="popup-close" id="popup-close">&times;</button>
       </div>
       <div class="popup-body">
+        <!-- Nội dung câu hỏi -->
         <div class="form-group">
-          <label>Thêm câu hỏi</label>
+          <label>Nội dung câu hỏi</label>
           <input type="text" id="question-name" placeholder="Nhập câu hỏi..." />
-          <p class="error-question">Thêm ít nhất 1 câu hỏi!</p>
+          <p class="error-question">Nhập nội dung câu hỏi!</p>
+        </div>
+
+        <!-- Danh sách đáp án -->
+        <div class="answer-section">
+          <div class="answer-section-header">
+            <label
+              >Đáp án
+              <span class="answer-hint"
+                >(tối thiểu 2 đáp án, chọn 1 đáp án đúng)</span
+              ></label
+            >
+            <button type="button" class="btn-add-answer" id="btn-add-answer">
+              + Thêm đáp án
+            </button>
+          </div>
+          <p class="error-answer"></p>
+          <div class="answer-list" id="answer-list"></div>
         </div>
       </div>
       <div class="popup-footer">
         <button class="btn-cancel" id="btn-cancel">Huỷ</button>
-        <button class="btn-save" id="btn-save">Lưu</button>
+        <button class="btn-save" id="btn-save">Lưu câu hỏi</button>
       </div>
     </div>
 

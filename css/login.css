@@ -164,3 +164,121 @@ p.error-login {
 .register-link a:hover {
   text-decoration: underline;
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 24px;
+    padding-left: 16px;
+  }
+
+  .main {
+    height: auto;
+    padding: 20px;
+  }
+
+  .title {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    margin-top: 60px;
+  }
+
+  .title h2 {
+    font-size: 36px;
+    line-height: 44px;
+  }
+
+  .title p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .form-login {
+    max-width: 400px;
+    height: auto;
+    padding: 30px 20px;
+  }
+
+  .login-box label {
+    font-size: 16px;
+  }
+
+  .login-box input {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .login-box input::placeholder {
+    font-size: 14px;
+  }
+
+  p.error-login {
+    font-size: 16px;
+  }
+
+  #btn-login {
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    height: 40px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+    padding-left: 12px;
+  }
+
+  .main {
+    padding: 16px;
+  }
+
+  .title {
+    margin-top: 40px;
+  }
+
+  .title h2 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .title p {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .form-login {
+    max-width: 100%;
+    padding: 24px 16px;
+  }
+
+  .login-box label {
+    font-size: 15px;
+  }
+
+  .login-box input {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .login-box input::placeholder {
+    font-size: 13px;
+  }
+
+  p.error-login {
+    font-size: 14px;
+  }
+
+  #btn-login {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .register-link {
+    font-size: 13px;
+  }
+}
