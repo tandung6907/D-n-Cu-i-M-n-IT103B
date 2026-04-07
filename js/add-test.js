@@ -168,8 +168,10 @@ const saveTest = () => {
     return createToast("error", "Vui lòng chọn danh mục!");
   }
 
-  if (!timeInput.value || parseInt(timeInput.value) <= 0) {
-    return createToast("error", "Thời gian phải lớn hơn 0!");
+  const timeVal = timeInput.value.trim();
+  const timeNum = parseInt(timeVal);
+  if (!timeVal || timeNum <= 0 || !Number.isInteger(timeNum) || timeVal.includes('.')) {
+    return createToast("error", "Thời gian phải là số nguyên lớn hơn 0!");
   }
 
   if (questions.length < 2) {
@@ -220,7 +222,9 @@ const validateTestForm = () => {
     !selectedImageFile ||
     !nameInput.value.trim() ||
     !categorySelect.value.trim() ||
-    !timeInput.value ||
+    !timeInput.value || 
+    !Number.isInteger(parseInt(timeInput.value)) || 
+    timeInput.value.includes('.') ||
     parseInt(timeInput.value) <= 0 ||
     questions.length < 2
   ) {

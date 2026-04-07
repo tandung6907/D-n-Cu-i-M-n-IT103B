@@ -257,6 +257,10 @@ window.prepareDelete = (id) => {
 // Thực hiện xoá khi nhấn nút Xoá trên popup đỏ
 const confirmDelete = () => {
   const idToDelete = parseInt(deleteIdInput.value);
+  
+  // Lấy thông tin category bị xóa trước khi xóa (để cập nhật tests)
+  const deletedCategory = categories.find((c) => c.id === idToDelete);
+  const deletedName = deletedCategory ? deletedCategory.emoji + " " + deletedCategory.name : "";
 
   // Lọc bỏ phần tử bị xoá
   categories = categories.filter((c) => c.id !== idToDelete);
@@ -267,6 +271,22 @@ const confirmDelete = () => {
   });
 
   syncStorage();
+
+  // Cập nhật tests: nếu test.category chứa deletedName → đổi thành "Chưa có danh mục"
+  if (deletedName) {
+    let allTests = JSON.parse(localStorage.getItem("tests")) || [];
+    let hasChanges = false;
+    allTests.forEach((test) => {
+      if (test.category === deletedName) {
+        test.category = "Chưa có danh mục";
+        hasChanges = true;
+      }
+    });
+    if (hasChanges) {
+      localStorage.setItem("tests", JSON.stringify(allTests));
+    }
+  }
+
   renderTable();
   toggleModal(deleteModal, false);
   createToast("success", "Xóa danh mục thành công!");

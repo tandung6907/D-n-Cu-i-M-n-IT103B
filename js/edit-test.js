@@ -186,9 +186,14 @@ const saveTest = () => {
 
   const name = nameInput.value.trim();
   const category = categorySelect.value;
-  const time = timeInput.value;
+  const timeVal = timeInput.value.trim();
+  const timeNum = parseInt(timeVal);
 
   if (!name) return createToast("error", "Vui lòng nhập tên bài test!");
+  
+  if (!timeVal || timeNum <= 0 || !Number.isInteger(timeNum) || timeVal.includes('.')) {
+    return createToast("error", "Thời gian phải là số nguyên lớn hơn 0!");
+  }
 
   let allTests = JSON.parse(localStorage.getItem("tests")) || [];
   const testData = allTests.find((t) => t.id == testId);

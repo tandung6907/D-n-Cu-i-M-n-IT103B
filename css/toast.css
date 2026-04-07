@@ -101,7 +101,7 @@
   left: 0px;
   height: 100%;
   width: 350px;
-  animation: progressAnimation 2s linear forwards;
+  animation: progressAnimation 1.5s linear forwards;
 }
 
 .success .progress::before {

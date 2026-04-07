@@ -44,7 +44,7 @@ const createToast = (type, customMsg = "") => {
 
   const autoClose = setTimeout(() => {
     removeToast(toast);
-  }, 2000);
+  }, 1500);
 
   const closeBtn = toast.querySelector(".toast-close");
   closeBtn.onclick = () => {
