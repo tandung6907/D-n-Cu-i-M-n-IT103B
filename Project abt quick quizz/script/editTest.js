@@ -83,35 +83,19 @@ function changePage(page) {
 
 function saveClick() {
     let tName = document.getElementById("tName").value.trim();
-    let tCat = document.getElementById("sorts").value.trim();
+    let tCat = document.getElementById("sorts").value.trim(); 
     let tTime = document.getElementById("times").value.trim();
     let timeUnit = document.getElementById("timer").value === "true" ? "sec" : "min";
     let timeNum = parseInt(tTime);
+    let categoryData = somesome.find(c => c.category === tCat);
+    let categoryId = categoryData ? categoryData.id : null; 
 
-    errorAnnouncement(".error-msg", "", "none");
-    errorAnnouncement(".error-time-msg", "", "none");
-    if (!tName || !tCat || !tTime) {
-        errorAnnouncement(".error-msg", "Vui lòng điền đầy đủ thông tin bài test", "block");
-        return;
-    }
-    if (isNaN(timeNum) || timeNum < 1) {
-        errorAnnouncement(".error-time-msg", "Thời gian phải là số dương và ít nhất là 1 phút", "block");
-        return;
-    }
-    if (question.length === 0) {
-        Swal.fire({
-            title: 'Thiếu dữ liệu!',
-            text: 'Bài test phải có ít nhất 1 câu hỏi.',
-            icon: 'warning',
-            confirmButtonColor: '#3085d6'
-        });
-        return;
-    }
     if (editTestId) {
         let index = smthsmth.findIndex(t => t.id == editTestId);
         if (index !== -1) {
             smthsmth[index].name = tName;
             smthsmth[index].category = tCat;
+            smthsmth[index].categoryId = categoryId;
             smthsmth[index].time = tTime + " " + timeUnit;
             smthsmth[index].question = question.length;
             smthsmth[index].detailQuestion = question;
@@ -122,12 +106,14 @@ function saveClick() {
             id: newId,
             name: tName,
             category: tCat,
+            categoryId: categoryId, 
             question: question.length,
             time: tTime + " " + timeUnit,
             detailQuestion: question,
-            played: 0,
+            played: 0
         });
     }
+
     localStorage.setItem("ttts", JSON.stringify(smthsmth));
     Swal.fire({
         text: 'Lưu bài test thành công',

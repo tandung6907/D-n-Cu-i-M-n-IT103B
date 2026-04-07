@@ -86,11 +86,15 @@ function findResult() {
 }
 showUp();
 function ascClick(){
+    document.querySelector('.asc').classList.add('active');
+    document.querySelector('.desc').classList.remove('active');
     smthsmth.sort((a, b) => a.play - b.play);
     currentPage = 1;
     showUp();
 }
 function descClick(){
+    document.querySelector('.desc').classList.add('active');
+    document.querySelector('.asc').classList.remove('active');
     smthsmth.sort((a, b) => b.play - a.play);
     currentPage = 1;
     showUp();
