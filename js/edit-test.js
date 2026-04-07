@@ -214,7 +214,7 @@ const saveTest = () => {
       ...allTests[index],
       name,
       category,
-      time,
+      time: timeVal,
       questions: questions.length,
       image: currentImage,
     };
