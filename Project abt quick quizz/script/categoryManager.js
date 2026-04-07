@@ -22,20 +22,23 @@ function showUp() {
     let end = start + limit;
     let paginatedItems = accounts.slice(start, end);
     let str = "";
+    
     for (let i = 0; i < paginatedItems.length; i++) {
+        let displayIndex = start + i + 1; 
+        
         str += `
             <tr class = "${i % 2 === 0 ? 'odd' : ''}">
-                        <td class="num">${i + 1}</td>
-                        <td>${paginatedItems[i].category}</td>
-                        <td class="grBtn">
-                            <button id="updBtn" onclick = "clickUpd(${paginatedItems[i].id})">Sửa</button>
-                            <button id="delBtn" onclick = "clickDel(${paginatedItems[i].id})">Xoá</button>
-                        </td>
-                    </tr>
-        `
+                <td class="num">${displayIndex}</td>
+                <td>${paginatedItems[i].category}</td>
+                <td class="grBtn">
+                    <button id="updBtn" onclick = "clickUpd(${paginatedItems[i].id})">Sửa</button>
+                    <button id="delBtn" onclick = "clickDel(${paginatedItems[i].id})">Xoá</button>
+                </td>
+            </tr>
+        `;
     }
     document.getElementById("tbdy").innerHTML = str;
-    localStorage.setItem("anc", JSON.stringify(accounts))
+    localStorage.setItem("anc", JSON.stringify(accounts));
     renderPagination();
 }
 showUp();
@@ -43,8 +46,15 @@ let modal = document.getElementById("categoryModal");
 function clickAdd() {
     editId = null;
     document.querySelector(".modal-header h3").innerText = "Thêm danh mục";
-    document.getElementById("categoryName").value = "";
-    document.getElementById("categoryEmoji").value = "";
+    
+    const nameInput = document.getElementById("categoryName");
+    const emojiInput = document.getElementById("categoryEmoji");
+
+    nameInput.value = "";
+    emojiInput.value = "";
+    
+    document.getElementById("error-msg").style.display = "none";
+    document.getElementById("empty-msg").style.display = "none";
     document.getElementById("categoryModal").style.display = "flex";
 }
 function clickUpd(index) {
@@ -67,29 +77,49 @@ function closeModal() {
 function saveCategory() {
     const name = document.getElementById("categoryName").value.trim();
     const emoji = document.getElementById("categoryEmoji").value.trim();
+    const errorMsg = document.getElementById("error-msg");
+    const emptyMsg = document.getElementById("empty-msg");
+
+    errorMsg.style.display = "none";
+    emptyMsg.style.display = "none";
 
     if (!name || !emoji) {
-        alert("Vui lòng điền đủ thông tin!");
+        emptyMsg.innerText = "Vui lòng điền đầy đủ thông tin!";
+        emptyMsg.style.display = "block";
+        return;
+    }
+    if (name.length > 20) {
+        emptyMsg.innerText = "Tên danh mục không quá 20 ký tự!";
+        emptyMsg.style.display = "block";
+        return;
+    }
+
+    const emojiArray = Array.from(emoji);
+    if (emojiArray.length !== 1) {
+        emptyMsg.innerText = "Chỉ được chọn duy nhất 1 emoji!";
+        emptyMsg.style.display = "block";
+        return;
+    }
+
+    const isExist = accounts.find(a => {
+        let categoryNameOnly = a.category.split(" ").slice(1).join(" ");
+        return categoryNameOnly.toLowerCase() === name.toLowerCase() && a.id !== editId;
+    });
+
+    if (isExist) {
+        errorMsg.style.display = "block";
         return;
     }
 
     if (editId === null) {
-
-        const isExist = accounts.find(a => a.category.includes(name));
-        if (isExist) {
-            document.getElementById("error-msg").style.display = "block";
-            return;
-        }
         const newId = accounts.length > 0 ? Math.max(...accounts.map(a => a.id)) + 1 : 1;
         accounts.push({ id: newId, category: `${emoji} ${name}` });
     } else {
-
         let index = accounts.findIndex(a => a.id === editId);
         if (index !== -1) {
             accounts[index].category = `${emoji} ${name}`;
         }
     }
-
     showUp();
     closeModal();
 }
@@ -107,8 +137,9 @@ function clickDel(index) {
 }
 
 function closeDeleteModal() {
-    idToDelete = null;
     document.getElementById("deleteModal").style.display = "none";
+    document.getElementById("error-msg").style.display = "none";
+    document.getElementById("empty-msg").style.display = "none";
 }
 function confirmDelete() {
     if (idToDelete !== null) {

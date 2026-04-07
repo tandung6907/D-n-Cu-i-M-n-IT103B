@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,9 +42,19 @@
                         </select>
                     </div>
                     <div class="tm">
-                        <label for="times">Thời gian (phút)</label>
+                        <label for="times">Thời gian</label>
                         <br>
-                        <input type="number" placeholder="15" id="times">
+                        <input type="number" id="times" placeholder="Nhập thời gian">
+                        <small class="error-time-msg" style="color: red; display: none;"></small>
+                    </div>
+                    <div class="cate">
+                        <label for="timer">Đơn vị thời gian</label>
+                        <br>
+                        <select name="" id="timer" onchange="choosen()">
+                            <option value="">Chọn đơn vị</option>
+                            <option value="true">Giây</option>
+                            <option value="fa">Phút</option>
+                        </select>
                     </div>
                 </div>
             </form>
@@ -87,9 +96,7 @@
                     <label for="testName">Câu hỏi</label>
                     <input type="text" id="testName" placeholder="Nhập câu hỏi">
                 </div>
-
                 <label>Câu trả lời</label>
-
                 <div id="answerContainer">
                     <div class="answer-group">
                         <div class="check-box-wrapper">
@@ -131,5 +138,4 @@
     <script src="../script/editTest.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
-
 </html>

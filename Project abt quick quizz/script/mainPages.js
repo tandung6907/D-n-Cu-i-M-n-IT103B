@@ -28,7 +28,6 @@ function showUp(){
     let start = (currentPage - 1) * perPage;
     let end = start + perPage;
     let itemsOnPage = smthsmth.slice(start, end);
-    let randomPlayCount = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
 
     if (itemsOnPage.length === 0) {
         document.getElementsByClassName("cards")[0].innerHTML = "<p>Không tìm thấy câu đố nào.</p>";
@@ -38,7 +37,7 @@ function showUp(){
         str += `
             <div class="containers">
                 <div class="poster">
-                    <img src="../img/8160b25e90a83127a613c90527e7cea2365c88ea.png" alt="poster">
+                    <img src="../img/20260402-150420.jpg" alt="poster">
                 </div>
                 <div class="information">
                     <p>${itemsOnPage[i].category}</p>
@@ -97,7 +96,22 @@ function descClick(){
     showUp();
 }
 function goToQuiz(index){
-    let selectedQuiz = smthsmth[index]; 
+    let selectedQuiz = smthsmth[index];
+    selectedQuiz.play = (selectedQuiz.play || 0) + 1;
+    let fullData = JSON.parse(localStorage.getItem("ttts")) || [];
+    let originalIndex = fullData.findIndex(t => t.id === selectedQuiz.id);
+    if(originalIndex !== -1) {
+        fullData[originalIndex].play = selectedQuiz.play;
+        localStorage.setItem("ttts", JSON.stringify(fullData));
+    }
     localStorage.setItem("currentQuiz", JSON.stringify(selectedQuiz));
     window.location.href = "./doTest.html";
+}
+function randomPlay(){
+     if (smthsmth.length === 0) {
+        Swal.fire("Lỗi", "Không có bài test nào để chơi!", "error");
+        return;
+    }
+    let randomIndex = Math.floor(Math.random() * smthsmth.length);
+    goToQuiz(randomIndex);
 }

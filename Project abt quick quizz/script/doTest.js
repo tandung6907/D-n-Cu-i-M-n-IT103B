@@ -134,32 +134,38 @@ function checkButtonStatus() {
 
 function startTimer() {
     if (!quizData || !quizData.time) return;
-    let minutes = parseInt(quizData.time);
-    totalSeconds = minutes * 60;
+    let timeParts = quizData.time.split(" ");
+    let timeVal = parseInt(timeParts[0]);
+    let unit = timeParts[1];
+    if (unit === "sec") {
+        totalSeconds = timeVal;
+    } else {
+        totalSeconds = timeVal * 60;
+    }
+    let displayUnit = (unit === "sec") ? "giây" : "phút";
 
     let timerInterval = setInterval(function () {
         let min = Math.floor(totalSeconds / 60);
         let sec = totalSeconds % 60;
         let displayMin = min < 10 ? "0" + min : min;
         let displaySec = sec < 10 ? "0" + sec : sec;
-
         document.querySelector(".countDown").innerHTML = `
-            <p>Thời gian: ${minutes} phút</p>
+            <p>Thời gian: ${timeVal} ${displayUnit}</p>
             <p style="color: red; font-weight: bold;">Còn lại: ${displayMin}:${displaySec}</p>
         `;
 
         if (totalSeconds <= 0) {
-        clearInterval(timerInterval);
-        Swal.fire({
-            title: "Hết giờ!",
-            text: "Hệ thống sẽ tự động nộp bài.",
-            icon: "info",
-            timer: 3000,
-            showConfirmButton: false
-        }).then(() => {
-            showSummaryPopup();
-        });
-    } else {
+            clearInterval(timerInterval);
+            Swal.fire({
+                title: "Hết giờ!",
+                text: "Hệ thống sẽ tự động nộp bài.",
+                icon: "info",
+                timer: 3000,
+                showConfirmButton: false
+            }).then(() => {
+                showSummaryPopup();
+            });
+        } else {
             totalSeconds--;
         }
     }, 1000);
@@ -172,7 +178,6 @@ function renderName() {
             titleElement.innerText = quizData.name;
         }
     }
-    
 }
 
 function calculateResults() {

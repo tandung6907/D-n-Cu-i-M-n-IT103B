@@ -6,6 +6,7 @@ let tests = smthsmth ? smthsmth : [
         category: "📚 Lịch sử",
         question: 15,
         time: "10 min",
+        played: 0,
     },
     {
         id: 2,
@@ -13,6 +14,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🧠 Khoa học",
         question: 20,
         time: "15 min",
+        played: 0,
 
     },
     {
@@ -21,6 +23,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+        played: 0,
 
     },
     {
@@ -29,6 +32,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+        played: 0,
 
     },
     {
@@ -37,6 +41,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+        played: 0,
 
     },
     {
@@ -45,6 +50,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+        played: 0,
 
     },
     {
@@ -53,6 +59,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+        played: 0,
 
     },
     {
@@ -61,6 +68,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+        played: 0,
 
     },
     {
@@ -69,6 +77,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+        played: 0,
 
     },
     {
@@ -77,6 +86,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+        played: 0,
 
     },
     {
@@ -85,6 +95,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+        played: 0,
 
     },
     {
@@ -93,6 +104,7 @@ let tests = smthsmth ? smthsmth : [
         category: "🎤 Giải trí",
         question: 10,
         time: "5 min",
+        played: 0,
 
     },
 ]
