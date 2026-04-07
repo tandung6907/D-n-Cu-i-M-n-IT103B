@@ -247,6 +247,41 @@ const editCurrentRow = (btn) => openModal(true, btn.closest("tr"));
 
 window.onload = function () {
   checkLogin();
+
+  // Mobile menu toggle
+  const hamburger = document.querySelector('.hamburger');
+  const navbar = document.querySelector('.navbar');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  const toggleMenu = () => {
+    navbar.classList.toggle('nav-active');
+    document.body.classList.toggle('menu-open');
+    hamburger.setAttribute('aria-expanded', navbar.classList.contains('nav-active'));
+  };
+
+  const closeMenu = () => {
+    navbar.classList.remove('nav-active');
+    document.body.classList.remove('menu-open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  };
+
+  if (hamburger) {
+    hamburger.addEventListener('click', toggleMenu);
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-controls', 'nav-links');
+  }
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Close on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navbar.classList.contains('nav-active')) {
+      closeMenu();
+    }
+  });
+
   const urlParams = new URLSearchParams(window.location.search);
   testId = parseInt(urlParams.get("id"));
   if (!testId) {

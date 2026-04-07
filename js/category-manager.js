@@ -318,6 +318,43 @@ const checkLogin = () => {
 window.onload = function () {
   checkLogin();
 
+  // Mobile menu toggle - MATCH test-manager.js
+  const hamburger = document.querySelector('.hamburger');
+  const navbar = document.querySelector('.navbar');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  const toggleMenu = () => {
+    navbar.classList.toggle('nav-active');
+    document.body.classList.toggle('menu-open');
+    if (hamburger) hamburger.setAttribute('aria-expanded', navbar.classList.contains('nav-active'));
+  };
+
+  const closeMenu = () => {
+    navbar.classList.remove('nav-active');
+    document.body.classList.remove('menu-open');
+    if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+  };
+
+  if (hamburger) {
+    hamburger.addEventListener('click', toggleMenu);
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-controls', 'nav-links');
+  }
+
+  // Attach close to all nav links
+  if (navLinks) {
+    navLinks.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+  }
+
+  // Close on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navbar && navbar.classList.contains('nav-active')) {
+      closeMenu();
+    }
+  });
+
   // Gán sự kiện nút lưu
   document.getElementById("btnSave").onclick = function () {
     saveData();

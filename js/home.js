@@ -117,7 +117,43 @@ const renderPagination = (filteredTests) => {
 document.addEventListener("DOMContentLoaded", () => {
   checkLogin();
 
-  // Add admin manage link
+  // Mobile menu toggle
+  const hamburger = document.querySelector('.hamburger');
+  const header = document.querySelector('header');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const toggleMenu = () => {
+    header.classList.toggle('nav-active');
+    document.body.classList.toggle('menu-open');
+    
+    // ARIA accessibility
+    hamburger.setAttribute('aria-expanded', header.classList.contains('nav-active'));
+  };
+
+  const closeMenu = () => {
+    header.classList.remove('nav-active');
+    document.body.classList.remove('menu-open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  };
+
+  if (hamburger) {
+    hamburger.addEventListener('click', toggleMenu);
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-controls', 'nav');
+  }
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Close on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && header.classList.contains('nav-active')) {
+      closeMenu();
+    }
+  });
+
+  // Add admin manage link (after potential dynamic nav changes)
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   if (currentUser && currentUser.role === "admin") {
     const nav = document.querySelector("nav");
@@ -128,6 +164,9 @@ document.addEventListener("DOMContentLoaded", () => {
         manageLink.href = "./category-manager.html";
         manageLink.textContent = "Quản lý";
         homeLink.insertAdjacentElement("afterend", manageLink);
+        
+        // Re-attach close event to new link
+        manageLink.addEventListener('click', closeMenu);
       }
     }
   }
